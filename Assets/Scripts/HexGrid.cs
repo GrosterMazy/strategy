@@ -81,6 +81,15 @@ public class HexGrid : MonoBehaviour {
         );
     }
 
+    public Vector2Int InLocalCoords(Vector3 position) { // TODO: более оптимизированная версия
+        for (int x = 0; x < this.size.x)
+            for (int y = 0; y < this.size.y)
+                if (this.cells[x, y] != null
+                        && this.InUnityCoords(x, y) == new Vector3(position.x, 0, position.z))
+                    return new Vector2Int(x, y);
+        return new Vector2Int(-1, -1); // нет такой позиции
+    }
+
     public Vector2Int[] Neighbours(Vector2Int pos) {
         Vector2Int[] potentialMoves = new Vector2Int[6] {
             new Vector2Int(pos.x+1, pos.y),
