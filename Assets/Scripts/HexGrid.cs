@@ -20,7 +20,7 @@ public class HexGrid : MonoBehaviour {
     * * * *
     */
 
-    public HexCell[,] cells;
+    [NonSerialized] public HexCell[,] cells;
     /*
     Координаты построены как будто у нас квадратное поле, тоесть на нашем примере так:
     * * * *
