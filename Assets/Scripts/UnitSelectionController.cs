@@ -8,10 +8,7 @@ public class UnitSelectionController : MonoBehaviour
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
-    void Start()
-    {
-        
-    }
+
     private void OnEnable()
     {
         MouseSelection.onSelectionChanged += OnSelectionChanged;
@@ -43,12 +40,4 @@ public class UnitSelectionController : MonoBehaviour
         if (_selectedBeforeUnitMovement != null) _selectedBeforeUnitMovement.enabled = false;
 
     }
-
-
-    void Update()
-    {
-        
-    }
-
-
 }

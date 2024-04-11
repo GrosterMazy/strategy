@@ -7,7 +7,9 @@ public class UnitMovement : MonoBehaviour
     private bool _isHighlightedNeighbour;
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
-    [SerializeField] private float _speed = 1;  
+    private short _maxSpeed => GetComponent<UnitDescription>().MovementSpeed;
+    private short _speed;
+    private Transform _selected;
     private Transform _highlighted;
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
@@ -34,6 +36,8 @@ public class UnitMovement : MonoBehaviour
             {
                 transform.position = _highlighted.position;
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
+                _objectOnGrid.LocalCoords = _hexGrid.InLocalCoords(_highlighted.position);
+                _speed -= 1;
                 _mouseSelection.SetSelection(_highlighted);
             }
         }
@@ -53,5 +57,4 @@ public class UnitMovement : MonoBehaviour
             }
         }
     }
-
 }

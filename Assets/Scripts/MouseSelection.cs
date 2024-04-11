@@ -64,7 +64,7 @@ public class MouseSelection : MonoBehaviour {
                 
                 // возвращаем старый цвет старому selection'у
                 if (this.selected != null)
-                    this.selected.GetComponent<MeshRenderer>().material.color = this._selectedOldColor;             
+                    this.selected.GetComponent<MeshRenderer>().material.color = this._selectedOldColor;
                 
                 MouseSelection.onSelectionChanged?.Invoke(hit);
 
