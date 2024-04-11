@@ -40,7 +40,7 @@ public class HexGrid : MonoBehaviour {
     [SerializeField, Range(0f, 1f)] private float waterLevel = 0.3f; // уровень "воды" на карте. работет только при noise == true
     [SerializeField] private float smoothness = 10; // насколько ровный ландшафт карты. работет только при noise == true
     
-    private void Start() {
+    private void Awake() {
         this._hexagonPrefabRenderer = this.hexagonPrefab.GetComponent<Renderer>();
 
         this.cells = new HexCell[this.size.x, this.size.y];
