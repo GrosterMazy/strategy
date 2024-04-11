@@ -3,12 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeUnit : MonoBehaviour
+public class MeleeUnit : UnitDescription
 {
-    public UnitDescription Specifications;
-
-    private void Start()
-    {
-        Specifications.ArmorCounter();
-    }
 }

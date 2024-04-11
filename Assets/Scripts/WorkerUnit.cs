@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorkerUnit : MonoBehaviour
+public class WorkerUnit : UnitDescription
 {
-    public UnitDescription Specifications;
-
-    private void Start()
-    {
-        Specifications.ArmorCounter();
-    }
 }

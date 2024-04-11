@@ -107,14 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5006e65879fe09e4f95e08acecd7fe62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Specifications:
-    ArmorEfficiencyTable: []
-    Armor: 0
-    MovementSpeed: 0
-    AttackRange: 0
-    Health: 0
-    AttackDamage: 0
-    FoodConsumption: 0
-    ArmorUnitEfficiencyMaxAmount: 15
-    ArmorEfficiencyDecreasementPerUnit: 1.5
-    LocalCoords: {x: 0, y: 0}
+  ArmorEfficiencyTable: []
+  Armor: 0
+  MovementSpeed: 0
+  AttackRange: 0
+  Health: 0
+  AttackDamage: 0
+  FoodConsumption: 0
+  ArmorUnitEfficiencyMaxAmount: 15
+  ArmorEfficiencyDecreasementPerUnit: 1.5
