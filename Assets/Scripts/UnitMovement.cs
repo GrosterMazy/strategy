@@ -6,23 +6,27 @@ using System;
 public class UnitMovement : MonoBehaviour
 {
     public Action<Vector2Int> WantToMoveOnCell;
+    public bool canMove;
+    private UnitCharacteristicsTransformationController _unitCharacteristicsTransformationController => GetComponent<UnitCharacteristicsTransformationController>();
+    private UnitDescription _unitDescription;
     private TurnManager _turnManager => FindObjectOfType<TurnManager>();
     private bool _isHighlightedNeighbour;
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
-    private short _maxSpeed => GetComponent<UnitDescription>().MovementSpeed;
+    private short _maxSpeed;
     private short _speed;
-    private Transform _selected;
     private Transform _highlighted;
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
     private void OnEnable()
     {
+        TurnManager.onTurnChanged += UpdateSpeedValueOnTurnChanged;
         MouseSelection.onHighlightChanged += NeighboursFind;
         MouseSelection.onHighlightChanged += OnHighlightChanged;
     }
     private void OnDisable()
     {
+        TurnManager.onTurnChanged -= UpdateSpeedValueOnTurnChanged;
         MouseSelection.onHighlightChanged -= NeighboursFind;
         MouseSelection.onHighlightChanged -= OnHighlightChanged;
     }
@@ -30,15 +34,22 @@ public class UnitMovement : MonoBehaviour
     {
         _highlighted = highlighted;
     }
+    private void Start()
+    {
+        _unitDescription = _unitCharacteristicsTransformationController.unitDescription;
+        UpdateSpeedValueOnTurnChanged();
+    }
+
+
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && canMove && _maxSpeed + _speed > 0)
         {
             if(_isHighlightedNeighbour)
             {
                 transform.position = _highlighted.position;
-                WantToMoveOnCell.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
+                WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
                 _objectOnGrid.LocalCoords = _hexGrid.InLocalCoords(_highlighted.position);
                 _speed -= 1;
@@ -60,5 +71,10 @@ public class UnitMovement : MonoBehaviour
                 break;
             }
         }
+    }
+    private void UpdateSpeedValueOnTurnChanged()
+    {
+        _maxSpeed = _unitDescription.MovementSpeed;
+        _speed = 0;
     }
 }

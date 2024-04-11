@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5960637561423118066}
   - component: {fileID: 5960637561423118067}
   - component: {fileID: 1624388318}
+  - component: {fileID: 120777310}
   m_Layer: 0
   m_Name: RangedUnit
   m_TagString: Untagged
@@ -108,10 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5006e65879fe09e4f95e08acecd7fe62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalCoords: {x: 0, y: 0}
+  LocalCoords: {x: 50, y: 50}
   ArmorEfficiencyTable: []
   Armor: 0
-  MovementSpeed: 0
+  MovementSpeed: 3
   AttackRange: 0
   Health: 0
   AttackDamage: 0
@@ -125,9 +126,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5960637561423118068}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c57437c77df970c4fb986c4ddc26639d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1
+  canMove: 0
+--- !u!114 &120777310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960637561423118068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78718f8f0521774469a66768a3a1a0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitDescription: {fileID: 0}

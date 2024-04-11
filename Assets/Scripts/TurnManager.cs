@@ -50,6 +50,7 @@ public class TurnManager : MonoBehaviour
     }
     private void NextTurn()
     {
+        onTurnChanged?.Invoke();
         currentTeam = 1;
         turn += 1;
         _currentTeamText.SetText(currentTeam.ToString());
