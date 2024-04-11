@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-[Serializable] public class UnitDescription : MonoBehaviour
+[Serializable] public class UnitDescription : ObjectOnGrid
 {
     public List<float> ArmorEfficiencyTable;
     public byte Armor;

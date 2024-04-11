@@ -29,7 +29,7 @@ public class UnitSelectionController : MonoBehaviour
 
             if (_selectedObject != null) // Если на выделенной клетке стоит что-то
             {
-                Unit _selectedUnit = _selectedObject.GetComponent<Unit>();
+                UnitDescription _selectedUnit = _selectedObject.GetComponent<UnitDescription>();
                 if (_selectedUnit != null) // Если на выделенной клетке стоит юнит
                 {
                     if (_selectedBeforeUnitMovement != null) _selectedBeforeUnitMovement.enabled = false;

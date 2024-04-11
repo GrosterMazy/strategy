@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2634586875484107272}
   - component: {fileID: 2634586875484107275}
   - component: {fileID: 2634586875484107274}
+  - component: {fileID: 344305377}
   m_Layer: 0
   m_Name: MeleeUnit
   m_TagString: Untagged
@@ -107,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c117a1ec228935c4287e33bdd12acebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LocalCoords: {x: 0, y: 1}
   ArmorEfficiencyTable: []
   Armor: 0
   MovementSpeed: 0
@@ -116,3 +118,16 @@ MonoBehaviour:
   FoodConsumption: 0
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
+--- !u!114 &344305377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2634586875484107269}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57437c77df970c4fb986c4ddc26639d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 1
