@@ -6,7 +6,7 @@ using System;
 public class PlacementManager : MonoBehaviour
 {
     private Vector2Int _size => FindObjectOfType<HexGrid>().size;
-    [NonSerialized] public ObjectOnGrid[,] gridWithObjectsInformation;
+    [NonSerialized] public ObjectOnGrid[,] gridWithObjectsInformation; // Сетка с информацией об объектах, которую можно получить, обратившись к этому массиву по координатам.
     private ObjectOnGrid[] _objectsOnGrid;
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
     void Awake()

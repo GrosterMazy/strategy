@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using TMPro;
 
 public class TurnManager : MonoBehaviour
 {
+    [NonSerialized] public static Action onTurnChanged;
     public int turn;
     public float timeToTurn;
     public float remainingTime;
@@ -21,8 +23,11 @@ public class TurnManager : MonoBehaviour
     void Start()
     {
         turn = 0; // На экран будем выводить: turn + 1
+        _timeOfDayText.SetText("Day");
         currentTeam = 1;
+        _currentTeamText.SetText(currentTeam.ToString());
         remainingTime = timeToTurn;
+        _turnText.SetText(turn+1.ToString());
 
     }
 
@@ -48,7 +53,7 @@ public class TurnManager : MonoBehaviour
         currentTeam = 1;
         turn += 1;
         _currentTeamText.SetText(currentTeam.ToString());
-        _turnText.SetText(turn.ToString());
+        _turnText.SetText(turn+1.ToString());
         if (turn % (dayDuration + nightDuration + 1) - dayDuration > 0)
         {
             StartNight();

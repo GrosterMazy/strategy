@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitMovement : MonoBehaviour
 {
+    public Action<Vector2Int> WantToMoveOnCell;
+    private TurnManager _turnManager => FindObjectOfType<TurnManager>();
     private bool _isHighlightedNeighbour;
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
@@ -35,6 +38,7 @@ public class UnitMovement : MonoBehaviour
             if(_isHighlightedNeighbour)
             {
                 transform.position = _highlighted.position;
+                WantToMoveOnCell.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
                 _objectOnGrid.LocalCoords = _hexGrid.InLocalCoords(_highlighted.position);
                 _speed -= 1;
