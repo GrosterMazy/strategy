@@ -127,7 +127,15 @@ public class MouseSelection : MonoBehaviour {
             MouseSelection.onSelectionChanged?.Invoke(newSelection);
         
         // сохраняем старый цвет нового selection'а и красим его в новый
-        this._selectedOldColor = newSelection.GetComponent<MeshRenderer>().material.color;
+        if (newSelection == this.highlighted) {
+            this._selectedOldColor = this._highlightedOldColor;
+            
+            // теперь highlight'а не не должно быть
+            this._lastHighlight = null;
+            MouseSelection.onHighlightChanged?.Invoke(this._lastHighlight);
+            this.highlighted = null;
+        }
+        else this._selectedOldColor = newSelection.GetComponent<MeshRenderer>().material.color;
         newSelection.GetComponent<MeshRenderer>().material.color = this.selectionMaterial.color;
 
         // меняем переменную
