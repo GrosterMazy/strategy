@@ -5,7 +5,8 @@ using System;
 
 public class UnitMovement : MonoBehaviour
 {
-    public Action<Vector2Int> WantToMoveOnCell;
+    public Action<Vector2Int> WantToMoveOnCell; // вызывается до обновления координат на локальной сетке
+    public Action MovedToCell; // вызывается после обновления координат на локальной сетке
     private TurnManager _turnManager => FindObjectOfType<TurnManager>();
     private bool _isHighlightedNeighbour;
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
@@ -38,8 +39,9 @@ public class UnitMovement : MonoBehaviour
             if(_isHighlightedNeighbour)
             {
                 transform.position = _highlighted.position;
-                WantToMoveOnCell.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
+                WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
+                MovedToCell.Invoke();
                 _objectOnGrid.LocalCoords = _hexGrid.InLocalCoords(_highlighted.position);
                 _speed -= 1;
                 _mouseSelection.SetSelection(_highlighted);
