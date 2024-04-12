@@ -29,15 +29,15 @@ public class UnitSelectionController : MonoBehaviour
                 UnitDescription _selectedUnit = _selectedObject.GetComponent<UnitDescription>();
                 if (_selectedUnit != null) // Если на выделенной клетке стоит юнит
                 {
-                    if (_selectedBeforeUnitMovement != null) _selectedBeforeUnitMovement.enabled = false;
+                    if (_selectedBeforeUnitMovement != null) _selectedBeforeUnitMovement.canMove = false;
                     UnitMovement _selectedUnitMovement = _selectedUnit.GetComponent<UnitMovement>();
-                    _selectedUnitMovement.enabled = true;
+                    _selectedUnitMovement.canMove = true;
                     _selectedBeforeUnitMovement = _selectedUnitMovement;
                     return;
                 }
             }
         }
-        if (_selectedBeforeUnitMovement != null) _selectedBeforeUnitMovement.enabled = false;
+        if (_selectedBeforeUnitMovement != null) _selectedBeforeUnitMovement.canMove = false;
 
     }
 }
