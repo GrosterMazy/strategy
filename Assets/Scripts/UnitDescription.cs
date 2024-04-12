@@ -33,9 +33,7 @@ public class UnitDescription : ObjectOnGrid
         DamageReductionPercent = ArmorEfficiencyTable[Armor]; 
     }
 
-
     private void Start() {
         ArmorCounter(); }
-
 }
    
