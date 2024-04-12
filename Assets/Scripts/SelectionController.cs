@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitSelectionController : MonoBehaviour
+public class SelectionController : MonoBehaviour
 {
-    private UnitMovement _selectedBeforeUnitMovement;
+    public UnitDescription selectedUnit;
+    public bool isAnyUnitSelected;
+    private UnitDescription _selectedBeforeUnit;
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
@@ -20,24 +22,33 @@ public class UnitSelectionController : MonoBehaviour
 
     private void OnSelectionChanged(Transform selected)
     {
+        if (selected == null)
+        {
+            isAnyUnitSelected = false;
+            selectedUnit = null;
+            if (_selectedBeforeUnit != null) _selectedBeforeUnit.IsSelected = false;
+            return; 
+        }
+        IsUnitSelected(selected);
+    }
+    private void IsUnitSelected(Transform selected)
+    {
         if (selected != null)
         {
             ObjectOnGrid _selectedObject = _placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(selected.position).x, _hexGrid.InLocalCoords(selected.position).y];
 
             if (_selectedObject != null) // Если на выделенной клетке стоит что-то
             {
-                UnitDescription _selectedUnit = _selectedObject.GetComponent<UnitDescription>();
-                if (_selectedUnit != null) // Если на выделенной клетке стоит юнит
+                selectedUnit = _selectedObject.GetComponent<UnitDescription>();
+                if (selectedUnit != null) // Если на выделенной клетке стоит юнит
                 {
-                    if (_selectedBeforeUnitMovement != null) _selectedBeforeUnitMovement.canMove = false;
-                    UnitMovement _selectedUnitMovement = _selectedUnit.GetComponent<UnitMovement>();
-                    _selectedUnitMovement.canMove = true;
-                    _selectedBeforeUnitMovement = _selectedUnitMovement;
+                    if (_selectedBeforeUnit != null) _selectedBeforeUnit.IsSelected = false;
+                    selectedUnit.IsSelected = true;
+                    _selectedBeforeUnit = selectedUnit;
                     return;
                 }
             }
         }
-        if (_selectedBeforeUnitMovement != null) _selectedBeforeUnitMovement.canMove = false;
-
+        if (_selectedBeforeUnit != null) _selectedBeforeUnit.IsSelected = false;
     }
 }

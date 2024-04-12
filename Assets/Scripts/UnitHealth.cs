@@ -22,11 +22,18 @@ public class UnitHealth : MonoBehaviour
     }
     void Start()
     {
+        regenerationPercent /= 100;
+//        currentHealth = _maxHealth;
         TransformationHealthOnTurnChanged();
     }
     public void ApplyDamage(float _damage)
     { 
         currentHealth -= _damage * (100f - _damageReductionPercent);
+        _wasDamagedInThisTurn = true;
+        if (currentHealth <= 0)
+        {
+            Death();
+        }
     }
 
 
@@ -34,7 +41,8 @@ public class UnitHealth : MonoBehaviour
     {
         _maxHealth = _unitDescription.Health;
         _damageReductionPercent = _unitDescription.DamageReductionPercent;
-        if (!_wasDamagedInThisTurn || _unitMovement.spentSpeed != 0 || _unitActions.remainingActionsCount != 0)
+        _wasDamagedInThisTurn = false;
+        if (!_wasDamagedInThisTurn && _unitMovement.spentSpeed == 0 && _unitActions.remainingActionsCount != 0)
         {
             DefaultRegenerationPerTurn();
         }
@@ -42,5 +50,9 @@ public class UnitHealth : MonoBehaviour
     private void DefaultRegenerationPerTurn()
     {
         currentHealth = Mathf.Clamp(currentHealth + _maxHealth * regenerationPercent, 0, _maxHealth);
+    }
+    private void Death()
+    {
+        Destroy(gameObject);
     }
 }

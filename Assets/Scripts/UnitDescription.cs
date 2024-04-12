@@ -6,6 +6,8 @@ using System.Linq;
 public class UnitDescription : ObjectOnGrid
 {
     public List<float> ArmorEfficiencyTable; // Таблица, где номер элемента - количество брони, а значение элемента - соответствующая ей %-ая защита от урона
+    public bool IsSelected;
+    public bool IsHighlighted;
     public byte ActionsPerTurn;
     public int Armor;
     public short MovementSpeed;

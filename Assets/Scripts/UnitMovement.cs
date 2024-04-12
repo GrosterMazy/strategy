@@ -7,14 +7,14 @@ public class UnitMovement : MonoBehaviour
 {
     public Action<Vector2Int> WantToMoveOnCell; // вызывается до обновления координат на локальной сетке
     public Action MovedToCell; // вызывается после обновления координат на локальной сетке
-    public bool canMove;
+    private HighlightedController _highlightedController => FindObjectOfType<HighlightedController>();
     private UnitDescription _unitDescription => GetComponent<UnitDescription>();
     private TurnManager _turnManager => FindObjectOfType<TurnManager>();
     private bool _isHighlightedNeighbour;
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
     private short _maxSpeed;
-    public short spentSpeed;
+    public short spentSpeed = 0;
     private Transform _highlighted;
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
@@ -43,9 +43,9 @@ public class UnitMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && canMove && _maxSpeed - spentSpeed > 0)
+        if (Input.GetMouseButtonDown(1) && _unitDescription.IsSelected && _maxSpeed - spentSpeed > 0)
         {
-            if(_isHighlightedNeighbour)
+            if(_isHighlightedNeighbour && !_highlightedController.isAnyUnitHighlighted)
             {
                 transform.position = _highlighted.position;
                 WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
@@ -57,6 +57,7 @@ public class UnitMovement : MonoBehaviour
             }
         }
     }
+
     private void NeighboursFind(Transform highlighted)
     {
         _isHighlightedNeighbour = false;
