@@ -52,7 +52,7 @@ public class UnitMovement : MonoBehaviour
                 transform.position = _highlighted.position;
                 WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
-                MovedToCell.Invoke();
+                MovedToCell?.Invoke();
                 _objectOnGrid.LocalCoords = _hexGrid.InLocalCoords(_highlighted.position);
                 _speed -= 1;
                 _mouseSelection.SetSelection(_highlighted);
