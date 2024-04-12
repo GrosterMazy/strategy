@@ -14,7 +14,7 @@ public class UnitMovement : MonoBehaviour
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
     private short _maxSpeed;
-    private short _speed;
+    public short spentSpeed;
     private Transform _highlighted;
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
@@ -43,7 +43,7 @@ public class UnitMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && canMove && _maxSpeed + _speed > 0)
+        if (Input.GetMouseButtonDown(1) && canMove && _maxSpeed - spentSpeed > 0)
         {
             if(_isHighlightedNeighbour)
             {
@@ -52,7 +52,7 @@ public class UnitMovement : MonoBehaviour
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
                 MovedToCell?.Invoke();
                 _objectOnGrid.LocalCoords = _hexGrid.InLocalCoords(_highlighted.position);
-                _speed -= 1;
+                spentSpeed += 1;
                 _mouseSelection.SetSelection(_highlighted);
             }
         }
@@ -75,6 +75,6 @@ public class UnitMovement : MonoBehaviour
     private void UpdateSpeedValueOnTurnChanged()
     {
         _maxSpeed = _unitDescription.MovementSpeed;
-        _speed = 0;
+        spentSpeed = 0;
     }
 }

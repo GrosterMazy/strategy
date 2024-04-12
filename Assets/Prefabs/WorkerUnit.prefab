@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 8698055793455656315}
   - component: {fileID: 8698055793455656314}
   - component: {fileID: 1003853098}
-  - component: {fileID: 230813032}
+  - component: {fileID: 788805558}
+  - component: {fileID: 788805557}
   m_Layer: 0
   m_Name: WorkerUnit
   m_TagString: Untagged
@@ -111,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 1, y: 0}
   ArmorEfficiencyTable: []
+  ActionsPerTurn: 0
   Armor: 0
   MovementSpeed: 3
   AttackRange: 0
@@ -119,6 +121,7 @@ MonoBehaviour:
   FoodConsumption: 0
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
+  WeightCapacityMax: 0
 --- !u!114 &1003853098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 0
---- !u!114 &230813032
+  spentSpeed: 0
+--- !u!114 &788805558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +145,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8698055793455656313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78718f8f0521774469a66768a3a1a0b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e8f3e023edfcbe419bb00bdb73089ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitDescription: {fileID: 0}
+  regenerationPercent: 0
+  currentHealth: 0
+--- !u!114 &788805557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698055793455656313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2835eec6c7c704d4ba49cabd628fd76f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remainingActionsCount: 0

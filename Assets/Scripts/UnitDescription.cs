@@ -31,10 +31,8 @@ public class UnitDescription : ObjectOnGrid
         if (ArmorEfficiencyTable[ArmorEfficiencyTable.Count - 1] == 100) { ArmorEfficiencyTable = (from _percent in ArmorEfficiencyTable where _percent != 100 select _percent).ToList(); ArmorEfficiencyTable.Add(100); }
         Armor = Mathf.Clamp(Armor, 0, ArmorEfficiencyTable.Count - 1);
         DamageReductionPercent = ArmorEfficiencyTable[Armor]; 
-    } 
+    }
 
-    public void ApplyDamage(float _damage) { 
-        Health -= _damage * (100f - DamageReductionPercent); }
 
     private void Start() {
         ArmorCounter(); }
