@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectableItem : MonoBehaviour
+public class CollectableItem : ObjectOnGrid
 {
     public int NumberOfItems;
     public float WeightOfOneItem;
     public string Name;
-    public ObjectOnGrid _coordsOnGrid => GetComponent<ObjectOnGrid>();
+    public ObjectOnGrid _coordsOnGrid => GetComponent<CollectableItem>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
 
-    public void GoneAway() { _placementManager.UpdateGrid(_coordsOnGrid.LocalCoords, _coordsOnGrid.LocalCoords, _coordsOnGrid); } // Возвращение collectableitem'a в список всех предметов на сетке
+    public void GoneAway() { _placementManager.UpdateGrid(LocalCoords, LocalCoords, _coordsOnGrid); } // Возвращение collectableitem'a в список всех предметов на сетке
 
     public void Taken(int _amount) { 
         NumberOfItems -= _amount;
