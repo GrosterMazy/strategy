@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8174068106042348624}
   - component: {fileID: 8174068106042348625}
   m_Layer: 0
-  m_Name: HighlightedController
+  m_Name: HighlightingController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

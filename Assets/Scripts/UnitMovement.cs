@@ -7,7 +7,7 @@ public class UnitMovement : MonoBehaviour
 {
     public Action<Vector2Int> WantToMoveOnCell; // вызывается до обновления координат на локальной сетке
     public Action MovedToCell; // вызывается после обновления координат на локальной сетке
-    private HighlightedController _highlightedController => FindObjectOfType<HighlightedController>();
+    private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();
     private UnitDescription _unitDescription => GetComponent<UnitDescription>();
     private TurnManager _turnManager => FindObjectOfType<TurnManager>();
     private bool _isHighlightedNeighbour;

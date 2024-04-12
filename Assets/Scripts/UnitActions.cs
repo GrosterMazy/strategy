@@ -6,7 +6,7 @@ public class UnitActions : MonoBehaviour
 {
     public byte remainingActionsCount;
     private SelectionController _selectionController => FindObjectOfType<SelectionController>();
-    private HighlightedController _highlightedController => FindObjectOfType<HighlightedController>();
+    private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private UnitDescription _unitDescription => GetComponent<UnitDescription>();
 

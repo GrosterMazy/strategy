@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HighlightedController : MonoBehaviour
+public class HighlightingController : MonoBehaviour
 {
     public UnitDescription highlightedUnit;
     public int distanceBetweenSelectedAndHighlighted;

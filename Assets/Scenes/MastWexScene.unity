@@ -950,7 +950,7 @@ PrefabInstance:
     - target: {fileID: 8174068106042348630, guid: c655cc145e0767e40946b3d6f11855a8,
         type: 3}
       propertyPath: m_Name
-      value: HighlightedController
+      value: HighlightingController
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c655cc145e0767e40946b3d6f11855a8, type: 3}
