@@ -8,8 +8,7 @@ public class UnitMovement : MonoBehaviour
     public Action<Vector2Int> WantToMoveOnCell; // вызывается до обновления координат на локальной сетке
     public Action MovedToCell; // вызывается после обновления координат на локальной сетке
     public bool canMove;
-    private UnitCharacteristicsTransformationController _unitCharacteristicsTransformationController => GetComponent<UnitCharacteristicsTransformationController>();
-    private UnitDescription _unitDescription;
+    private UnitDescription _unitDescription => GetComponent<UnitDescription>();
     private TurnManager _turnManager => FindObjectOfType<TurnManager>();
     private bool _isHighlightedNeighbour;
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
@@ -37,7 +36,6 @@ public class UnitMovement : MonoBehaviour
     }
     private void Start()
     {
-        _unitDescription = _unitCharacteristicsTransformationController.unitDescription;
         UpdateSpeedValueOnTurnChanged();
     }
 

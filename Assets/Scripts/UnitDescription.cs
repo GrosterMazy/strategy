@@ -28,8 +28,7 @@ public class UnitDescription : ObjectOnGrid
             if (i == 0) ArmorEfficiencyTable[i] = 0;
             else if (i <= _maxArmorAccordingToPrimaryRules && _armorModification > 0) ArmorEfficiencyTable[i] = Mathf.Clamp(ArmorEfficiencyTable[i - 1] + _armorModification, 0, 100);
             else ArmorEfficiencyTable.RemoveAt(ArmorEfficiencyTable.Count - 1); }
-        if (ArmorEfficiencyTable[ArmorEfficiencyTable.Count - 1] == 100) { ArmorEfficiencyTable = (from _percent in ArmorEfficiencyTable where _percent != 100 select _percent).ToList();
-            ArmorEfficiencyTable.Add(100); }
+        if (ArmorEfficiencyTable[ArmorEfficiencyTable.Count - 1] == 100) { ArmorEfficiencyTable = (from _percent in ArmorEfficiencyTable where _percent != 100 select _percent).ToList(); ArmorEfficiencyTable.Add(100); }
         Armor = Mathf.Clamp(Armor, 0, ArmorEfficiencyTable.Count - 1);
         DamageReductionPercent = ArmorEfficiencyTable[Armor]; 
     } 
