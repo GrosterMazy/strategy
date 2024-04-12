@@ -41,6 +41,6 @@ public class UnitHealth : MonoBehaviour
     }
     private void DefaultRegenerationPerTurn()
     {
-        currentHealth = Mathf.Clamp(currentHealth + _maxHealth * regenerationPercent, 0, _damageReductionPercent);
+        currentHealth = Mathf.Clamp(currentHealth + _maxHealth * regenerationPercent, 0, _maxHealth);
     }
 }
