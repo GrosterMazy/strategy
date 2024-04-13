@@ -103,4 +103,40 @@ public class HexGrid : MonoBehaviour {
             newpos.x >= 0 && newpos.x < this.size.x && newpos.y >= 0 && newpos.y < this.size.y
         );
     }
+
+    public int Distance(Vector2Int pos1, Vector2Int pos2) {
+        Vector2Int start = pos1;
+        Vector2Int end = pos2;
+        int dist = 0;
+
+        while (start != end) {
+            Vector2Int delta = end - start;
+
+            if (start.y % 2 == 0) {
+                if (delta.y != 0) {
+                    if (delta.y > 0) start.y++;
+                    else start.y--;
+
+                    if (delta.x < 0) start.x--;// skip
+                    dist++;
+                    continue;
+                }
+                //just go by x
+                return dist + Mathf.Abs(delta.x);
+            }
+
+            if (delta.y != 0) {
+                if (delta.y > 0) start.y++;
+                else start.y--;
+
+                if (delta.x > 0) start.x++;// skip
+                dist++;
+                continue;
+            }
+            //just go by x
+            return dist + Mathf.Abs(delta.x);
+        }
+            
+        return dist;
+    }
 }
