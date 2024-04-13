@@ -103,6 +103,9 @@ public class HexGrid : MonoBehaviour {
             newpos.x >= 0 && newpos.x < this.size.x && newpos.y >= 0 && newpos.y < this.size.y
         );
     }
+    public Vector2Int[] Neighbours(Vector3 position) {
+        return this.Neighbours(this.InLocalCoords(position));
+    }
 
     public int Distance(Vector2Int pos1, Vector2Int pos2) {
         Vector2Int start = pos1;
@@ -138,5 +141,8 @@ public class HexGrid : MonoBehaviour {
         }
             
         return dist;
+    }
+    public int Distance(Vector3 position1, Vector3 position2) {
+        return this.Distance(this.InLocalCoords(position1), this.InLocalCoords(position2));
     }
 }
