@@ -6,6 +6,7 @@ public class UnitHealth : MonoBehaviour
 {
     public float regenerationPercent; // Процент от макс здоровья, который будет восстанавливаться, когда юнит стоит и ничего не делает и не получает урон
     public float currentHealth;
+    private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
     private UnitDescription _unitDescription => GetComponent<UnitDescription>();
     private UnitMovement _unitMovement => GetComponent<UnitMovement>();
     private float _damageReductionPercent;
@@ -53,6 +54,7 @@ public class UnitHealth : MonoBehaviour
     }
     private void Death()
     {
+        _placementManager.gridWithObjectsInformation[_unitDescription.LocalCoords.x, _unitDescription.LocalCoords.y] = null;
         Destroy(gameObject);
     }
 }
