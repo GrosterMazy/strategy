@@ -5,7 +5,6 @@ using UnityEngine;
 public class HighlightingController : MonoBehaviour
 {
     public UnitDescription highlightedUnit;
-    public int distanceBetweenSelectedAndHighlighted;
     public bool isAnyUnitHighlighted;
     private Transform _highlighted;
     private UnitDescription _highlightedBeforeUnit;
@@ -15,17 +14,19 @@ public class HighlightingController : MonoBehaviour
     private void OnEnable()
     {
         MouseSelection.onHighlightChanged += OnHighlightedChanged;
+        UnitHealth.anyUnitDie += OnAnyUnitDeath;
     }
     private void OnDisable()
     {
         MouseSelection.onHighlightChanged -= OnHighlightedChanged;
+        UnitHealth.anyUnitDie -= OnAnyUnitDeath;
     }
 
 
     private void IsUnitHighlighted(Transform highlighted)
     {
         if (_highlightedBeforeUnit != null) _highlightedBeforeUnit.IsHighlighted = false;
-        if (_placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(highlighted.position).x, _hexGrid.InLocalCoords(highlighted.position).y] == null) // На выделенной клетке ничего нет
+        if (_placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(highlighted.position).x, _hexGrid.InLocalCoords(highlighted.position).y] == null) // На подсвеченной клетке ничего нет
         {
             isAnyUnitHighlighted = false;
             highlightedUnit = null;
@@ -33,7 +34,7 @@ public class HighlightingController : MonoBehaviour
         else 
         {
             highlightedUnit = _placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(highlighted.position).x, _hexGrid.InLocalCoords(highlighted.position).y].GetComponent<UnitDescription>();
-            if (highlightedUnit != null) // На выделенной клетке есть юнит
+            if (highlightedUnit != null) // На подсвеченной клетке есть юнит
             {
                 isAnyUnitHighlighted = true;
                 highlightedUnit.IsHighlighted = true;
@@ -42,17 +43,12 @@ public class HighlightingController : MonoBehaviour
             else
             {
                 isAnyUnitHighlighted = false;
-                highlightedUnit.IsHighlighted = false;
             }
         }
-
     }
-    private void DistanceBetweenSelectedAndHighlighted(Transform highlighted)
+    private void OnAnyUnitDeath()
     {
-        if (_mouseSelection.selected == null) return;
-        distanceBetweenSelectedAndHighlighted =
-            Mathf.Abs(_hexGrid.InLocalCoords(_mouseSelection.selected.position).x - _hexGrid.InLocalCoords(highlighted.position).x)
-            + Mathf.Abs(_hexGrid.InLocalCoords(_mouseSelection.selected.position).y - _hexGrid.InLocalCoords(highlighted.position).y);
+        OnHighlightedChanged(_mouseSelection.highlighted);
     }
     private void OnHighlightedChanged(Transform highlighted)
     {
@@ -61,10 +57,8 @@ public class HighlightingController : MonoBehaviour
             isAnyUnitHighlighted = false;
             highlightedUnit = null;
             if (_highlightedBeforeUnit != null) _highlightedBeforeUnit.IsHighlighted = false;
-            distanceBetweenSelectedAndHighlighted = -1;
             return;
         }
         IsUnitHighlighted(highlighted);
-        DistanceBetweenSelectedAndHighlighted(highlighted);
     }
 }

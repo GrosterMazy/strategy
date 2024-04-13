@@ -14,10 +14,12 @@ public class SelectionController : MonoBehaviour
     private void OnEnable()
     {
         MouseSelection.onSelectionChanged += OnSelectionChanged;
+        UnitHealth.anyUnitDie += OnAnyUnitDeath;
     }
     private void OnDisable()
     {
         MouseSelection.onSelectionChanged -= OnSelectionChanged;
+        UnitHealth.anyUnitDie -= OnAnyUnitDeath;
     }
 
     private void OnSelectionChanged(Transform selected)
@@ -50,5 +52,9 @@ public class SelectionController : MonoBehaviour
             }
         }
         if (_selectedBeforeUnit != null) _selectedBeforeUnit.IsSelected = false;
+    }
+    private void OnAnyUnitDeath()
+    {
+        OnSelectionChanged(_mouseSelection.selected);
     }
 }

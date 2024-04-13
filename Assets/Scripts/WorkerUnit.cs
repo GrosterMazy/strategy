@@ -11,6 +11,7 @@ public class WorkerUnit : UnitDescription
     private float _weightCapacityRemaining;
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
     private UnitMovement _unitMovement => GetComponent<UnitMovement>();
+    private UnitHealth _unitHealth => GetComponent<UnitHealth>();
     private UnitActions _unitActions => GetComponent<UnitActions>();
     private CollectableItem _itemToCollect = null;
     private CollectableItem _itemToReturnReference = null;
@@ -42,6 +43,6 @@ public class WorkerUnit : UnitDescription
   
     private void Start() { _weightCapacityRemaining = WeightCapacityMax; }
 
-    private void OnEnable() { _unitMovement.WantToMoveOnCell += CollectItem; _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; }
-    private void OnDisable() { _unitMovement.WantToMoveOnCell -= CollectItem; _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; }
+    private void OnEnable() { _unitMovement.WantToMoveOnCell += CollectItem; _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; _unitHealth.death += ItemReferenceReturner; }
+    private void OnDisable() { _unitMovement.WantToMoveOnCell -= CollectItem; _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; _unitHealth.death -= ItemReferenceReturner; }
 }

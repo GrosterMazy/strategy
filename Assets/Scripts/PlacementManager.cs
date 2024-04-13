@@ -16,13 +16,6 @@ public class PlacementManager : MonoBehaviour
     private void CreateEmptyGridAwake()
     {
         gridWithObjectsInformation = new ObjectOnGrid[_size.x, _size.y];
-        for (int x = 0; x < _size.x; x++)
-        {
-            for (int y = 0; y < _size.y; y++)
-            {
-                gridWithObjectsInformation[x, y] = null;
-            }
-        }
     }
     private void Start()
     {
@@ -42,5 +35,15 @@ public class PlacementManager : MonoBehaviour
     {
         gridWithObjectsInformation[oldPos.x, oldPos.y] = null;
         gridWithObjectsInformation[newPos.x, newPos.y] = objectOnGird;
+    }
+    public void UpdateGrid(Vector3 oldPos, Vector3 newPos, ObjectOnGrid objectOnGrid)
+    {
+        gridWithObjectsInformation[_hexGrid.InLocalCoords(oldPos).x, _hexGrid.InLocalCoords(oldPos).y] = null;
+        gridWithObjectsInformation[_hexGrid.InLocalCoords(oldPos).x, _hexGrid.InLocalCoords(oldPos).y] = objectOnGrid;
+    }
+    public void UpdateGrid(Transform oldPos, Transform newPos, ObjectOnGrid objectOnGrid)
+    {
+        gridWithObjectsInformation[_hexGrid.InLocalCoords(oldPos.position).x, _hexGrid.InLocalCoords(oldPos.position).y] = null;
+        gridWithObjectsInformation[_hexGrid.InLocalCoords(oldPos.position).x, _hexGrid.InLocalCoords(oldPos.position).y] = objectOnGrid;
     }
 }

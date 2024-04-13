@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitHealth : MonoBehaviour
 {
+    public static Action anyUnitDie;
+    public Action death;
     public float regenerationPercent; // Процент от макс здоровья, который будет восстанавливаться, когда юнит стоит и ничего не делает и не получает урон
     public float currentHealth;
+    private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
     private UnitDescription _unitDescription => GetComponent<UnitDescription>();
     private UnitMovement _unitMovement => GetComponent<UnitMovement>();
     private float _damageReductionPercent;
@@ -23,12 +27,12 @@ public class UnitHealth : MonoBehaviour
     void Start()
     {
         regenerationPercent /= 100;
-//        currentHealth = _maxHealth;
         TransformationHealthOnTurnChanged();
+        currentHealth = _maxHealth;
     }
     public void ApplyDamage(float _damage)
     { 
-        currentHealth -= _damage * (100f - _damageReductionPercent);
+        currentHealth -= _damage * (100f - _damageReductionPercent) / 100;
         _wasDamagedInThisTurn = true;
         if (currentHealth <= 0)
         {
@@ -53,6 +57,9 @@ public class UnitHealth : MonoBehaviour
     }
     private void Death()
     {
+        _placementManager.gridWithObjectsInformation[_unitDescription.LocalCoords.x, _unitDescription.LocalCoords.y] = null;
+        death?.Invoke();
+        anyUnitDie?.Invoke();
         Destroy(gameObject);
     }
 }

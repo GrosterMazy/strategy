@@ -25,7 +25,12 @@ public class MouseSelection : MonoBehaviour {
 
     private void Update() {
         RaycastHit raycastHit;
-        bool hasHit = Physics.Raycast(this._camera.ScreenPointToRay(Input.mousePosition), out raycastHit);
+        bool hasHit = Physics.Raycast(
+            this._camera.ScreenPointToRay(Input.mousePosition),
+            out raycastHit,
+            Mathf.Infinity,
+            1 << 8 // коллайдится только с 8-ым слоем
+        );
         this.UpdateHighlight(hasHit, raycastHit.transform);
         this.UpdateSelection(raycastHit.transform);
     }
@@ -36,7 +41,7 @@ public class MouseSelection : MonoBehaviour {
             this.highlighted = null;
         }
 
-        if (hasHit && hit.CompareTag("Selectable") && hit != this.selected
+        if (hasHit && hit != this.selected
                 //&& !EventSystem.current.IsPointerOverGameObject()
                 ) {
             if (hit != this._lastHighlight) {

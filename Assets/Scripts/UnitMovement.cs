@@ -62,8 +62,7 @@ public class UnitMovement : MonoBehaviour
     {
         _isHighlightedNeighbour = false;
         if (_mouseSelection.selected == null || highlighted == null) return;
-        var _localCoordsSelected = _hexGrid.InLocalCoords(_mouseSelection.selected.position);
-        var _neighbours = _hexGrid.Neighbours(_localCoordsSelected);
+        var _neighbours = _hexGrid.Neighbours(_mouseSelection.selected.position);
         for (int i = 0; i < _neighbours.Length; i++)
         {
             if (highlighted.position == _hexGrid.InUnityCoords(_neighbours[i]))
