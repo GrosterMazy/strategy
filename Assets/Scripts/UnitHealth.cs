@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitHealth : MonoBehaviour
 {
+    public Action death;
     public float regenerationPercent; // Процент от макс здоровья, который будет восстанавливаться, когда юнит стоит и ничего не делает и не получает урон
     public float currentHealth;
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
@@ -55,6 +57,7 @@ public class UnitHealth : MonoBehaviour
     private void Death()
     {
         _placementManager.gridWithObjectsInformation[_unitDescription.LocalCoords.x, _unitDescription.LocalCoords.y] = null;
+        death?.Invoke();
         Destroy(gameObject);
     }
 }

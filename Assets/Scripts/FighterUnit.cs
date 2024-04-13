@@ -6,6 +6,7 @@ public class FighterUnit : UnitDescription
 {
     private ObjectOnGrid[,] _gridWithObjects => FindObjectOfType<PlacementManager>().gridWithObjectsInformation;
     private UnitMovement _unitMovement => GetComponent<UnitMovement>();
+    private UnitHealth _unitHealth => GetComponent<UnitHealth>();
     private CollectableItem _itemToReturnReference;
 
     private void ItemToReturnReferenceUpdater(Vector2Int _coordsWithItem) { 
@@ -17,6 +18,6 @@ public class FighterUnit : UnitDescription
         if (_itemToReturnReference != null && _gridWithObjects[_itemToReturnReference.LocalCoords.x, _itemToReturnReference.LocalCoords.y] == null) { _itemToReturnReference.GoneAway(); } }
     
 
-    private void OnEnable() { _unitMovement.WantToMoveOnCell += ItemToReturnReferenceUpdater; _unitMovement.MovedToCell += ItemReferenceReturner; }
-    private void OnDisable() { _unitMovement.WantToMoveOnCell -= ItemToReturnReferenceUpdater; _unitMovement.MovedToCell -= ItemReferenceReturner; }
+    private void OnEnable() { _unitMovement.WantToMoveOnCell += ItemToReturnReferenceUpdater; _unitMovement.MovedToCell += ItemReferenceReturner; _unitHealth.death += ItemReferenceReturner; }
+    private void OnDisable() { _unitMovement.WantToMoveOnCell -= ItemToReturnReferenceUpdater; _unitMovement.MovedToCell -= ItemReferenceReturner; _unitHealth.death -= ItemReferenceReturner; }
 }

@@ -11,6 +11,7 @@ public class WorkerUnit : UnitDescription
     private float _weightCapacityRemaining;
     private ObjectOnGrid[,] _gridWithObjects => FindObjectOfType<PlacementManager>().gridWithObjectsInformation;
     private UnitMovement _unitMovement => GetComponent<UnitMovement>();
+    private UnitHealth _unitHealth => GetComponent<UnitHealth>();
     private CollectableItem _itemToCollect = null;
     private CollectableItem _itemToReturnReference = null;
 
@@ -31,6 +32,6 @@ public class WorkerUnit : UnitDescription
   
     private void Start() { _weightCapacityRemaining = WeightCapacityMax; }
 
-    private void OnEnable() { _unitMovement.WantToMoveOnCell += CollectItem; _unitMovement.MovedToCell += ItemReferenceReturner; }
-    private void OnDisable() { _unitMovement.WantToMoveOnCell -= CollectItem; _unitMovement.MovedToCell -= ItemReferenceReturner; }
+    private void OnEnable() { _unitMovement.WantToMoveOnCell += CollectItem; _unitMovement.MovedToCell += ItemReferenceReturner; _unitHealth.death += ItemReferenceReturner; }
+    private void OnDisable() { _unitMovement.WantToMoveOnCell -= CollectItem; _unitMovement.MovedToCell -= ItemReferenceReturner; _unitHealth.death -= ItemReferenceReturner; }
 }
