@@ -14,10 +14,12 @@ public class HighlightingController : MonoBehaviour
     private void OnEnable()
     {
         MouseSelection.onHighlightChanged += OnHighlightedChanged;
+        UnitHealth.anyUnitDie += OnAnyUnitDeath;
     }
     private void OnDisable()
     {
         MouseSelection.onHighlightChanged -= OnHighlightedChanged;
+        UnitHealth.anyUnitDie -= OnAnyUnitDeath;
     }
 
 
@@ -43,7 +45,10 @@ public class HighlightingController : MonoBehaviour
                 isAnyUnitHighlighted = false;
             }
         }
-
+    }
+    private void OnAnyUnitDeath()
+    {
+        OnHighlightedChanged(_mouseSelection.highlighted);
     }
     private void OnHighlightedChanged(Transform highlighted)
     {
