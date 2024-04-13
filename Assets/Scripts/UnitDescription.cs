@@ -10,6 +10,7 @@ public class UnitDescription : ObjectOnGrid
     public bool IsHighlighted;
     public byte ActionsPerTurn;
     public int Armor;
+    public int TeamAffiliation;
     public short MovementSpeed;
     public short AttackRange;
     public float Health;
