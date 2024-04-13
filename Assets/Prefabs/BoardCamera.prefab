@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5000908786651834619}
   - component: {fileID: 5000908786651834618}
   - component: {fileID: 7728191527702136726}
+  - component: {fileID: 8349192589480795532}
   m_Layer: 0
   m_Name: BoardCamera
   m_TagString: MainCamera
@@ -26,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000908786651834617}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.5902324, y: 0, z: 0, w: 0.8072334}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 72.347, y: 0, z: 0}
 --- !u!20 &5000908786651834619
 Camera:
   m_ObjectHideFlags: 0
@@ -98,3 +99,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: 615e646f46f891f44bf2e098489f889b, type: 2}
   selectionMaterial: {fileID: 2100000, guid: 9b5a58c24f117154f8bba000f6672b4c, type: 2}
+--- !u!114 &8349192589480795532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5000908786651834617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea76107974fa916489d5d1928ad3245d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useCurrentPositionAsBasePosition: 0
+  basePosition: {x: 0, y: 0, z: 0}
+  zoomSpeed: 1000
+  minZoom: 3
+  maxZoom: 100
+  moveSpeed: 100
