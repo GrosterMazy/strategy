@@ -5,7 +5,7 @@ using System;
 
 public class UnitMovement : MonoBehaviour
 {
-    public Action<Vector2Int> WantToMoveOnCell; // вызывается до обновления координат на локальной сетке
+    public Func<Vector2Int, bool> WantToMoveOnCell; // вызывается до обновления координат на локальной сетке
     public Action MovedToCell; // вызывается после обновления координат на локальной сетке
     private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();
     private UnitDescription _unitDescription => GetComponent<UnitDescription>();
@@ -47,8 +47,9 @@ public class UnitMovement : MonoBehaviour
         {
             if(_isHighlightedNeighbour && !_highlightedController.isAnyUnitHighlighted)
             {
+                var _canIMove = WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
+                if ((bool)!_canIMove) { return; }
                 transform.position = _highlighted.position;
-                WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
                 MovedToCell?.Invoke();
                 _objectOnGrid.LocalCoords = _hexGrid.InLocalCoords(_highlighted.position);

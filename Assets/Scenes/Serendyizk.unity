@@ -604,6 +604,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8698055793455656314, guid: 9a9c6b86b27f4ff4ab57e2254ba34e77,
         type: 3}
+      propertyPath: TeamAffiliation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8698055793455656314, guid: 9a9c6b86b27f4ff4ab57e2254ba34e77,
+        type: 3}
       propertyPath: WeightCapacityMax
       value: 20
       objectReference: {fileID: 0}
@@ -1186,6 +1191,11 @@ PrefabInstance:
     - target: {fileID: 6005090392611746925, guid: b6db167775509a0459ad661783f95331,
         type: 3}
       propertyPath: ActionsPerTurn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6005090392611746925, guid: b6db167775509a0459ad661783f95331,
+        type: 3}
+      propertyPath: TeamAffiliation
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6005090392611746927, guid: b6db167775509a0459ad661783f95331,
