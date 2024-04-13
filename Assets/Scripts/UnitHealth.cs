@@ -27,12 +27,12 @@ public class UnitHealth : MonoBehaviour
     void Start()
     {
         regenerationPercent /= 100;
-//        currentHealth = _maxHealth;
         TransformationHealthOnTurnChanged();
+        currentHealth = _maxHealth;
     }
     public void ApplyDamage(float _damage)
     { 
-        currentHealth -= _damage * (100f - _damageReductionPercent);
+        currentHealth -= _damage * (100f - _damageReductionPercent) / 100;
         _wasDamagedInThisTurn = true;
         if (currentHealth <= 0)
         {
