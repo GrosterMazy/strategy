@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Administratum : PlayableObjectDescription
+public class Administratum : ObjectOnGrid
 {
     public bool WorkerOnSite;
+    public int TeamAffiliation;
     public float OverallLight;
     public float OverallOre;
     public float OverallWood;

@@ -4,13 +4,15 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class Building : PlayableObjectDescription
+public class Building : ObjectOnGrid
 {
     public Administratum Administratum;
     public bool WorkerOnSite = false;
+    public int TeamAffiliation;
     public int ActionsToFinalizeBuilding;
     public Dictionary<string, int> Storage = new Dictionary<string, int>();
 
+    public float FoodConsumption;
     public float OreConsumption;
     public float WoodConsumption;
     public float LightConsumption;

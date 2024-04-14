@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SelectionController : MonoBehaviour
 {
-    public PlayableObjectDescription selectedUnit;
+    public UnitDescription selectedUnit;
     public bool isAnyUnitSelected;
-    private PlayableObjectDescription _selectedBeforeUnit;
+    private UnitDescription _selectedBeforeUnit;
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
@@ -41,7 +41,7 @@ public class SelectionController : MonoBehaviour
 
             if (_selectedObject != null) // Если на выделенной клетке стоит что-то
             {
-                selectedUnit = _selectedObject.GetComponent<PlayableObjectDescription>();
+                selectedUnit = _selectedObject.GetComponent<UnitDescription>();
                 if (selectedUnit != null) // Если на выделенной клетке стоит юнит
                 {
                     if (_selectedBeforeUnit != null) _selectedBeforeUnit.IsSelected = false;
