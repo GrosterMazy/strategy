@@ -8,9 +8,8 @@ public class UnitHealth : MonoBehaviour
     public static Action anyUnitDie;
     public Action death;
     public float regenerationPercent; // Процент от макс здоровья, который будет восстанавливаться, когда юнит стоит и ничего не делает и не получает урон
-    public float currentHealth;
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
-    private UnitDescription _unitDescription => GetComponent<UnitDescription>();
+    private PlayableObjectDescription _unitDescription => GetComponent<PlayableObjectDescription>();
     private UnitMovement _unitMovement => GetComponent<UnitMovement>();
     private float _damageReductionPercent;
     private UnitActions _unitActions => GetComponent<UnitActions>();
@@ -28,13 +27,13 @@ public class UnitHealth : MonoBehaviour
     {
         regenerationPercent /= 100;
         TransformationHealthOnTurnChanged();
-        currentHealth = _maxHealth;
+        _unitDescription.CurrentHealth = _maxHealth;
     }
     public void ApplyDamage(float _damage)
     { 
-        currentHealth -= _damage * (100f - _damageReductionPercent) / 100;
+        _unitDescription.CurrentHealth -= _damage * (100f - _damageReductionPercent) / 100;
         _wasDamagedInThisTurn = true;
-        if (currentHealth <= 0)
+        if (_unitDescription.CurrentHealth <= 0)
         {
             Death();
         }
@@ -43,7 +42,7 @@ public class UnitHealth : MonoBehaviour
 
     private void TransformationHealthOnTurnChanged()
     {
-        _maxHealth = _unitDescription.Health;
+        _maxHealth = _unitDescription.MaxHealth;
         _damageReductionPercent = _unitDescription.DamageReductionPercent;
         _wasDamagedInThisTurn = false;
         if (!_wasDamagedInThisTurn && _unitMovement.spentSpeed == 0 && _unitActions.remainingActionsCount != 0)
@@ -53,7 +52,7 @@ public class UnitHealth : MonoBehaviour
     }
     private void DefaultRegenerationPerTurn()
     {
-        currentHealth = Mathf.Clamp(currentHealth + _maxHealth * regenerationPercent, 0, _maxHealth);
+        _unitDescription.CurrentHealth = Mathf.Clamp(_unitDescription.CurrentHealth + _maxHealth * regenerationPercent, 0, _maxHealth);
     }
     private void Death()
     {

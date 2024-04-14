@@ -8,7 +8,7 @@ public class UnitMovement : MonoBehaviour
     public Func<Vector2Int, bool> WantToMoveOnCell; // вызывается до обновления координат на локальной сетке
     public Action MovedToCell; // вызывается после обновления координат на локальной сетке
     private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();
-    private UnitDescription _unitDescription => GetComponent<UnitDescription>();
+    private PlayableObjectDescription _unitDescription => GetComponent<PlayableObjectDescription>();
     private TurnManager _turnManager => FindObjectOfType<TurnManager>();
     private bool _isHighlightedNeighbour;
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();

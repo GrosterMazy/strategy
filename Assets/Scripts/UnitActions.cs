@@ -9,7 +9,7 @@ public class UnitActions : MonoBehaviour
     private SelectionController _selectionController => FindObjectOfType<SelectionController>();
     private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
-    private UnitDescription _unitDescription => GetComponent<UnitDescription>();
+    private PlayableObjectDescription _unitDescription => GetComponent<PlayableObjectDescription>();
 
     private void OnEnable()
     {

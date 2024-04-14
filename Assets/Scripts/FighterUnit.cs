@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FighterUnit : UnitDescription
+public class FighterUnit : PlayableObjectDescription
 {
     private ObjectOnGrid[,] _gridWithObjects => FindObjectOfType<PlacementManager>().gridWithObjectsInformation;
     private UnitMovement _unitMovement => GetComponent<UnitMovement>();

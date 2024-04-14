@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class HighlightingController : MonoBehaviour
 {
-    public UnitDescription highlightedUnit;
+    public PlayableObjectDescription highlightedUnit;
     public bool isAnyUnitHighlighted;
     private Transform _highlighted;
-    private UnitDescription _highlightedBeforeUnit;
+    private PlayableObjectDescription _highlightedBeforeUnit;
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
@@ -33,7 +33,7 @@ public class HighlightingController : MonoBehaviour
         }
         else 
         {
-            highlightedUnit = _placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(highlighted.position).x, _hexGrid.InLocalCoords(highlighted.position).y].GetComponent<UnitDescription>();
+            highlightedUnit = _placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(highlighted.position).x, _hexGrid.InLocalCoords(highlighted.position).y].GetComponent<PlayableObjectDescription>();
             if (highlightedUnit != null) // На подсвеченной клетке есть юнит
             {
                 isAnyUnitHighlighted = true;

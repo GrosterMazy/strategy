@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class WorkerUnit : UnitDescription
+public class WorkerUnit : PlayableObjectDescription
 {
     public Dictionary<string, int> Inventory = new Dictionary<string, int>();
     [SerializeField] private float WeightCapacityMax;
