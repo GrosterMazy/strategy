@@ -33,12 +33,14 @@ public class UnitActions : MonoBehaviour
 
     private void Attack()
     {
-        if (_mouseSelection.highlighted == null) return;
-        if (_unitDescription.IsSelected && _highlightedController.isAnyUnitHighlighted && _unitDescription.AttackRange >= _hexGrid.Distance(_mouseSelection.selected.position, _mouseSelection.highlighted.position) && remainingActionsCount != 0)
+        if (_mouseSelection.highlighted == null || !_unitDescription.IsSelected || _unitDescription.AttackRange < _hexGrid.Distance(_mouseSelection.selected.position, _mouseSelection.highlighted.position)) return;
+        if (_highlightedController.isAnyUnitHighlighted && remainingActionsCount != 0 && _highlightedController.highlightedUnit.TeamAffiliation != _unitDescription.TeamAffiliation)
         {
-            _highlightedController.highlightedUnit.GetComponent<UnitHealth>().ApplyDamage(_unitDescription.AttackDamage);
-            remainingActionsCount -= 1;
+            _highlightedController.highlightedUnit.GetComponent<UnitHealth>().ApplyDamage(_unitDescription.AttackDamage); // Атакуем вражеского юнита
         }
+//        else if ()
+        
+        remainingActionsCount -= 1;
     }
 
     private void UpdateActionsCountOnTurnChanged()

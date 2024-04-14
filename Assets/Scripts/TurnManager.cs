@@ -7,6 +7,7 @@ using TMPro;
 public class TurnManager : MonoBehaviour
 {
     [NonSerialized] public static Action onTurnChanged;
+    public bool isDay;
     public int turn;
     public float timeToTurn;
     public float remainingTime;
@@ -54,19 +55,23 @@ public class TurnManager : MonoBehaviour
         _turnText.SetText("Turn: " + (turn +1).ToString());
         if (turn % (dayDuration + nightDuration + 1) - dayDuration > 0)
         {
-            StartNight();
+            if (isDay)
+                StartNight();
         }
         else if (turn % (dayDuration + nightDuration + 1) - dayDuration <= 0)
         {
-            StartDay();
+            if (!isDay)
+                StartDay();
         }
     }
     private void StartNight()
     {
+        isDay = false;
         _timeOfDayText.SetText("Night");
     }
     private void StartDay()
     {
+        isDay = true;
         _timeOfDayText.SetText("Day");
     }
     private void FirstTurnStart()
