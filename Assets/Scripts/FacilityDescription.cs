@@ -44,8 +44,9 @@ public class FacilityDescription : ObjectOnGrid
         if (_highlighted == null) { return; }
         Vector2Int _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
         if (IsSelected && WorkerOnSite && _placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null && Input.GetKeyDown(KeyCode.T)) {
-            WorkerInsideMe.SetActive(true); WorkerOnSite = false; WorkerInsideMe.transform.position = _highlighted.position;
-            _placementManager.UpdateGrid(_highlighted.position, _highlighted.position, WorkerInsideMe.GetComponent<ObjectOnGrid>()); } }
+            ObjectOnGrid _workerInsideMeLocalCoords = WorkerInsideMe.GetComponent<ObjectOnGrid>();
+            WorkerInsideMe.SetActive(true); WorkerOnSite = false; WorkerInsideMe.transform.position = _highlighted.position; _workerInsideMeLocalCoords.LocalCoords = new Vector2Int(_highlightedInLocalCoords.x, _highlightedInLocalCoords.y);
+            _placementManager.UpdateGrid(_highlighted.position, _highlighted.position, _workerInsideMeLocalCoords); } }
 
     private void Start() {
         ArmorCounter(); }
