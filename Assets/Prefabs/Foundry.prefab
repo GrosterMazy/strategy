@@ -232,14 +232,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
-  Administratum: {fileID: 0}
-  WorkerOnSite: 0
+  ArmorEfficiencyTable: []
   TeamAffiliation: 0
-  ActionsToFinalizeBuilding: 3
+  Armor: 1
+  IsSelected: 0
+  IsHighlighted: 0
+  WorkerOnSite: 0
+  MaxHealth: 10
+  CurrentHealth: 0
+  PercentFromMaxHealthForRepairment: 1
+  ArmorUnitEfficiencyMaxAmount: 1
+  ArmorEfficiencyDecreasementPerUnit: 1
+  WorkerInsideMe: {fileID: 0}
   FoodConsumption: 0
   OreConsumption: 0
   WoodConsumption: 0
   LightConsumption: 0
+  Administratum: {fileID: 0}
+  ActionsToFinalizeBuilding: 3
   LightBuildingCost: 1
   FoodBuildingCost: 1
   OreBuildingCost: 1

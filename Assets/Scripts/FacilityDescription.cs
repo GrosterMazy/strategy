@@ -11,6 +11,7 @@ public class FacilityDescription : ObjectOnGrid
     public int TeamAffiliation;
     public int Armor;
     public bool IsSelected; // тыкнул мышкой на него
+    public bool IsHighlighted; // Навёл мышку
     public bool WorkerOnSite;
     public float MaxHealth;
     public float CurrentHealth;
