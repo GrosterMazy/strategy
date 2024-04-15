@@ -6,6 +6,7 @@ using System.Linq;
 
 public class WorkerUnit : UnitDescription
 {
+    public float miningModifier;
     public Dictionary<string, int> Inventory = new Dictionary<string, int>();
     [SerializeField] private float WeightCapacityMax;
     private float _weightCapacityRemaining;
@@ -26,9 +27,12 @@ public class WorkerUnit : UnitDescription
             if (_itemToCollect != null) { _canTakeItems = Mathf.Clamp(Mathf.FloorToInt(_weightCapacityRemaining / _itemToCollect.WeightOfOneItem), 0, _itemToCollect.NumberOfItems);
                 if (!Inventory.ContainsKey(_itemToCollect.Name)) { Inventory.Add(_itemToCollect.Name, _canTakeItems); }
                 else if (Inventory.ContainsKey(_itemToCollect.Name)) { Inventory[_itemToCollect.Name] += _canTakeItems; }
-                _itemToCollect.Taken(_canTakeItems); _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem; } } return true;}
+                _itemToCollect.Taken(_canTakeItems); _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem; } }
+        if (_itemToCollect != null || _objectOnMyWay == null) return true;
+        else return false;
+    }
 
-    private bool EnterBuilding(Vector2Int _cellToEnter) {    
+    private bool EnterBuilding(Vector2Int _cellToEnter) {
         Building _buildingOnMyWay = null;
         var _objectOnMyWay = _placementManager.gridWithObjectsInformation[_cellToEnter.x, _cellToEnter.y];
         if (_objectOnMyWay != null) {       
@@ -57,6 +61,34 @@ public class WorkerUnit : UnitDescription
                 FacilityDescription _building = _objectOnCell.GetComponent<FacilityDescription>();
                 if (_building != null && _building == _buildingToCheck) { return true; } } } return false; }
 
+    private bool GetToughResource(Vector2Int _cellToMove)
+    {
+        ToughResources _toughResourcesOnGrid = null;
+        var _objectOnMyWay = _placementManager.gridWithObjectsInformation[_cellToMove.x, _cellToMove.y];
+        if (_objectOnMyWay != null)
+        {
+            _toughResourcesOnGrid = _objectOnMyWay.GetComponent<ToughResources>();
+            if (_toughResourcesOnGrid != null && _unitActions.remainingActionsCount > 0)
+            {
+                CollectToughItem(_toughResourcesOnGrid, _toughResourcesOnGrid.ApplyDamage(miningModifier));
+                _unitActions.remainingActionsCount -= 1;
+            }
+            return false;
+        }
+        return true;
+    }
+    private void CollectToughItem(ToughResources _itemToCollect, int countOfResorces)
+    {
+        int _canTakeItems;
+        if (_itemToCollect != null)
+        {
+            _canTakeItems = Mathf.Clamp(Mathf.FloorToInt(_weightCapacityRemaining / _itemToCollect.WeightOfOneItem), 0, countOfResorces);
+            if (!Inventory.ContainsKey(_itemToCollect.Name)) { Inventory.Add(_itemToCollect.Name, _canTakeItems); }
+            else if (Inventory.ContainsKey(_itemToCollect.Name)) { Inventory[_itemToCollect.Name] += _canTakeItems; }
+            _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem;
+        }
+    }
+
     private void ItemReferenceReturner() { // т.к. рабочий, наступая на клетку вымещает собой collectableitem из списка всех предметов на сетке, то если он забрал не все и ушел, нам нужно вернуть collectableitem в список
         if (_itemToReturnReference != null && _placementManager.gridWithObjectsInformation[_itemToReturnReference.LocalCoords.x, _itemToReturnReference.LocalCoords.y] == null) { _itemToReturnReference.GoneAway(); _itemToReturnReference = null; } }
   
@@ -64,6 +96,7 @@ public class WorkerUnit : UnitDescription
 
     private void Update() { RepairBuilding(); }
 
-    private void OnEnable() { _unitMovement.WantToMoveOnCell += CollectItem; _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; _unitHealth.death += ItemReferenceReturner; }
-    private void OnDisable() { _unitMovement.WantToMoveOnCell -= CollectItem; _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; _unitHealth.death -= ItemReferenceReturner; }
+    
+    private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; _unitHealth.death += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += GetToughResource; _unitMovement.WantToMoveOnCell += CollectItem; }
+    private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; _unitHealth.death -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= GetToughResource; _unitMovement.WantToMoveOnCell -= CollectItem; }
 }

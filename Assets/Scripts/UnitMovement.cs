@@ -47,8 +47,8 @@ public class UnitMovement : MonoBehaviour
         {
             if(_isHighlightedNeighbour && !_highlightedController.isAnyUnitHighlighted)
             {
-                var _canIMove = WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
-                if ((bool)!_canIMove) { return; }
+                bool? _canIMove = WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
+                if (!(bool)_canIMove) { return; }
                 transform.position = _highlighted.position;
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
                 MovedToCell?.Invoke();

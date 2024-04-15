@@ -22,7 +22,7 @@ public class CameraControls : MonoBehaviour {
 
     void Update() {
         // движение камеры
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(2))
             this.basePosition +=
                 - (new Vector3(this.transform.right.x, 0, this.transform.right.z)).normalized
                     * this.moveSpeed * Time.deltaTime * Input.GetAxis("Mouse X")
