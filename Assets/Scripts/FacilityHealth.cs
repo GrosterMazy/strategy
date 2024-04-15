@@ -7,26 +7,29 @@ public class FacilityHealth : MonoBehaviour
 { 
     public static Action anyFacilityDie;
     public Action death;
-    public float currentHealth;
+    public float СurrentHealth;
+    public float MaxHealth => _facilityDescription.MaxHealth;
+    public float HealthPerRepairment;
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
     private FacilityDescription _facilityDescription => GetComponent<FacilityDescription>();
     private float _damageReductionPercent => _facilityDescription.DamageReductionPercent;
-    private float _maxHealth => _facilityDescription.MaxHealth;
     private bool _wasDamagedInThisTurn = false;
 
     void Start()
     {
-        currentHealth = _maxHealth;
+        СurrentHealth = MaxHealth;
     }
     public void ApplyDamage(float _damage)
     { 
-        currentHealth -= _damage * (100f - _damageReductionPercent) / 100;
+        СurrentHealth -= _damage * (100f - _damageReductionPercent) / 100;
         _wasDamagedInThisTurn = true;
-        if (currentHealth <= 0)
+        if (СurrentHealth <= 0)
         {
             Death();
         }
     }
+    public void Repairment() {
+        СurrentHealth = Mathf.Clamp(СurrentHealth + HealthPerRepairment, 0, MaxHealth); }
     private void Death()
     {
         _placementManager.gridWithObjectsInformation[_facilityDescription.LocalCoords.x, _facilityDescription.LocalCoords.y] = null;

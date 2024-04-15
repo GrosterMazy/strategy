@@ -14,8 +14,6 @@ public class FacilityDescription : ObjectOnGrid
     public bool IsHighlighted; // Навёл мышку
     public bool WorkerOnSite;
     public float MaxHealth;
-    public float CurrentHealth;
-    public float PercentFromMaxHealthForRepairment;
     public float ArmorUnitEfficiencyMaxAmount;  // Значение максимальной эффективности брони(т.е. на сколько % будет снижен урон за первую единицу брони)
     public float ArmorEfficiencyDecreasementPerUnit; // То, насколько будет снижаться эффективность каждой последующей единицы брони(в %)
     [NonSerialized] public float DamageReductionPercent;
@@ -37,9 +35,6 @@ public class FacilityDescription : ObjectOnGrid
         if (ArmorEfficiencyTable[ArmorEfficiencyTable.Count - 1] == 100) { ArmorEfficiencyTable = (from _percent in ArmorEfficiencyTable where _percent != 100 select _percent).ToList(); ArmorEfficiencyTable.Add(100); }
         Armor = Mathf.Clamp(Armor, 0, ArmorEfficiencyTable.Count - 1);
         DamageReductionPercent = ArmorEfficiencyTable[Armor]; }
-
-    public void Repairment() {
-        CurrentHealth = Mathf.Clamp(CurrentHealth + MaxHealth * PercentFromMaxHealthForRepairment / 100, 0, MaxHealth); }
 
     public void ThrowAwayWorker() { 
         if (_highlighted == null) { return; }

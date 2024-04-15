@@ -50,9 +50,11 @@ public class WorkerUnit : UnitDescription
             var _smthOnCell = _placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y];
             if (_smthOnCell != null) {
                 FacilityDescription _buildingToRepair = _smthOnCell.GetComponent<FacilityDescription>();
-                if (_buildingToRepair != null && _buildingToRepair.CurrentHealth < _buildingToRepair.MaxHealth && TeamAffiliation == _buildingToRepair.TeamAffiliation && _unitActions.remainingActionsCount > 0 && IsNeededBuildingNear(_buildingToRepair)) {
+                if (_buildingToRepair == null) { return; }
+                FacilityHealth _healthOfBuildingToRepair = _buildingToRepair.GetComponent<FacilityHealth>();
+                if (_healthOfBuildingToRepair.СurrentHealth < _buildingToRepair.MaxHealth && TeamAffiliation == _buildingToRepair.TeamAffiliation && _unitActions.remainingActionsCount > 0 && IsNeededBuildingNear(_buildingToRepair)) {
                     _unitActions.remainingActionsCount -= 1;
-                    _buildingToRepair.Repairment(); } } } }
+                    _healthOfBuildingToRepair.Repairment(); } } } }
 
     private bool IsNeededBuildingNear(FacilityDescription _buildingToCheck) {
         foreach (Vector2Int _cell in _hexGrid.Neighbours(transform.position)) {
