@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -14,16 +15,16 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private Building Foundry;
     [SerializeField] private Building Barracks;
 
-    private void BuildBuildingsUpdate() { 
+    private void BuildBuildingsUpdate() {
                 if (_highlighted == null) { return; }
         var _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
-        if (_placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null) {       
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !_teamsAdministratumsReferences.ContainsKey(CurrentTeamNumber)) {             
+        if (_placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null) {
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !_teamsAdministratumsReferences.ContainsKey(CurrentTeamNumber)) {
                 var _administratum = Instantiate(Administratum, _highlighted.position, Quaternion.identity);
                 _administratum.TeamAffiliation = CurrentTeamNumber;
                 _teamsAdministratumsReferences.Add(CurrentTeamNumber, _administratum);
                 _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _administratum); }
-            if (_teamsAdministratumsReferences.ContainsKey(CurrentTeamNumber)) {        
+            if (_teamsAdministratumsReferences.ContainsKey(CurrentTeamNumber) && IsAllyWorkerNearby(_highlightedInLocalCoords)) {
                 var _currentAdministratum = _teamsAdministratumsReferences[CurrentTeamNumber];
                 Building _buildingToBuild;
                 if (Input.GetKeyDown(KeyCode.Alpha2)) { _buildingToBuild = Sawmill; }
@@ -31,14 +32,20 @@ public class BuildingManager : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Alpha4)) { _buildingToBuild = Barracks; }
                 else return;
                 if (_currentAdministratum.OverallLight >= _buildingToBuild.LightBuildingCost && _currentAdministratum.OverallOre >= _buildingToBuild.OreBuildingCost &&
-                        _currentAdministratum.OverallWood >= _buildingToBuild.WoodBuildingCost && _currentAdministratum.OverallFood >= _buildingToBuild.FoodBuildingCost) {             
+                        _currentAdministratum.OverallWood >= _buildingToBuild.WoodBuildingCost && _currentAdministratum.OverallFood >= _buildingToBuild.FoodBuildingCost) {
                     var _building = Instantiate(_buildingToBuild, _highlighted.position, Quaternion.identity);
                     _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _building);
                     _building.TeamAffiliation = CurrentTeamNumber;
                     _building.Administratum = _teamsAdministratumsReferences[_building.TeamAffiliation];
                     _building.Administratum.WasteResources(_building.LightBuildingCost, _building.OreBuildingCost, _building.WoodBuildingCost, _building.FoodBuildingCost); } } } }
-    
 
-    private void Update() { 
+    private bool IsAllyWorkerNearby(Vector2Int _cell) {
+        foreach (Vector2Int _neighbourCell in _hexGrid.Neighbours(_cell)) {
+            ObjectOnGrid _neighbour = _placementManager.gridWithObjectsInformation[_neighbourCell.x, _neighbourCell.y];
+            if (_neighbour != null) {
+                WorkerUnit _worker = _neighbour.GetComponent<WorkerUnit>();
+                if (_worker != null && _worker.TeamAffiliation == CurrentTeamNumber) return true; } } return false; }
+    
+    private void Update() {
         BuildBuildingsUpdate();}
 }

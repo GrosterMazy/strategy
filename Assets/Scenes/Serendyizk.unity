@@ -971,6 +971,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sawmill
       objectReference: {fileID: 0}
+    - target: {fileID: 1062981795405597191, guid: 48d1ad8987b72bb47bcb7c60c6754f22,
+        type: 3}
+      propertyPath: ArmorUnitEfficiencyMaxAmount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062981795405597191, guid: 48d1ad8987b72bb47bcb7c60c6754f22,
+        type: 3}
+      propertyPath: ArmorEfficiencyDecreasementPerUnit
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48d1ad8987b72bb47bcb7c60c6754f22, type: 3}
 --- !u!1001 &1912249941041816522
@@ -1040,6 +1050,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Foundry
       objectReference: {fileID: 0}
+    - target: {fileID: 1912249941856750919, guid: f3003bea982268a4fba0b9c190d502ef,
+        type: 3}
+      propertyPath: ArmorUnitEfficiencyMaxAmount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912249941856750919, guid: f3003bea982268a4fba0b9c190d502ef,
+        type: 3}
+      propertyPath: ArmorEfficiencyDecreasementPerUnit
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3003bea982268a4fba0b9c190d502ef, type: 3}
 --- !u!1001 &4556878165041046975
@@ -1049,6 +1069,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4556878165065314100, guid: d7645c79656c2cb4387a0ff4417ade2d,
+        type: 3}
+      propertyPath: WorkerOnSite
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556878165065314100, guid: d7645c79656c2cb4387a0ff4417ade2d,
+        type: 3}
+      propertyPath: ArmorUnitEfficiencyMaxAmount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556878165065314100, guid: d7645c79656c2cb4387a0ff4417ade2d,
+        type: 3}
+      propertyPath: ArmorEfficiencyDecreasementPerUnit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4556878165065314101, guid: d7645c79656c2cb4387a0ff4417ade2d,
         type: 3}
       propertyPath: m_RootOrder
@@ -1305,6 +1340,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Barracks
+      objectReference: {fileID: 0}
+    - target: {fileID: 8738308260022013270, guid: ddec3b30bf8a5a043897a04d7283623e,
+        type: 3}
+      propertyPath: ArmorUnitEfficiencyMaxAmount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8738308260022013270, guid: ddec3b30bf8a5a043897a04d7283623e,
+        type: 3}
+      propertyPath: ArmorEfficiencyDecreasementPerUnit
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8738308260022013271, guid: ddec3b30bf8a5a043897a04d7283623e,
         type: 3}

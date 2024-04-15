@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitActions : MonoBehaviour
 {
-    public byte remainingActionsCount;
+    public int remainingActionsCount;
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
     private SelectionController _selectionController => FindObjectOfType<SelectionController>();
     private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();

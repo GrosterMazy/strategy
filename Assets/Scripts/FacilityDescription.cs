@@ -1,28 +1,30 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using System.Linq;
 
-public class UnitDescription : ObjectOnGrid
+public class FacilityDescription : ObjectOnGrid
 {
-    public List<float> ArmorEfficiencyTable; // Таблица, где номер элемента - количество брони, а значение элемента - соответствующая ей %-ая защита от урона
-    public bool IsSelected; // тыкнул мышкой на него
-    public bool IsHighlighted; // навел мышку на него
-    public int ActionsPerTurn;
-    public int Armor;
+    public List<float> ArmorEfficiencyTable;
     public int TeamAffiliation;
-    public int MovementSpeed;
-    public int AttackRange;
-    public float Health;
-    public float AttackDamage;
-    public float FoodConsumption;
+    public int Armor;
+    public bool IsSelected; // тыкнул мышкой на него
+    public bool WorkerOnSite;
+    public float MaxHealth;
+    public float CurrentHealth;
+    public float PercentFromMaxHealthForRepairment;
     public float ArmorUnitEfficiencyMaxAmount;  // Значение максимальной эффективности брони(т.е. на сколько % будет снижен урон за первую единицу брони)
     public float ArmorEfficiencyDecreasementPerUnit; // То, насколько будет снижаться эффективность каждой последующей единицы брони(в %)
     [NonSerialized] public float DamageReductionPercent;
+    public Transform _highlighted => FindObjectOfType<MouseSelection>().highlighted;
+    public PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
+    public HexGrid _hexGrid => FindObjectOfType<HexGrid>();
+    public GameObject WorkerInsideMe;
 
-    public void ArmorCounter()
-    {
-        if (ArmorEfficiencyDecreasementPerUnit <= 0) { throw new Exception("Убывающая полезность брони юнита не может быть равна или меньше 0"); }
+    public void ArmorCounter() {
+        if (ArmorEfficiencyDecreasementPerUnit <= 0) { throw new Exception("Убывающая полезность брони не может быть равна или меньше 0"); }
         var _maxArmorAccordingToPrimaryRules = ArmorUnitEfficiencyMaxAmount / ArmorEfficiencyDecreasementPerUnit;
         if (_maxArmorAccordingToPrimaryRules != Mathf.RoundToInt(_maxArmorAccordingToPrimaryRules)) { _maxArmorAccordingToPrimaryRules = Mathf.RoundToInt(_maxArmorAccordingToPrimaryRules) + 1; }
         for (int i = 0; i < _maxArmorAccordingToPrimaryRules + 1; i++) ArmorEfficiencyTable.Add(0);
@@ -33,10 +35,21 @@ public class UnitDescription : ObjectOnGrid
             else ArmorEfficiencyTable.RemoveAt(ArmorEfficiencyTable.Count - 1); }
         if (ArmorEfficiencyTable[ArmorEfficiencyTable.Count - 1] == 100) { ArmorEfficiencyTable = (from _percent in ArmorEfficiencyTable where _percent != 100 select _percent).ToList(); ArmorEfficiencyTable.Add(100); }
         Armor = Mathf.Clamp(Armor, 0, ArmorEfficiencyTable.Count - 1);
-        DamageReductionPercent = ArmorEfficiencyTable[Armor]; 
-    }
+        DamageReductionPercent = ArmorEfficiencyTable[Armor]; }
+
+    public void Repairment() {
+        CurrentHealth = Mathf.Clamp(CurrentHealth + MaxHealth * PercentFromMaxHealthForRepairment / 100, 0, MaxHealth); }
+
+    public void ThrowAwayWorker() { 
+        if (_highlighted == null) { return; }
+        Vector2Int _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
+        if (IsSelected && WorkerOnSite && _placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null && Input.GetKeyDown(KeyCode.T)) {
+            WorkerInsideMe.SetActive(true); WorkerOnSite = false; WorkerInsideMe.transform.position = _highlighted.position;
+            _placementManager.UpdateGrid(_highlighted.position, _highlighted.position, WorkerInsideMe.GetComponent<ObjectOnGrid>()); } }
 
     private void Start() {
         ArmorCounter(); }
+
+    private void Update() {
+        ThrowAwayWorker(); }
 }
-   
