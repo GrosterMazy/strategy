@@ -9,9 +9,17 @@ public class FighterUnit : UnitDescription
     private UnitHealth _unitHealth => GetComponent<UnitHealth>();
     private CollectableItem _itemToReturnReference;
 
-    private bool ItemToReturnReferenceUpdater(Vector2Int _coordsWithItem) { 
+    private bool ItemToReturnReferenceUpdater(Vector2Int _coordsWithItem)
+    {
         var _objectOnMyWay = _gridWithObjects[_coordsWithItem.x, _coordsWithItem.y];
-        if (_objectOnMyWay != null) { _itemToReturnReference = _objectOnMyWay.GetComponent<CollectableItem>(); } return true; }
+        if (_objectOnMyWay != null)
+        { 
+            _itemToReturnReference = _objectOnMyWay.GetComponent<CollectableItem>();
+            if (_itemToReturnReference != null) return true;
+            else return false;
+        }
+        else return true;
+    }
     
 
     private void ItemReferenceReturner() { 

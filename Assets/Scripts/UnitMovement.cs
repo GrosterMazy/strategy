@@ -13,8 +13,8 @@ public class UnitMovement : MonoBehaviour
     private bool _isHighlightedNeighbour;
     private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
-    private short _maxSpeed;
-    public short spentSpeed = 0;
+    private int _maxSpeed;
+    public int spentSpeed = 0;
     private Transform _highlighted;
     private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
@@ -47,8 +47,8 @@ public class UnitMovement : MonoBehaviour
         {
             if(_isHighlightedNeighbour && !_highlightedController.isAnyUnitHighlighted)
             {
-                var _canIMove = WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
-                if ((bool)!_canIMove) { return; }
+                bool? _canIMove = WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
+                if (!(bool)_canIMove) { return; }
                 transform.position = _highlighted.position;
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
                 MovedToCell?.Invoke();

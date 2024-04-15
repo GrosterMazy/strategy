@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitActions : MonoBehaviour
 {
-    public byte remainingActionsCount;
+    public int remainingActionsCount;
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
     private SelectionController _selectionController => FindObjectOfType<SelectionController>();
     private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();
@@ -37,10 +37,11 @@ public class UnitActions : MonoBehaviour
         if (_highlightedController.isAnyUnitHighlighted && remainingActionsCount != 0 && _highlightedController.highlightedUnit.TeamAffiliation != _unitDescription.TeamAffiliation)
         {
             _highlightedController.highlightedUnit.GetComponent<UnitHealth>().ApplyDamage(_unitDescription.AttackDamage); // Атакуем вражеского юнита
+            remainingActionsCount -= 1;
         }
 //        else if ()
         
-        remainingActionsCount -= 1;
+
     }
 
     private void UpdateActionsCountOnTurnChanged()

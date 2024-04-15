@@ -8,11 +8,11 @@ public class UnitDescription : ObjectOnGrid
     public List<float> ArmorEfficiencyTable; // Таблица, где номер элемента - количество брони, а значение элемента - соответствующая ей %-ая защита от урона
     public bool IsSelected;
     public bool IsHighlighted;
-    public byte ActionsPerTurn;
+    public int ActionsPerTurn;
     public int Armor;
     public int TeamAffiliation;
-    public short MovementSpeed;
-    public short AttackRange;
+    public int MovementSpeed;
+    public int AttackRange;
     public float Health;
     public float AttackDamage;
     public float FoodConsumption;
