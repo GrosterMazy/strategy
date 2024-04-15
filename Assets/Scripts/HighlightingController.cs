@@ -7,7 +7,7 @@ public class HighlightingController : MonoBehaviour
     public UnitDescription highlightedUnit;
     public bool isAnyUnitHighlighted;
     public FirstFactionFacilities highlightedFirstFactionFacility;
-    public bool isAnyFacilityHighlighted;
+    public bool isAnyFirstFactionFacilityHighlighted;
     private Transform _highlighted;
     private UnitDescription _highlightedBeforeUnit;
     private FirstFactionFacilities _highlightedBeforeFirstFactionFacility;
@@ -55,7 +55,7 @@ public class HighlightingController : MonoBehaviour
         if (_highlightedBeforeFirstFactionFacility != null) _highlightedBeforeFirstFactionFacility.IsHighlighted = false;
         if (_placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(highlighted.position).x, _hexGrid.InLocalCoords(highlighted.position).y] == null) // На подсвеченной клетке ничего нет
         {
-            isAnyFacilityHighlighted = false;
+            isAnyFirstFactionFacilityHighlighted = false;
             highlightedFirstFactionFacility = null;
         }
         else
@@ -63,13 +63,13 @@ public class HighlightingController : MonoBehaviour
             highlightedFirstFactionFacility = _placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(highlighted.position).x, _hexGrid.InLocalCoords(highlighted.position).y].GetComponent<FirstFactionFacilities>();
             if (highlightedFirstFactionFacility != null) // На подсвеченной клетке есть юнит
             {
-                isAnyFacilityHighlighted = true;
+                isAnyFirstFactionFacilityHighlighted = true;
                 highlightedFirstFactionFacility.IsHighlighted = true;
                 _highlightedBeforeFirstFactionFacility = highlightedFirstFactionFacility;
             }
             else
             {
-                isAnyFacilityHighlighted = false;
+                isAnyFirstFactionFacilityHighlighted = false;
             }
         }
     }
@@ -86,7 +86,7 @@ public class HighlightingController : MonoBehaviour
             highlightedUnit = null;
             if (_highlightedBeforeUnit != null) _highlightedBeforeUnit.IsHighlighted = false;
 
-            isAnyFacilityHighlighted = false;
+            isAnyFirstFactionFacilityHighlighted = false;
             highlightedFirstFactionFacility = null;
             if (_highlightedBeforeFirstFactionFacility != null) _highlightedBeforeFirstFactionFacility.IsHighlighted = false;
 

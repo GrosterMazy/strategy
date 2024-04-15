@@ -33,15 +33,20 @@ public class UnitActions : MonoBehaviour
 
     private void Attack()
     {
-        if (_mouseSelection.highlighted == null || !_unitDescription.IsSelected || _unitDescription.AttackRange < _hexGrid.Distance(_mouseSelection.selected.position, _mouseSelection.highlighted.position)) return;
-        if (_highlightedController.isAnyUnitHighlighted && remainingActionsCount != 0 && _highlightedController.highlightedUnit.TeamAffiliation != _unitDescription.TeamAffiliation)
+        if (_mouseSelection.highlighted == null || !_unitDescription.IsSelected 
+            || _unitDescription.AttackRange < _hexGrid.Distance(_mouseSelection.selected.position, _mouseSelection.highlighted.position)
+            || remainingActionsCount == 0) return;
+
+        if (_highlightedController.isAnyUnitHighlighted && _highlightedController.highlightedUnit.TeamAffiliation != _unitDescription.TeamAffiliation)
         {
             _highlightedController.highlightedUnit.GetComponent<UnitHealth>().ApplyDamage(_unitDescription.AttackDamage); // Атакуем вражеского юнита
             remainingActionsCount -= 1;
         }
-//        else if ()
-        
-
+        else if (_highlightedController.isAnyFirstFactionFacilityHighlighted && _highlightedController.highlightedFirstFactionFacility.TeamAffiliation != _unitDescription.TeamAffiliation)
+        {
+            _highlightedController.highlightedFirstFactionFacility.GetComponent<FacilityHealth>().ApplyDamage(_unitDescription.AttackDamage); // Атакуем вражеское здание первой фракции
+            remainingActionsCount -= 1;
+        }
     }
 
     private void UpdateActionsCountOnTurnChanged()

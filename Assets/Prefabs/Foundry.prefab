@@ -196,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1912249941856750916}
   - component: {fileID: 1912249941856750919}
+  - component: {fileID: 92117117600809936}
   m_Layer: 0
   m_Name: Foundry
   m_TagString: Untagged
@@ -234,15 +235,15 @@ MonoBehaviour:
   LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
   TeamAffiliation: 0
-  Armor: 1
+  Armor: 3
   IsSelected: 0
   IsHighlighted: 0
   WorkerOnSite: 0
   MaxHealth: 10
   CurrentHealth: 0
-  PercentFromMaxHealthForRepairment: 1
-  ArmorUnitEfficiencyMaxAmount: 1
-  ArmorEfficiencyDecreasementPerUnit: 1
+  PercentFromMaxHealthForRepairment: 0
+  ArmorUnitEfficiencyMaxAmount: 15
+  ArmorEfficiencyDecreasementPerUnit: 2
   WorkerInsideMe: {fileID: 0}
   FoodConsumption: 0
   OreConsumption: 0
@@ -254,3 +255,16 @@ MonoBehaviour:
   FoodBuildingCost: 1
   OreBuildingCost: 1
   WoodBuildingCost: 1
+--- !u!114 &92117117600809936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912249941856750918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40048bc7074e19a408615c13365478a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0

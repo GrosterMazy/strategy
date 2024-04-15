@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1062981795405597188}
   - component: {fileID: 1062981795405597191}
+  - component: {fileID: 6494127415992848402}
   m_Layer: 0
   m_Name: Sawmill
   m_TagString: Untagged
@@ -48,15 +49,15 @@ MonoBehaviour:
   LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
   TeamAffiliation: 0
-  Armor: 1
+  Armor: 3
   IsSelected: 0
   IsHighlighted: 0
   WorkerOnSite: 0
   MaxHealth: 10
   CurrentHealth: 0
   PercentFromMaxHealthForRepairment: 0
-  ArmorUnitEfficiencyMaxAmount: 1
-  ArmorEfficiencyDecreasementPerUnit: 1
+  ArmorUnitEfficiencyMaxAmount: 15
+  ArmorEfficiencyDecreasementPerUnit: 2
   WorkerInsideMe: {fileID: 0}
   FoodConsumption: 0
   OreConsumption: 0
@@ -68,6 +69,19 @@ MonoBehaviour:
   FoodBuildingCost: 1
   OreBuildingCost: 1
   WoodBuildingCost: 1
+--- !u!114 &6494127415992848402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062981795405597190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40048bc7074e19a408615c13365478a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
 --- !u!1 &1062981796099159055
 GameObject:
   m_ObjectHideFlags: 0

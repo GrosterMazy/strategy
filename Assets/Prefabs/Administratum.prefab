@@ -198,6 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4556878165065314101}
   - component: {fileID: 4556878165065314100}
+  - component: {fileID: 9086735682775507510}
   m_Layer: 0
   m_Name: Administratum
   m_TagString: Untagged
@@ -239,15 +240,15 @@ MonoBehaviour:
   LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
   TeamAffiliation: 0
-  Armor: 1
+  Armor: 5
   IsSelected: 0
   IsHighlighted: 0
   WorkerOnSite: 0
-  MaxHealth: 10
+  MaxHealth: 50
   CurrentHealth: 0
-  PercentFromMaxHealthForRepairment: 1
-  ArmorUnitEfficiencyMaxAmount: 1
-  ArmorEfficiencyDecreasementPerUnit: 1
+  PercentFromMaxHealthForRepairment: 0
+  ArmorUnitEfficiencyMaxAmount: 15
+  ArmorEfficiencyDecreasementPerUnit: 3
   WorkerInsideMe: {fileID: 0}
   FoodConsumption: 0
   OreConsumption: 0
@@ -257,6 +258,19 @@ MonoBehaviour:
   OverallOre: 5
   OverallWood: 5
   OverallFood: 5
+--- !u!114 &9086735682775507510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4556878165065314102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40048bc7074e19a408615c13365478a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
 --- !u!1 &4556878165382001632
 GameObject:
   m_ObjectHideFlags: 0
