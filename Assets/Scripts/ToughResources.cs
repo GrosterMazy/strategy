@@ -21,6 +21,7 @@ public class ToughResources : ObjectOnGrid // Ресурсы, которые н�
     {
         if (actionsToBreak <= 0)
         {
+            _placementManager.gridWithObjectsInformation[LocalCoords.x, LocalCoords.y] = null;
             Destroy(gameObject);
         }
     }
