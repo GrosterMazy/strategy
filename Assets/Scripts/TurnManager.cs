@@ -7,6 +7,9 @@ using TMPro;
 public class TurnManager : MonoBehaviour
 {
     [NonSerialized] public static Action onTurnChanged;
+    [NonSerialized] public static Action DayStarts;
+    [NonSerialized] public static Action NightStarts;
+
     public bool isDay;
     public int turn;
     public float timeToTurn;
@@ -21,9 +24,6 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentTeamText;
     [SerializeField] private TextMeshProUGUI _remainingTimeText;
     [SerializeField] private TextMeshProUGUI _timeOfDayText;
-
-
-
     void Start()
     {
         FirstTurnStart();
@@ -58,19 +58,21 @@ public class TurnManager : MonoBehaviour
             if (isDay)
                 StartNight();
         }
-        else if (turn % (dayDuration + nightDuration + 1) - dayDuration <= 0)
+        else if (turn % (dayDuration + nightDuration + 2) - dayDuration <= 0)
         {
             if (!isDay)
-                StartDay();
+                StartDay(); 
         }
     }
     private void StartNight()
     {
+        NightStarts.Invoke();
         isDay = false;
         _timeOfDayText.SetText("Night");
     }
     private void StartDay()
     {
+        DayStarts.Invoke();
         isDay = true;
         _timeOfDayText.SetText("Day");
     }
