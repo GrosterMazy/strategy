@@ -7,7 +7,6 @@ using System;
 public class Building : FirstFactionFacilities
 {
     public Administratum Administratum;
-    public int ActionsToFinalizeBuilding;
     public Dictionary<string, int> Storage = new Dictionary<string, int>();
 
     public float LightBuildingFoundationCost;

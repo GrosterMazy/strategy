@@ -8,6 +8,7 @@ using System.Linq;
 public class FacilityDescription : ObjectOnGrid
 {
     public List<float> ArmorEfficiencyTable;
+    public int ActionsToFinalizeBuilding;
     public int TeamAffiliation;
     public int Armor;
     public bool IsSelected; // тыкнул мышкой на него
