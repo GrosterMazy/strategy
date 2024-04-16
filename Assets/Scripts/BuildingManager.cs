@@ -31,13 +31,13 @@ public class BuildingManager : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Alpha3)) { _buildingToBuild = Foundry; }
                 else if (Input.GetKeyDown(KeyCode.Alpha4)) { _buildingToBuild = Barracks; }
                 else return;
-                if (_currentAdministratum.OverallLight >= _buildingToBuild.LightBuildingCost && _currentAdministratum.OverallOre >= _buildingToBuild.OreBuildingCost &&
-                        _currentAdministratum.OverallWood >= _buildingToBuild.WoodBuildingCost && _currentAdministratum.OverallFood >= _buildingToBuild.FoodBuildingCost) {
+                if (_currentAdministratum.OverallLight >= _buildingToBuild.LightBuildingFoundationCost && _currentAdministratum.OverallOre >= _buildingToBuild.OreBuildingFoundationCost &&
+                        _currentAdministratum.OverallWood >= _buildingToBuild.WoodBuildingFoundationCost && _currentAdministratum.OverallFood >= _buildingToBuild.FoodBuildingFoundationCost) {
                     var _building = Instantiate(_buildingToBuild, _highlighted.position, Quaternion.identity);
                     _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _building);
                     _building.TeamAffiliation = CurrentTeamNumber;
                     _building.Administratum = _teamsAdministratumsReferences[_building.TeamAffiliation];
-                    _building.Administratum.WasteResources(_building.LightBuildingCost, _building.OreBuildingCost, _building.WoodBuildingCost, _building.FoodBuildingCost); } } } }
+                    _building.BuildingExpenses("Foundation"); } } } }
 
     private bool IsAllyWorkerNearby(Vector2Int _cell) {
         foreach (Vector2Int _neighbourCell in _hexGrid.Neighbours(_cell)) {

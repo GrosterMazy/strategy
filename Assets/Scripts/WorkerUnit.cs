@@ -39,8 +39,10 @@ public class WorkerUnit : UnitDescription
             _buildingOnMyWay = _objectOnMyWay.GetComponent<Building>();
             if (_buildingOnMyWay != null && !_buildingOnMyWay.WorkerOnSite && TeamAffiliation == _buildingOnMyWay.TeamAffiliation && _unitActions.remainingActionsCount > 0) {
                 if (_buildingOnMyWay.ActionsToFinalizeBuilding == 0) { 
-                _buildingOnMyWay.WorkerOnSite = true; _placementManager.UpdateGrid(LocalCoords, LocalCoords, null); _buildingOnMyWay.WorkerInsideMe = gameObject; gameObject.SetActive(false); }
-                else { _buildingOnMyWay.ActionsToFinalizeBuilding -= 1; _unitActions.remainingActionsCount -= 1; } } }
+                    _buildingOnMyWay.WorkerOnSite = true; _placementManager.UpdateGrid(LocalCoords, LocalCoords, null); _buildingOnMyWay.WorkerInsideMe = gameObject; gameObject.SetActive(false); }
+                else if (_buildingOnMyWay.Administratum.OverallLight >= _buildingOnMyWay.LightConstructionCost && _buildingOnMyWay.Administratum.OverallOre >= _buildingOnMyWay.OreConstructionCost &&
+                        _buildingOnMyWay.Administratum.OverallWood >= _buildingOnMyWay.WoodConstructionCost && _buildingOnMyWay.Administratum.OverallFood >= _buildingOnMyWay.FoodConstructionCost) {
+                    _buildingOnMyWay.ActionsToFinalizeBuilding -= 1; _buildingOnMyWay.BuildingExpenses("Construction"); _unitActions.remainingActionsCount -= 1; } } }
         if (_buildingOnMyWay == null) return true;
         return false; }
 
