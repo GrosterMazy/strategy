@@ -58,7 +58,7 @@ public class TurnManager : MonoBehaviour
             if (isDay)
                 StartNight();
         }
-        else if (turn % (dayDuration + nightDuration + 2) - dayDuration <= 0)
+        else if (turn % (dayDuration + nightDuration + 1) - dayDuration <= 0)
         {
             if (!isDay)
                 StartDay(); 
