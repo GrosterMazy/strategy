@@ -48,7 +48,6 @@ public class TurnManager : MonoBehaviour
     }
     private void NextTurn()
     {
-        onTurnChanged?.Invoke();
         currentTeam = 1;
         turn += 1;
         _currentTeamText.SetText("Current Team: " + teamsDict[currentTeam]);
@@ -63,6 +62,7 @@ public class TurnManager : MonoBehaviour
             if (!isDay)
                 StartDay(); 
         }
+        onTurnChanged?.Invoke();
     }
     private void StartNight()
     {
