@@ -2,33 +2,36 @@
 
 public class HexCell : MonoBehaviour 
 {
+    public float _lightRate = 0; //коэффициент освещенности (КО) клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
+    private GameObject _darknessnPrefab; 
+    private GameObject _darknessInstance;
     public int height;
-    public float _lightRate = 0; //коэффициент освещенности клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
-    private GameObject _darknessnPrefab; // объект для хранения префаба тьмы
-
-
     private void Awake()
     {
-        TurnManager.NightStarts += NightStarts;   // начало ночи //     Экшены из скрипта
-        TurnManager.DayStarts += DayStarts;       // начало дня //         TurnManager
+        TurnManager.NightStarts += NightStarts;   
+        TurnManager.DayStarts += DayStarts;       //    Экшены из скрипта TurnManager        
         TurnManager.onTurnChanged += TurnChange;
-        _darknessnPrefab = Resources.Load<GameObject>("Prefabs/Darkness"); //подгружаем префаб тьмы из папки Resources
+        _darknessnPrefab = Resources.Load<GameObject>("Prefabs/Darkness");
     }
-    private void DayStarts() 
+    private void DayStarts() //начало дня, изменение коэфициента освещенности и его порогового значения
     {
-        _lightRate += DarknessMainVariables.LightForce; // "осветляем" клетки на числовое значение силы света
-        DarknessMainVariables.CriticalLightRate = -1; // устанавливается дневной порог для появления тьмы
+        _lightRate += DarknessMainVariables.LightForce; 
+        DarknessMainVariables.CriticalLightRate = -1; 
     } 
-    private void NightStarts() 
+    private void NightStarts() //тоже самое что в DayStarts, но только для ночи
     {
-        _lightRate -= DarknessMainVariables.DarknessForce; // "затемняем" клетки на значение силы тьмы
-        DarknessMainVariables.CriticalLightRate = 0; // здесь соответственно устанавливается ночной порог для появления тьмы
-    } 
-    private void TurnChange() //проверка спавнить ли тьму.
-    {
-        if (_lightRate < DarknessMainVariables.CriticalLightRate && GetComponentInChildren<Darkness>() == null) Instantiate(_darknessnPrefab, transform.parent.position+Vector3.up*2, transform.rotation, transform.parent); // создаем тьму с кордами клетки на которой находится скрипт                                                                                                                                                 
-        else if(GetComponentInChildren<Darkness>()!=null && _lightRate > DarknessMainVariables.CriticalLightRate) Destroy(GetComponentInChildren<Darkness>().gameObject); // удаляем дочернюю тьму //          // и заодно заносим ее в дочерние объекты родительской клетки //                  
+        _lightRate -= DarknessMainVariables.DarknessForce; 
+        DarknessMainVariables.CriticalLightRate = 0; 
     }
-
-
+    private void TurnChange() //проверка условий для создания или удаления тьмы
+    {
+        if (_lightRate < DarknessMainVariables.CriticalLightRate && _darknessInstance == null)
+        {
+            _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up*2, transform.rotation, transform);
+        }
+        else if (_darknessInstance != null && _lightRate > DarknessMainVariables.CriticalLightRate)
+        {
+            Destroy(_darknessInstance);
+        }
+    }  
 }
