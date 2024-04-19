@@ -66,13 +66,13 @@ public class TurnManager : MonoBehaviour
     }
     private void StartNight()
     {
-        NightStarts.Invoke();
+        NightStarts?.Invoke();
         isDay = false;
         _timeOfDayText.SetText("Night");
     }
     private void StartDay()
     {
-        DayStarts.Invoke();
+        DayStarts?.Invoke();
         isDay = true;
         _timeOfDayText.SetText("Day");
     }

@@ -43,12 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6298927c148744e843a9cb58d4fbdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexagonPrefab: {fileID: 7310844489074244817, guid: 776b9be14408faa4fa41a013ddb8fe4b,
+  hexagonPrefab: {fileID: 5665832294305024598, guid: d128650f6653d614197c2cbe50459ea9,
     type: 3}
   size: {x: 20, y: 20}
   spacing: {x: 0, y: 0}
-  noise: 0
   randomSeed: 1
   seed: {x: 0, y: 0}
-  waterLevel: 0.3
   smoothness: 10
+  waterLevel: 0.3
+  numberOfHeights: 2
+  showHeightOnCells: 0
+  linearHeightStep: 1
+  heightStep: 1
+  heightSteps: []

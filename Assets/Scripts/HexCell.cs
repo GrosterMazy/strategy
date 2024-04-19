@@ -2,8 +2,10 @@
 
 public class HexCell : MonoBehaviour 
 {
+    public int height;
     public float _lightRate = 0; //коэффициент освещенности клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
     private GameObject _darknessnPrefab; // объект для хранения префаба тьмы
+
 
     private void Awake()
     {
@@ -24,8 +26,9 @@ public class HexCell : MonoBehaviour
     } 
     private void TurnChange() //проверка спавнить ли тьму.
     {
-        if (_lightRate < DarknessMainVariables.CriticalLightRate && GetComponentInChildren<Darkness>() == null) Instantiate(_darknessnPrefab, transform.position + Vector3.up, transform.rotation, transform); // создаем тьму с кордами клетки на которой находится скрипт                                                                                                                                                 
+        if (_lightRate < DarknessMainVariables.CriticalLightRate && GetComponentInChildren<Darkness>() == null) Instantiate(_darknessnPrefab, transform.parent.position, transform.rotation, transform.parent); // создаем тьму с кордами клетки на которой находится скрипт                                                                                                                                                 
         else if(GetComponentInChildren<Darkness>()!=null && _lightRate > DarknessMainVariables.CriticalLightRate) Destroy(GetComponentInChildren<Darkness>().gameObject); // удаляем дочернюю тьму //          // и заодно заносим ее в дочерние объекты родительской клетки //                  
     }
-   
+
+
 }
