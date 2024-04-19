@@ -27,7 +27,7 @@ public class HexCell : MonoBehaviour
     {
         if (_lightRate < DarknessMainVariables.CriticalLightRate && _darknessInstance == null)
         {
-            _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up*2, transform.rotation, transform);
+            _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up*2, transform.rotation, transform.parent);
         }
         else if (_darknessInstance != null && _lightRate > DarknessMainVariables.CriticalLightRate)
         {
