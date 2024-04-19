@@ -26,7 +26,7 @@ public class HexCell : MonoBehaviour
     } 
     private void TurnChange() //проверка спавнить ли тьму.
     {
-        if (_lightRate < DarknessMainVariables.CriticalLightRate && GetComponentInChildren<Darkness>() == null) Instantiate(_darknessnPrefab, transform.parent.position, transform.rotation, transform.parent); // создаем тьму с кордами клетки на которой находится скрипт                                                                                                                                                 
+        if (_lightRate < DarknessMainVariables.CriticalLightRate && GetComponentInChildren<Darkness>() == null) Instantiate(_darknessnPrefab, transform.parent.position+Vector3.up*2, transform.rotation, transform.parent); // создаем тьму с кордами клетки на которой находится скрипт                                                                                                                                                 
         else if(GetComponentInChildren<Darkness>()!=null && _lightRate > DarknessMainVariables.CriticalLightRate) Destroy(GetComponentInChildren<Darkness>().gameObject); // удаляем дочернюю тьму //          // и заодно заносим ее в дочерние объекты родительской клетки //                  
     }
 

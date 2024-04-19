@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604be83df9a06f84981d403aad5dbc8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LocalCoords: {x: 0, y: 0}
   Damage: 0
 --- !u!1001 &6570779256384112143
 PrefabInstance:
@@ -28,17 +29,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f1f13d5d91c92ad478702e32ad5de41e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1f13d5d91c92ad478702e32ad5de41e,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1f13d5d91c92ad478702e32ad5de41e,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 20
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1f13d5d91c92ad478702e32ad5de41e,
         type: 3}
