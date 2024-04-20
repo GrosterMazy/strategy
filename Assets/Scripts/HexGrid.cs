@@ -49,7 +49,24 @@ public class HexGrid : MonoBehaviour {
     [SerializeField] private float heightStep;
     [SerializeField] private float[] heightSteps;
 
-    
+    private bool f=true;
+
+    private void Update()
+    {
+        if(f) 
+        {
+            LightTransporter Source = childs[1, 1].GetComponent<LightTransporter>();
+            Source.SetLight(4,2);
+            LightTransporter Source2 = childs[2, 2].GetComponent<LightTransporter>();
+            Source2.SetLight(6,1);
+            f = false;
+        }
+        if(Input.GetMouseButtonDown(2))
+        {
+            LightTransporter Source2 = childs[2, 2].GetComponent<LightTransporter>();
+            Source2.SetLight(0,1);
+        }
+    }
     private void Awake() {
         this._hexagonPrefabRenderer = this.hexagonPrefab.transform.GetChild(0).GetComponent<Renderer>();
 
@@ -57,6 +74,8 @@ public class HexGrid : MonoBehaviour {
         this.childs = new HexCell[this.size.x, this.size.y];
 
         this.GenerateMap();
+      
+        
     }
 
     private void GenerateMap() {
@@ -131,6 +150,7 @@ public class HexGrid : MonoBehaviour {
             for (int y = 0; y < this.size.y; y++)
                 if (this.cells[x, y] != null) {
                     Vector3 fromLocal = this.InUnityCoords(new Vector2Int(x, y));
+                   // Debug.Log((fromLocal, position)); 
                     if (fromLocal.x == position.x && fromLocal.z == position.z)
                         return new Vector2Int(x, y);
                 }

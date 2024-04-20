@@ -2,36 +2,50 @@
 
 public class HexCell : MonoBehaviour 
 {
-    public float _lightRate = 0; //коэффициент освещенности (КО) клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
+    public float LightRate = 0; //коэффициент освещенности (КО) клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
     private GameObject _darknessnPrefab; 
     private GameObject _darknessInstance;
+    private LightTransporter _lightTransporter;
     public int height;
     private void Awake()
     {
         TurnManager.NightStarts += NightStarts;   
         TurnManager.DayStarts += DayStarts;       //    Экшены из скрипта TurnManager        
-        TurnManager.onTurnChanged += TurnChange;
+        _lightTransporter = GetComponent<LightTransporter>();
         _darknessnPrefab = Resources.Load<GameObject>("Prefabs/Darkness");
+        _lightTransporter.OnLightForceChange += OnLightForceChanged;
+    }
+    private void Start()
+    {
+        _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up, transform.rotation, transform.parent);
+        _darknessInstance.SetActive(false);
+
     }
     private void DayStarts() //начало дня, изменение коэфициента освещенности и его порогового значения
     {
-        _lightRate += DarknessMainVariables.LightForce; 
-        DarknessMainVariables.CriticalLightRate = -1; 
+        LightRate += DarknessMainVariables.LightForce; 
+        DarknessMainVariables.CriticalLightRate = -1;
+        DarknessUpdate();
     } 
     private void NightStarts() //тоже самое что в DayStarts, но только для ночи
     {
-        _lightRate -= DarknessMainVariables.DarknessForce; 
-        DarknessMainVariables.CriticalLightRate = 0; 
+        LightRate -= DarknessMainVariables.LightForce; 
+        DarknessMainVariables.CriticalLightRate = 1;
+        DarknessUpdate();
     }
-    private void TurnChange() //проверка условий для создания или удаления тьмы
+    private void DarknessUpdate() //проверка условий для создания или удаления тьмы
     {
-        if (_lightRate < DarknessMainVariables.CriticalLightRate && _darknessInstance == null)
+        if (LightRate <= DarknessMainVariables.CriticalLightRate && _darknessInstance.activeSelf==false)
         {
-            _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up*2, transform.rotation, transform.parent);
+            _darknessInstance.SetActive(true);
         }
-        else if (_darknessInstance != null && _lightRate > DarknessMainVariables.CriticalLightRate)
+        else if (_darknessInstance != null && LightRate > DarknessMainVariables.CriticalLightRate)
         {
-            Destroy(_darknessInstance);
+            _darknessInstance.SetActive(false);
         }
     }  
+    private void OnLightForceChanged(LightTransporter NewSource, int NewLightForce)
+    {
+        DarknessUpdate();
+    }
 }
