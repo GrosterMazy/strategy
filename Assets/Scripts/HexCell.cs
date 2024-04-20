@@ -1,22 +1,19 @@
 ﻿using UnityEngine;
+using System;
 
 public class HexCell : MonoBehaviour 
 {
     public float LightRate = 0; //коэффициент освещенности (КО) клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
     private GameObject _darknessnPrefab; 
     private GameObject _darknessInstance;
-    private LightTransporter _lightTransporter;
+    [NonSerialized] public LightTransporter lightTransporter;
     public int height;
-    private void Awake()
+    private void Start()
     {
         TurnManager.NightStarts += NightStarts;   
         TurnManager.DayStarts += DayStarts;       //    Экшены из скрипта TurnManager        
-        _lightTransporter = GetComponent<LightTransporter>();
         _darknessnPrefab = Resources.Load<GameObject>("Prefabs/Darkness");
-        _lightTransporter.OnLightForceChange += OnLightForceChanged;
-    }
-    private void Start()
-    {
+        lightTransporter.OnLightForceChange += OnLightForceChanged;
         _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up, transform.rotation, transform.parent);
         _darknessInstance.SetActive(false);
 

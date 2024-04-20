@@ -30,7 +30,7 @@ public class HexGrid : MonoBehaviour {
     * f e *
     * * * *
     */
-    [SerializeField] private Vector2 spacing; // расстояние между клетками
+    [SerializeField] private int spacing; // расстояние между клетками
 
     [SerializeField] private bool randomSeed = true; // false - использует поле seed, true - генерирует случайный(его можно увидеть в поле seed после запуска)
     private float _minSeedNumber = 0f;
@@ -49,33 +49,16 @@ public class HexGrid : MonoBehaviour {
     [SerializeField] private float heightStep;
     [SerializeField] private float[] heightSteps;
 
-    private bool f=true;
+    private TurnManager _turnManager;
 
-    private void Update()
-    {
-        if(f) 
-        {
-            LightTransporter Source = childs[1, 1].GetComponent<LightTransporter>();
-            Source.SetLight(4,2);
-            LightTransporter Source2 = childs[2, 2].GetComponent<LightTransporter>();
-            Source2.SetLight(6,1);
-            f = false;
-        }
-        if(Input.GetMouseButtonDown(2))
-        {
-            LightTransporter Source2 = childs[2, 2].GetComponent<LightTransporter>();
-            Source2.SetLight(0,1);
-        }
-    }
     private void Awake() {
         this._hexagonPrefabRenderer = this.hexagonPrefab.transform.GetChild(0).GetComponent<Renderer>();
+        this._turnManager = FindObjectOfType<TurnManager>();
 
         this.cells = new GameObject[this.size.x, this.size.y];
         this.childs = new HexCell[this.size.x, this.size.y];
 
         this.GenerateMap();
-      
-        
     }
 
     private void GenerateMap() {
@@ -107,6 +90,13 @@ public class HexGrid : MonoBehaviour {
                 );
                 HexCell child = cell.transform.GetChild(0).GetComponent<HexCell>();
 
+                LightTransporter lightTransporter = child.GetComponent<LightTransporter>();
+                lightTransporter.grid = this;
+                lightTransporter.turnManager = this._turnManager;
+                lightTransporter.cell = child;
+
+                child.lightTransporter = lightTransporter;
+
                 child.transform.localScale = new Vector3(
                     child.transform.localScale.x,
                     child.transform.localScale.y,
@@ -133,28 +123,29 @@ public class HexGrid : MonoBehaviour {
 
         int realHeight = (height == -1) ? this.childs[pos.x, pos.y].height : height;
 
+
         return new Vector3(
-            pos.x * this._hexagonPrefabRenderer.bounds.size.x
-                + ((pos.y % 2 == 0) ? 0 : (this._hexagonPrefabRenderer.bounds.size.x / 2))
-                + this.spacing.x * pos.x,
+            pos.x * (this._hexagonPrefabRenderer.bounds.size.x + this.spacing)
+                + ((pos.y % 2 == 0) ? 0 : ((this._hexagonPrefabRenderer.bounds.size.x + this.spacing) / 2)),
             (this.showHeightOnCells ?
                 (this.linearHeightStep ? realHeight*this.heightStep : this.heightSteps[realHeight])
                 : 0),
-            pos.y * this._hexagonPrefabRenderer.bounds.size.x * Mathf.Cos(Mathf.PI/6)
-                + this.spacing.y * pos.y
+            pos.y * (this._hexagonPrefabRenderer.bounds.size.x + this.spacing) * Mathf.Cos(Mathf.PI/6)
         );
     }
 
-    public Vector2Int InLocalCoords(Vector3 position) { // игнорирует координату "y" // TODO: более оптимизированная версия
-        for (int x = 0; x < this.size.x; x++)
-            for (int y = 0; y < this.size.y; y++)
-                if (this.cells[x, y] != null) {
-                    Vector3 fromLocal = this.InUnityCoords(new Vector2Int(x, y));
-                   // Debug.Log((fromLocal, position)); 
-                    if (fromLocal.x == position.x && fromLocal.z == position.z)
-                        return new Vector2Int(x, y);
-                }
-        throw new System.Exception("невозможно перевести "+position.ToString()+" в локальные координаты.");
+    public Vector2Int InLocalCoords(Vector3 position) {// игнорирует координату "y"
+        int posY = Mathf.RoundToInt(
+            position.z
+                / (this._hexagonPrefabRenderer.bounds.size.x + this.spacing) / Mathf.Cos(Mathf.PI/6)
+        );
+        return new Vector2Int(
+            Mathf.RoundToInt(
+                (position.x - ((posY % 2 == 0) ? 0 : ((this._hexagonPrefabRenderer.bounds.size.x + this.spacing) / 2)))
+                    / (this._hexagonPrefabRenderer.bounds.size.x + this.spacing)
+            ),
+            posY
+        );
     }
 
     public Vector2Int[] Neighbours(Vector2Int pos) {

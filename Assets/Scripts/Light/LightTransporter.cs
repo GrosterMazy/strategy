@@ -10,30 +10,24 @@ public class LightTransporter : MonoBehaviour
     private int _oldLightDecrease;
     public int LightForce;
     public int LightDecrease;
-    private HexCell _cell;
+    [NonSerialized] public HexCell cell;
     public LightTransporter Source;
-    private HexGrid _grid;
-    private TurnManager _turnManager;
+    [NonSerialized] public HexGrid grid;
+    [NonSerialized] public TurnManager turnManager;
     [NonSerialized] public Action<LightTransporter, int> OnLightForceChange;
-    private void Awake()
-    {
-        _cell = GetComponent<HexCell>();
-        _grid = FindObjectOfType<HexGrid>();
-        _turnManager = FindObjectOfType<TurnManager>();
-    }
 
     private void Start()
     {
-        foreach(Vector2Int Coords in _grid.Neighbours(transform.position))
+        foreach(Vector2Int Coords in grid.Neighbours(transform.position))
         {
-            _grid.childs[Coords.x, Coords.y].GetComponent<LightTransporter>().OnLightForceChange += OnLightSourceChanged;
+            grid.childs[Coords.x, Coords.y].GetComponent<LightTransporter>().OnLightForceChange += OnLightSourceChanged;
         }
     }
     private void OnDestroy()
     {
-        foreach (Vector2Int Coords in _grid.Neighbours(transform.position))
+        foreach (Vector2Int Coords in grid.Neighbours(transform.position))
         {
-            _grid.childs[Coords.x, Coords.y].GetComponent<LightTransporter>().OnLightForceChange -= OnLightSourceChanged;
+            grid.childs[Coords.x, Coords.y].GetComponent<LightTransporter>().OnLightForceChange -= OnLightSourceChanged;
         }
     }
     private void OnLightSourceChanged(LightTransporter NewSource,int NewLightForce)
@@ -41,18 +35,18 @@ public class LightTransporter : MonoBehaviour
        
         if (NewSource == Source)
         {
-            if (_turnManager.isDay && NewLightForce - NewSource.LightDecrease <= DarknessMainVariables.LightForce || !_turnManager.isDay && NewLightForce - NewSource.LightDecrease <= 0)
+            if (turnManager.isDay && NewLightForce - NewSource.LightDecrease <= DarknessMainVariables.LightForce || !turnManager.isDay && NewLightForce - NewSource.LightDecrease <= 0)
             {
                 SetLight(_oldLightForce,_oldLightDecrease);
                 return;
             }
             LightForce = NewLightForce - NewSource.LightDecrease;
             LightDecrease = NewSource.LightDecrease;
-            _cell.LightRate = (_turnManager.isDay ? DarknessMainVariables.LightForce : 0) + NewLightForce-NewSource.LightDecrease;
+            cell.LightRate = (turnManager.isDay ? DarknessMainVariables.LightForce : 0) + NewLightForce-NewSource.LightDecrease;
             OnLightForceChange?.Invoke(this, NewLightForce-NewSource.LightDecrease);
             return;
         }
-        if (_turnManager.isDay && NewLightForce - NewSource.LightDecrease <= DarknessMainVariables.LightForce || !_turnManager.isDay && NewLightForce - NewSource.LightDecrease <= 0)
+        if (turnManager.isDay && NewLightForce - NewSource.LightDecrease <= DarknessMainVariables.LightForce || !turnManager.isDay && NewLightForce - NewSource.LightDecrease <= 0)
             return;
         if (NewLightForce - NewSource.LightDecrease > LightForce)
         {
@@ -64,7 +58,7 @@ public class LightTransporter : MonoBehaviour
             LightForce = NewLightForce - NewSource.LightDecrease;
             Source = NewSource;
             LightDecrease = NewSource.LightDecrease;
-            _cell.LightRate= (_turnManager.isDay ? DarknessMainVariables.LightForce : 0) + NewLightForce - NewSource.LightDecrease;
+            cell.LightRate= (turnManager.isDay ? DarknessMainVariables.LightForce : 0) + NewLightForce - NewSource.LightDecrease;
             OnLightForceChange?.Invoke(this, NewLightForce - NewSource.LightDecrease);
         }
     }
@@ -73,7 +67,7 @@ public class LightTransporter : MonoBehaviour
         Source = null;
         LightForce = NewLightRate;
         LightDecrease = NewDecrease;
-        _cell.LightRate =( _turnManager.isDay ? DarknessMainVariables.LightForce : 0)+NewLightRate;
+        cell.LightRate = (turnManager.isDay ? DarknessMainVariables.LightForce : 0) + NewLightRate;
         OnLightForceChange?.Invoke(this, NewLightRate);
     }
 }

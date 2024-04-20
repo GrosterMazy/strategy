@@ -1036,6 +1036,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
         type: 3}
+      propertyPath: spacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: spacing.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: spacing.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
       propertyPath: heightStep
       value: 2
       objectReference: {fileID: 0}
