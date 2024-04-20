@@ -7,6 +7,7 @@ using System.Linq;
 
 public class FacilityDescription : ObjectOnGrid
 {
+    public Action OnEnteredWorker;
     public List<float> ArmorEfficiencyTable;
     public int ActionsToFinalizeBuilding;
     public int TeamAffiliation;
@@ -43,7 +44,7 @@ public class FacilityDescription : ObjectOnGrid
         if (IsSelected && WorkerOnSite && _placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null && Input.GetKeyDown(KeyCode.T) && IsSelectedDestinationNearby(_highlightedInLocalCoords)) {
             ObjectOnGrid _workerInsideMeLocalCoords = WorkerInsideMe.GetComponent<ObjectOnGrid>();
             WorkerInsideMe.SetActive(true); WorkerOnSite = false; WorkerInsideMe.transform.position = _highlighted.position; _workerInsideMeLocalCoords.LocalCoords = new Vector2Int(_highlightedInLocalCoords.x, _highlightedInLocalCoords.y);
-            _placementManager.UpdateGrid(_highlighted.position, _highlighted.position, _workerInsideMeLocalCoords); } }
+            _placementManager.UpdateGrid(_highlighted.position, _highlighted.position, _workerInsideMeLocalCoords); WorkerInsideMe = null; } }
 
     public bool IsSelectedDestinationNearby(Vector2Int _selectedCell) => _hexGrid.Neighbours(transform.position).Contains(_selectedCell);
 

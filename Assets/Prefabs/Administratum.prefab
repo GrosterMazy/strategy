@@ -239,25 +239,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
+  ActionsToFinalizeBuilding: 0
   TeamAffiliation: 0
   Armor: 5
   IsSelected: 0
   IsHighlighted: 0
   WorkerOnSite: 0
   MaxHealth: 50
-  CurrentHealth: 0
-  PercentFromMaxHealthForRepairment: 0
   ArmorUnitEfficiencyMaxAmount: 15
-  ArmorEfficiencyDecreasementPerUnit: 3
+  ArmorEfficiencyDecreasementPerUnit: 1
   WorkerInsideMe: {fileID: 0}
   FoodConsumption: 0
   OreConsumption: 0
   WoodConsumption: 0
   LightConsumption: 0
-  OverallLight: 5
-  OverallOre: 5
-  OverallWood: 5
-  OverallFood: 5
+  OverallLight: 7
+  OverallOre: 7
+  OverallWood: 7
+  OverallFood: 7
 --- !u!114 &9086735682775507510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40048bc7074e19a408615c13365478a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
+  "\u0421urrentHealth": 0
+  HealthPerRepairment: 0
 --- !u!1 &4556878165382001632
 GameObject:
   m_ObjectHideFlags: 0

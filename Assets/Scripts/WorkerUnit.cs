@@ -7,9 +7,10 @@ using System.Linq;
 public class WorkerUnit : UnitDescription
 {
     public float miningModifier;
+    public Dictionary<string, float> ResourcesWeights = new Dictionary<string, float>();
     public Dictionary<string, int> Inventory = new Dictionary<string, int>();
+    [NonSerialized] public float _weightCapacityRemaining;
     [SerializeField] private float WeightCapacityMax;
-    private float _weightCapacityRemaining;
     private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
     private UnitMovement _unitMovement => GetComponent<UnitMovement>();
     private UnitHealth _unitHealth => GetComponent<UnitHealth>();
@@ -25,21 +26,21 @@ public class WorkerUnit : UnitDescription
         if (_itemToCollect != null ) { _itemToReturnReference = _itemToCollect; }
         if (_objectOnMyWay != null) {_itemToCollect = _objectOnMyWay.GetComponent<CollectableItem>(); 
             if (_itemToCollect != null) { _canTakeItems = Mathf.Clamp(Mathf.FloorToInt(_weightCapacityRemaining / _itemToCollect.WeightOfOneItem), 0, _itemToCollect.NumberOfItems);
-                if (!Inventory.ContainsKey(_itemToCollect.Name)) { Inventory.Add(_itemToCollect.Name, _canTakeItems); }
+                if (!Inventory.ContainsKey(_itemToCollect.Name)) { Inventory.Add(_itemToCollect.Name, _canTakeItems); ResourcesWeights.Add(_itemToCollect.Name, 0); }
                 else if (Inventory.ContainsKey(_itemToCollect.Name)) { Inventory[_itemToCollect.Name] += _canTakeItems; }
-                _itemToCollect.Taken(_canTakeItems); _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem; } }
+                _itemToCollect.Taken(_canTakeItems); _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem; ResourcesWeights[_itemToCollect.Name] += _canTakeItems * _itemToCollect.WeightOfOneItem; } }
         if (_itemToCollect != null || _objectOnMyWay == null) return true;
         else return false;
     }
 
     private bool EnterBuilding(Vector2Int _cellToEnter) {
-        Building _buildingOnMyWay = null;
+        FirstFactionProductionBuildingDescription _buildingOnMyWay = null;
         var _objectOnMyWay = _placementManager.gridWithObjectsInformation[_cellToEnter.x, _cellToEnter.y];
         if (_objectOnMyWay != null) {       
-            _buildingOnMyWay = _objectOnMyWay.GetComponent<Building>();
+            _buildingOnMyWay = _objectOnMyWay.GetComponent<FirstFactionProductionBuildingDescription>();
             if (_buildingOnMyWay != null && !_buildingOnMyWay.WorkerOnSite && TeamAffiliation == _buildingOnMyWay.TeamAffiliation && _unitActions.remainingActionsCount > 0) {
                 if (_buildingOnMyWay.ActionsToFinalizeBuilding == 0) { 
-                    _buildingOnMyWay.WorkerOnSite = true; _placementManager.UpdateGrid(LocalCoords, LocalCoords, null); _buildingOnMyWay.WorkerInsideMe = gameObject; gameObject.SetActive(false); }
+                    _buildingOnMyWay.WorkerOnSite = true; _placementManager.UpdateGrid(LocalCoords, LocalCoords, null); _buildingOnMyWay.WorkerInsideMe = gameObject; _buildingOnMyWay.OnEnteredWorker?.Invoke(); gameObject.SetActive(false); }
                 else if (_buildingOnMyWay.Administratum.OverallLight >= _buildingOnMyWay.LightConstructionCost && _buildingOnMyWay.Administratum.OverallOre >= _buildingOnMyWay.OreConstructionCost &&
                         _buildingOnMyWay.Administratum.OverallWood >= _buildingOnMyWay.WoodConstructionCost && _buildingOnMyWay.Administratum.OverallFood >= _buildingOnMyWay.FoodConstructionCost) {
                     _buildingOnMyWay.ActionsToFinalizeBuilding -= 1; _buildingOnMyWay.BuildingExpenses("Construction"); _unitActions.remainingActionsCount -= 1; } } }
@@ -87,9 +88,9 @@ public class WorkerUnit : UnitDescription
         if (_itemToCollect != null)
         {
             _canTakeItems = Mathf.Clamp(Mathf.FloorToInt(_weightCapacityRemaining / _itemToCollect.WeightOfOneItem), 0, countOfResorces);
-            if (!Inventory.ContainsKey(_itemToCollect.Name)) { Inventory.Add(_itemToCollect.Name, _canTakeItems); }
+            if (!Inventory.ContainsKey(_itemToCollect.Name)) { Inventory.Add(_itemToCollect.Name, _canTakeItems); ResourcesWeights.Add(_itemToCollect.Name, 0); }
             else if (Inventory.ContainsKey(_itemToCollect.Name)) { Inventory[_itemToCollect.Name] += _canTakeItems; }
-            _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem;
+            _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem; ResourcesWeights[_itemToCollect.Name] += _canTakeItems * _itemToCollect.WeightOfOneItem;
         }
     }
 
@@ -98,7 +99,7 @@ public class WorkerUnit : UnitDescription
   
     private void Start() { _weightCapacityRemaining = WeightCapacityMax; }
 
-    private void Update() { RepairBuilding(); }
+    private void Update() { RepairBuilding(); if (Inventory.ContainsKey("Wood")) { Debug.Log(Inventory["Wood"]); } }
 
     
     private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; _unitHealth.death += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += GetToughResource; _unitMovement.WantToMoveOnCell += CollectItem; }

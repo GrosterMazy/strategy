@@ -11,9 +11,9 @@ public class BuildingManager : MonoBehaviour
     private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
     private Dictionary<int, Administratum> _teamsAdministratumsReferences = new Dictionary<int, Administratum>();
     [SerializeField] private Administratum Administratum;
-    [SerializeField] private Building Sawmill;
-    [SerializeField] private Building Foundry;
-    [SerializeField] private Building Barracks;
+    [SerializeField] private FirstFactionProductionBuildingDescription Sawmill;
+    [SerializeField] private FirstFactionProductionBuildingDescription Foundry;
+    [SerializeField] private FirstFactionProductionBuildingDescription Barracks;
 
     private void BuildBuildingsUpdate() {
                 if (_highlighted == null) { return; }
@@ -26,7 +26,7 @@ public class BuildingManager : MonoBehaviour
                 _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _administratum); }
             if (_teamsAdministratumsReferences.ContainsKey(CurrentTeamNumber) && IsAllyWorkerNearby(_highlightedInLocalCoords)) {
                 var _currentAdministratum = _teamsAdministratumsReferences[CurrentTeamNumber];
-                Building _buildingToBuild;
+                FirstFactionProductionBuildingDescription _buildingToBuild;
                 if (Input.GetKeyDown(KeyCode.Alpha2)) { _buildingToBuild = Sawmill; }
                 else if (Input.GetKeyDown(KeyCode.Alpha3)) { _buildingToBuild = Foundry; }
                 else if (Input.GetKeyDown(KeyCode.Alpha4)) { _buildingToBuild = Barracks; }

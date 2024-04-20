@@ -4,10 +4,9 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class Building : FirstFactionFacilities
+public class FirstFactionProductionBuildingDescription : FirstFactionFacilities
 {
     public Administratum Administratum;
-    public Dictionary<string, int> Storage = new Dictionary<string, int>();
 
     public float LightBuildingFoundationCost;
     public float FoodBuildingFoundationCost;

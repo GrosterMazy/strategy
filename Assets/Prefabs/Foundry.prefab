@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 1912249941856750916}
   - component: {fileID: 1912249941856750919}
   - component: {fileID: 92117117600809936}
+  - component: {fileID: 1568619188}
   m_Layer: 0
   m_Name: Foundry
   m_TagString: Untagged
@@ -234,27 +235,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
+  ActionsToFinalizeBuilding: 3
   TeamAffiliation: 0
   Armor: 3
   IsSelected: 0
   IsHighlighted: 0
   WorkerOnSite: 0
   MaxHealth: 10
-  CurrentHealth: 0
-  PercentFromMaxHealthForRepairment: 0
   ArmorUnitEfficiencyMaxAmount: 15
-  ArmorEfficiencyDecreasementPerUnit: 2
+  ArmorEfficiencyDecreasementPerUnit: 1
   WorkerInsideMe: {fileID: 0}
   FoodConsumption: 0
   OreConsumption: 0
   WoodConsumption: 0
   LightConsumption: 0
   Administratum: {fileID: 0}
-  ActionsToFinalizeBuilding: 3
-  LightBuildingCost: 1
-  FoodBuildingCost: 1
-  OreBuildingCost: 1
-  WoodBuildingCost: 1
+  LightBuildingFoundationCost: 0
+  FoodBuildingFoundationCost: 0
+  OreBuildingFoundationCost: 0
+  WoodBuildingFoundationCost: 0
+  LightConstructionCost: 0
+  FoodConstructionCost: 0
+  OreConstructionCost: 0
+  WoodConstructionCost: 0
 --- !u!114 &92117117600809936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,4 +270,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40048bc7074e19a408615c13365478a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
+  "\u0421urrentHealth": 0
+  HealthPerRepairment: 0
+--- !u!114 &1568619188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912249941856750918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761c83c81eed19d44a251b0fabc230a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RawMaterialName: Ore
+  ProcessedMaterialName: Steel
+  RawMaterialProcessingPerTurn: 0
+  ProcessedMaterialProductionPerTurn: 0
+  WeightOfOneProcessedMaterial: 0
