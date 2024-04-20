@@ -20,8 +20,8 @@ public class HexGrid : MonoBehaviour {
     * * * *
     */
 
-    [NonSerialized] public GameObject[,] cells;
-    [NonSerialized] public HexCell[,] childs;
+    [NonSerialized] public GameObject[,] pivots;
+    [NonSerialized] public HexCell[,] hexCells;
     /*
     Координаты построены как будто у нас квадратное поле, тоесть на нашем примере так:
     * * * *
@@ -55,8 +55,8 @@ public class HexGrid : MonoBehaviour {
         this._hexagonPrefabRenderer = this.hexagonPrefab.transform.GetChild(0).GetComponent<Renderer>();
         this._turnManager = FindObjectOfType<TurnManager>();
 
-        this.cells = new GameObject[this.size.x, this.size.y];
-        this.childs = new HexCell[this.size.x, this.size.y];
+        this.pivots = new GameObject[this.size.x, this.size.y];
+        this.hexCells = new HexCell[this.size.x, this.size.y];
 
         this.GenerateMap();
     }
@@ -102,7 +102,7 @@ public class HexGrid : MonoBehaviour {
                     child.transform.localScale.y,
                     child.transform.localScale.z
                         + child.transform.position.y / (this._hexagonPrefabRenderer.bounds.size.y / child.transform.localScale.z)
-                    );
+                );
 
                 child.transform.localPosition = new Vector3(
                     child.transform.localPosition.x,
@@ -112,16 +112,16 @@ public class HexGrid : MonoBehaviour {
 
                 child.height = height;
                 
-                this.cells[x, y] = cell;
-                this.childs[x, y] = child;
+                this.pivots[x, y] = cell;
+                this.hexCells[x, y] = child;
             }
     }
 
     public Vector3 InUnityCoords(Vector2Int pos, int height = -1/*высота клетки*/) {
-        if (this.cells[pos.x, pos.y] == null && height == -1)
+        if (this.pivots[pos.x, pos.y] == null && height == -1)
             throw new System.Exception("нету клетки в локальных координатах "+pos.ToString()+", а значит невозможно взять её высоту.");
 
-        int realHeight = (height == -1) ? this.childs[pos.x, pos.y].height : height;
+        int realHeight = (height == -1) ? this.hexCells[pos.x, pos.y].height : height;
 
 
         return new Vector3(
@@ -159,7 +159,7 @@ public class HexGrid : MonoBehaviour {
         };
         return Array.FindAll(potentialMoves, newpos =>
             newpos.x >= 0 && newpos.x < this.size.x && newpos.y >= 0 && newpos.y < this.size.y 
-            && this.cells[newpos.x, newpos.y] != null
+            && this.pivots[newpos.x, newpos.y] != null
         );
     }
     public Vector2Int[] Neighbours(Vector3 position) {
