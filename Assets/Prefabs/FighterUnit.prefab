@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6005090392611746926}
   - component: {fileID: 4847159160706961445}
   - component: {fileID: 3677984192473180696}
+  - component: {fileID: 5997869422801285634}
+  - component: {fileID: 5489589189015990291}
   m_Layer: 0
   m_Name: FighterUnit
   m_TagString: Untagged
@@ -49,8 +51,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 1, y: 3}
   ArmorEfficiencyTable: []
+  IsSelected: 0
+  IsHighlighted: 0
   ActionsPerTurn: 0
   Armor: 5
+  TeamAffiliation: 0
   MovementSpeed: 3
   AttackRange: 0
   Health: 0
@@ -70,7 +75,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57437c77df970c4fb986c4ddc26639d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 0
   spentSpeed: 0
 --- !u!114 &4847159160706961445
 MonoBehaviour:
@@ -99,6 +103,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   remainingActionsCount: 0
+--- !u!135 &5997869422801285634
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6005090392611746927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &5489589189015990291
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6005090392611746927}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7926910684266465754
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +143,6 @@ GameObject:
   - component: {fileID: 3553751184340051589}
   - component: {fileID: 6633804158316900029}
   - component: {fileID: 3979384713330186108}
-  - component: {fileID: 8821337757911105282}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -179,17 +211,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &8821337757911105282
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7926910684266465754}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!136 &4803362390072136198
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336970646593665886}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.008752365
+  m_Height: 0.00096890586
+  m_Direction: 2
+  m_Center: {x: 0, y: 2.2204462e-18, z: 0.000015543043}
 --- !u!114 &3141278201667388023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,7 +27,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
-  Damage: 0
+  Damage: 10
 --- !u!1001 &6570779256384112143
 PrefabInstance:
   m_ObjectHideFlags: 0
