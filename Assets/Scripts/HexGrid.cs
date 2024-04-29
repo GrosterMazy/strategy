@@ -4,10 +4,11 @@ using UnityEngine;
 using System;
 
 public class HexGrid : MonoBehaviour {
+    [Header("Base")]
     [SerializeField] private GameObject hexagonPrefab;
     private Renderer _hexagonPrefabRenderer;
 
-    public Vector2Int  size; // размер в клетках
+    public Vector2Int size; // размер в клетках
     /* Например поле 5(по x) на 4(по z) будет выглядеть так:
     ^ z
     |
@@ -30,24 +31,31 @@ public class HexGrid : MonoBehaviour {
     * f e *
     * * * *
     */
-    [SerializeField] private int spacing; // расстояние между клетками
+    [SerializeField] private int spacing;
 
-    [SerializeField] private bool randomSeed = true; // false - использует поле seed, true - генерирует случайный(его можно увидеть в поле seed после запуска)
-    private float _minSeedNumber = 0f;
-    private float _maxSeedNumber = 10_000f;
+    [Header("Terrain Generation")]
+    [SerializeField] private Noise baseHeight;
+    [SerializeField] private Noise erosion; // делает пики гор более острыми
+    [SerializeField] private Noise rivers;
+    [SerializeField, Range(0f, 1f)] private float riverWidth = 0.1f; // ширина рек (берутся значения вокруг 0.5 из rivers). при riverWidth == 0 реки не генерируются
     
-    [SerializeField] private Vector2 seed; // ключ генератора карты высот
+    [SerializeField] private Vector2Int numberOfPlates; // кол-во тектонических плит на карте. должно быть меньше size
+    private Vector2Int[,] _plateCenters;
+    private bool[,] _plateBorders;
 
-    [SerializeField] private float smoothness = 10; // насколько ровный ландшафт карты
 
     [SerializeField, Range(0f, 1f)] private float waterLevel = 0.3f; // высота от 0(минимальная) до 1(максимальная), ниже которой перестают создаваться клетки
 
-    
+    [Header("Height Mapping")]
     [SerializeField] private int numberOfHeights = 2; // кол-во ступеней высот. минимальная высота 0, максимальная numberOfHeights-1
     [SerializeField] private bool showHeightOnCells = false; // раставлять клетки в соответствии с их высотой
-    [SerializeField] private bool linearHeightStep = true; // true - клетки разница в высоте между клетками с соседними значениями height равна heightStep, false - берётся из heightSteps
+    [SerializeField] private bool linearHeightStep = true; // true - клетки разница в высоте между клетками с соседними значениями height равна heightStep, false - берётся из heights
     [SerializeField] private float heightStep;
-    [SerializeField] private float[] heightSteps;
+    [SerializeField] private float[] heights;
+
+    [Header("Biome Placement")]
+    [SerializeField] private Noise temperature;
+    [SerializeField] private Noise wetness;
 
     private TurnManager _turnManager;
 
@@ -55,31 +63,44 @@ public class HexGrid : MonoBehaviour {
         this._hexagonPrefabRenderer = this.hexagonPrefab.transform.GetChild(0).GetComponent<Renderer>();
         this._turnManager = FindObjectOfType<TurnManager>();
 
+        this._plateCenters = new Vector2Int[this.numberOfPlates.x, this.numberOfPlates.y];
+        this._plateBorders = new bool[this.size.x, this.size.y];
+
+        this.GenerateTectonicPlates();
+
         this.pivots = new GameObject[this.size.x, this.size.y];
         this.hexCells = new HexCell[this.size.x, this.size.y];
 
+        this.baseHeight.Init();
+        this.erosion.Init();
+        this.rivers.Init();
+
         this.GenerateMap();
+
+        this.temperature.Init();
+        this.wetness.Init();
+
+        this.PlaceBiomes();
+    }
+
+    private void GenerateTectonicPlates() {
+        Vector2Int step = Vector2Int.RoundToInt(((Vector2)this.size)/this.numberOfPlates);
+        // for (int x = 0; x < this.numberOfPlates.x; x++)
+        //     for (int baseY = 0; baseY < this.size.y; baseY += step.y) {
+                
+        //     }
     }
 
     private void GenerateMap() {
-        if (this.randomSeed)
-            this.seed = new Vector2(
-                UnityEngine.Random.Range(this._minSeedNumber, this._maxSeedNumber),
-                UnityEngine.Random.Range(this._minSeedNumber, this._maxSeedNumber)
-            );
-
         for (int x = 0; x < this.size.x; x++)
             for (int y = 0; y < this.size.y; y++) {
-                float heightNormalized = Mathf.Clamp(Mathf.PerlinNoise(
-                    x/this.smoothness + this.seed.x,
-                    y/this.smoothness + this.seed.y
-                ), 0f, 1f);
+                float baseHeight = this.baseHeight.ValueAt(x, y);
 
-                if (heightNormalized < this.waterLevel) continue;
+                if (baseHeight < this.waterLevel) continue;
 
-                int height = (int)Mathf.Round(Mathf.Lerp(0, this.numberOfHeights-1, heightNormalized));
+                int height = Mathf.RoundToInt(Mathf.Lerp(0, this.numberOfHeights-1, baseHeight));
 
-                GameObject cell = Instantiate(
+                GameObject pivot = Instantiate(
                     this.hexagonPrefab,
                     this.InUnityCoords(
                         new Vector2Int(x, y),
@@ -88,48 +109,58 @@ public class HexGrid : MonoBehaviour {
                     this.hexagonPrefab.transform.rotation,
                     this.transform
                 );
-                HexCell child = cell.transform.GetChild(0).GetComponent<HexCell>();
+                HexCell hexCell = pivot.transform.GetChild(0).GetComponent<HexCell>();
 
-                LightTransporter lightTransporter = child.GetComponent<LightTransporter>();
+                // set variables of LightTransporter(for optimization)
+                LightTransporter lightTransporter = hexCell.GetComponent<LightTransporter>();
                 lightTransporter.grid = this;
                 lightTransporter.turnManager = this._turnManager;
-                lightTransporter.cell = child;
+                lightTransporter.cell = hexCell;                
 
-                child.lightTransporter = lightTransporter;
-
-                child.transform.localScale = new Vector3(
-                    child.transform.localScale.x,
-                    child.transform.localScale.y,
-                    child.transform.localScale.z
-                        + child.transform.position.y / (this._hexagonPrefabRenderer.bounds.size.y / child.transform.localScale.z)
+                // scale hexCell and move it's center
+                hexCell.transform.localScale = new Vector3(
+                    hexCell.transform.localScale.x,
+                    hexCell.transform.localScale.y,
+                    hexCell.transform.localScale.z
+                        + hexCell.transform.position.y / (this._hexagonPrefabRenderer.bounds.size.y / hexCell.transform.localScale.z)
+                );
+                hexCell.transform.localPosition = new Vector3(
+                    hexCell.transform.localPosition.x,
+                    -hexCell.transform.position.y/2,
+                    hexCell.transform.localPosition.z
                 );
 
-                child.transform.localPosition = new Vector3(
-                    child.transform.localPosition.x,
-                    -child.transform.position.y/2,
-                    child.transform.localPosition.z
-                );
-
-                child.height = height;
+                // set variables of hexCell
+                hexCell.lightTransporter = lightTransporter;
+                hexCell.height = height;
                 
-                this.pivots[x, y] = cell;
-                this.hexCells[x, y] = child;
+                // set maps
+                this.pivots[x, y] = pivot;
+                this.hexCells[x, y] = hexCell;
             }
     }
 
-    public Vector3 InUnityCoords(Vector2Int pos, int height = -1/*высота клетки*/) {
-        if (this.pivots[pos.x, pos.y] == null && height == -1)
-            throw new System.Exception("нету клетки в локальных координатах "+pos.ToString()+", а значит невозможно взять её высоту.");
+    private void PlaceBiomes() {}
 
-        int realHeight = (height == -1) ? this.hexCells[pos.x, pos.y].height : height;
+    public bool InBoundsOfMap(Vector2Int pos) => pos.x >= 0 && pos.x < this.size.x && pos.y >= 0 && pos.y < this.size.y;
 
+    public Vector3 InUnityCoords(Vector2Int pos, int height = -1/*брать "y" у pivot'a клетки*/) {
+        if (!this.InBoundsOfMap(pos))
+            throw new System.Exception("локальные координаты "+pos.ToString()+" за пределами поля.");
+        
+        if (height == -1) {
+            if (this.pivots[pos.x, pos.y] == null)
+                throw new System.Exception("нету клетки в локальных координатах "+pos.ToString()+", а значит невозможно взять её высоту.");
+            return this.pivots[pos.x, pos.y].transform.position;
+        }
 
         return new Vector3(
             pos.x * (this._hexagonPrefabRenderer.bounds.size.x + this.spacing)
                 + ((pos.y % 2 == 0) ? 0 : ((this._hexagonPrefabRenderer.bounds.size.x + this.spacing) / 2)),
             (this.showHeightOnCells ?
-                (this.linearHeightStep ? realHeight*this.heightStep : this.heightSteps[realHeight])
-                : 0),
+                (this.linearHeightStep ? height*this.heightStep : this.heights[height])
+                : 0
+            ),
             pos.y * (this._hexagonPrefabRenderer.bounds.size.x + this.spacing) * Mathf.Cos(Mathf.PI/6)
         );
     }
@@ -139,16 +170,19 @@ public class HexGrid : MonoBehaviour {
             position.z
                 / (this._hexagonPrefabRenderer.bounds.size.x + this.spacing) / Mathf.Cos(Mathf.PI/6)
         );
-        return new Vector2Int(
+        Vector2Int pos = new Vector2Int(
             Mathf.RoundToInt(
                 (position.x - ((posY % 2 == 0) ? 0 : ((this._hexagonPrefabRenderer.bounds.size.x + this.spacing) / 2)))
                     / (this._hexagonPrefabRenderer.bounds.size.x + this.spacing)
             ),
             posY
         );
+        if (!this.InBoundsOfMap(pos))
+            throw new System.Exception("координаты "+position.ToString()+" за пределами поля.");
+        return pos;
     }
 
-    public Vector2Int[] Neighbours(Vector2Int pos) {
+    public Vector2Int[] Neighbours(Vector2Int pos, int maxHeightDifference = -1/*any height difference*/, bool restrictDownMovement = false) {
         Vector2Int[] potentialMoves = new Vector2Int[6] {
             new Vector2Int(pos.x+1, pos.y),
             new Vector2Int(pos.x-1, pos.y),
@@ -160,11 +194,17 @@ public class HexGrid : MonoBehaviour {
         return Array.FindAll(potentialMoves, newpos =>
             newpos.x >= 0 && newpos.x < this.size.x && newpos.y >= 0 && newpos.y < this.size.y 
             && this.pivots[newpos.x, newpos.y] != null
+            && (maxHeightDifference == -1 ?
+                true
+                : (restrictDownMovement ?
+                    Mathf.Abs(this.hexCells[newpos.x, newpos.y].height - this.hexCells[pos.x, pos.y].height)
+                    : this.hexCells[newpos.x, newpos.y].height - this.hexCells[pos.x, pos.y].height
+                ) <= maxHeightDifference
+            )
         );
     }
-    public Vector2Int[] Neighbours(Vector3 position) {
-        return this.Neighbours(this.InLocalCoords(position));
-    }
+    public Vector2Int[] Neighbours(Vector3 position, int maxHeightDifference = -1/*any height difference*/, bool restrictDownMovement = false) =>
+        this.Neighbours(this.InLocalCoords(position), maxHeightDifference, restrictDownMovement);
 
     public int Distance(Vector2Int pos1, Vector2Int pos2) {
         Vector2Int start = pos1;
@@ -201,7 +241,5 @@ public class HexGrid : MonoBehaviour {
             
         return dist;
     }
-    public int Distance(Vector3 position1, Vector3 position2) {
-        return this.Distance(this.InLocalCoords(position1), this.InLocalCoords(position2));
-    }
+    public int Distance(Vector3 position1, Vector3 position2) => this.Distance(this.InLocalCoords(position1), this.InLocalCoords(position2));
 }

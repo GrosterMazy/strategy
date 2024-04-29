@@ -49,7 +49,7 @@ public class UnitMovement : MonoBehaviour
             {
                 bool? _canIMove = WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
                 if (!(bool)_canIMove) { return; }
-                transform.position = _highlighted.position;
+                transform.position = _highlighted.parent.transform.position;
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
                 MovedToCell?.Invoke();
                 _objectOnGrid.LocalCoords = _hexGrid.InLocalCoords(_highlighted.position);
@@ -66,7 +66,7 @@ public class UnitMovement : MonoBehaviour
         var _neighbours = _hexGrid.Neighbours(_mouseSelection.selected.position);
         for (int i = 0; i < _neighbours.Length; i++)
         {
-            if (highlighted.position == _hexGrid.InUnityCoords(_neighbours[i]))
+            if (highlighted.position == _hexGrid.hexCells[_neighbours[i].x, _neighbours[i].y].transform.position)
             {
                 _isHighlightedNeighbour = true;
                 break;

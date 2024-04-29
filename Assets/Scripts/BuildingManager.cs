@@ -20,7 +20,7 @@ public class BuildingManager : MonoBehaviour
         var _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
         if (_placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null) {
             if (Input.GetKeyDown(KeyCode.Alpha1) && !_teamsAdministratumsReferences.ContainsKey(CurrentTeamNumber)) {
-                var _administratum = Instantiate(Administratum, _highlighted.position, Quaternion.identity);
+                var _administratum = Instantiate(Administratum, _highlighted.parent.transform.position, Quaternion.identity);
                 _administratum.TeamAffiliation = CurrentTeamNumber;
                 _teamsAdministratumsReferences.Add(CurrentTeamNumber, _administratum);
                 _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _administratum); }
@@ -33,7 +33,7 @@ public class BuildingManager : MonoBehaviour
                 else return;
                 if (_currentAdministratum.OverallLight >= _buildingToBuild.LightBuildingFoundationCost && _currentAdministratum.OverallOre >= _buildingToBuild.OreBuildingFoundationCost &&
                         _currentAdministratum.OverallWood >= _buildingToBuild.WoodBuildingFoundationCost && _currentAdministratum.OverallFood >= _buildingToBuild.FoodBuildingFoundationCost) {
-                    var _building = Instantiate(_buildingToBuild, _highlighted.position, Quaternion.identity);
+                    var _building = Instantiate(_buildingToBuild, _highlighted.parent.transform.position, Quaternion.identity);
                     _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _building);
                     _building.TeamAffiliation = CurrentTeamNumber;
                     _building.Administratum = _teamsAdministratumsReferences[_building.TeamAffiliation];

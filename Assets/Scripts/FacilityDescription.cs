@@ -43,7 +43,7 @@ public class FacilityDescription : ObjectOnGrid
         Vector2Int _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
         if (IsSelected && WorkerOnSite && _placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null && Input.GetKeyDown(KeyCode.T) && IsSelectedDestinationNearby(_highlightedInLocalCoords)) {
             ObjectOnGrid _workerInsideMeLocalCoords = WorkerInsideMe.GetComponent<ObjectOnGrid>();
-            WorkerInsideMe.SetActive(true); WorkerOnSite = false; WorkerInsideMe.transform.position = _highlighted.position; _workerInsideMeLocalCoords.LocalCoords = new Vector2Int(_highlightedInLocalCoords.x, _highlightedInLocalCoords.y);
+            WorkerInsideMe.SetActive(true); WorkerOnSite = false; WorkerInsideMe.transform.position = _highlighted.parent.transform.position; _workerInsideMeLocalCoords.LocalCoords = new Vector2Int(_highlightedInLocalCoords.x, _highlightedInLocalCoords.y);
             _placementManager.UpdateGrid(_highlighted.position, _highlighted.position, _workerInsideMeLocalCoords); WorkerInsideMe = null; } }
 
     public bool IsSelectedDestinationNearby(Vector2Int _selectedCell) => _hexGrid.Neighbours(transform.position).Contains(_selectedCell);

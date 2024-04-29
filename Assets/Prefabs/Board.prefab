@@ -46,13 +46,14 @@ MonoBehaviour:
   hexagonPrefab: {fileID: 5665832294305024598, guid: d128650f6653d614197c2cbe50459ea9,
     type: 3}
   size: {x: 20, y: 20}
-  spacing: {x: 0, y: 0}
-  randomSeed: 1
-  seed: {x: 0, y: 0}
-  smoothness: 10
-  waterLevel: 0.3
+  spacing: 0
+  baseHeight:
+    scale: 10
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  waterLevel: 0
   numberOfHeights: 2
   showHeightOnCells: 0
   linearHeightStep: 1
   heightStep: 1
-  heightSteps: []
+  heights: []
