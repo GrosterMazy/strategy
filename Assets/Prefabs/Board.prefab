@@ -45,15 +45,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexagonPrefab: {fileID: 5665832294305024598, guid: d128650f6653d614197c2cbe50459ea9,
     type: 3}
-  size: {x: 20, y: 20}
+  size: {x: 100, y: 100}
   spacing: 0
   baseHeight:
     scale: 10
     randomSeed: 1
     seed: {x: 0, y: 0}
+  erosion:
+    scale: 100
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  erosionSlopeInfluence: 0.5
+  rigidity:
+    scale: 30
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  rigidityHeightInfluence: 1
+  rivers:
+    scale: 5
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  riverWidth: 0
+  riverDepth: 0
+  numberOfPlates: {x: 2, y: 3}
+  mountainHeight: 2
+  mountainSlope: 0.01
   waterLevel: 0
-  numberOfHeights: 2
-  showHeightOnCells: 0
+  numberOfHeights: 50
+  showHeightOnCells: 1
   linearHeightStep: 1
-  heightStep: 1
+  heightStep: 0.25
   heights: []
+  temperature:
+    scale: 0
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  wetness:
+    scale: 0
+    randomSeed: 1
+    seed: {x: 0, y: 0}

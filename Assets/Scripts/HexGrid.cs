@@ -35,14 +35,28 @@ public class HexGrid : MonoBehaviour {
 
     [Header("Terrain Generation")]
     [SerializeField] private Noise baseHeight;
+    private float[,] _multiplyersMap; // карта множителей для базовой высоты
+    private float _maxMultiplyer = 1;
+
     [SerializeField] private Noise erosion; // делает пики гор более острыми
+    [SerializeField] private float erosionSlopeInfluence;
+
+    [SerializeField] private Noise rigidity;
+    [SerializeField] private float rigidityHeightInfluence;
+
     [SerializeField] private Noise rivers;
     [SerializeField, Range(0f, 1f)] private float riverWidth = 0.1f; // ширина рек (берутся значения вокруг 0.5 из rivers). при riverWidth == 0 реки не генерируются
+    [SerializeField] private float riverDepth;
     
     [SerializeField] private Vector2Int numberOfPlates; // кол-во тектонических плит на карте. должно быть меньше size
-    private Vector2Int[,] _plateCenters;
-    private bool[,] _plateBorders;
+    [SerializeField] private float mountainHeight;
+    [SerializeField] private float mountainSlope; 
 
+    private Vector2Int[,] _plateCenters; // локальные координаты центра плиты для каждого чанка
+    private Vector2Int[,] _plateCoords; // локальные координаты центра плиты для каждой локальной координаты
+    private List<Vector2Int> _plateborders;
+    private bool[,] _mountainExpanded;
+    private Vector2Int _chunkStep;
 
     [SerializeField, Range(0f, 1f)] private float waterLevel = 0.3f; // высота от 0(минимальная) до 1(максимальная), ниже которой перестают создаваться клетки
 
@@ -64,60 +78,162 @@ public class HexGrid : MonoBehaviour {
         this._turnManager = FindObjectOfType<TurnManager>();
 
         this._plateCenters = new Vector2Int[this.numberOfPlates.x, this.numberOfPlates.y];
-        this._plateBorders = new bool[this.size.x, this.size.y];
-
-        this.GenerateTectonicPlates();
-
+        this._plateCoords = new Vector2Int[this.size.x, this.size.y];
+        this._plateborders =  new List<Vector2Int>();
         this.pivots = new GameObject[this.size.x, this.size.y];
         this.hexCells = new HexCell[this.size.x, this.size.y];
-
-        this.baseHeight.Init();
+        this._multiplyersMap = new float[this.size.x, this.size.y];
+        this._mountainExpanded = new bool[this.size.x, this.size.y];
+        for (int x = 0; x < this.size.x; x++)
+            for (int y = 0; y < this.size.y; y++)
+                this._multiplyersMap[x, y] = 1;
+        
+        this._chunkStep = Vector2Int.RoundToInt(((Vector2)this.size)/this.numberOfPlates);
+        
         this.erosion.Init();
         this.rivers.Init();
-
-        this.GenerateMap();
-
+        this.baseHeight.Init();
+        this.rigidity.Init();
         this.temperature.Init();
         this.wetness.Init();
 
+
+        this.GenerateTectonicPlateCenters();
+        this.GenerateTectonicPlateBorders();
+        this.GenerateMultiplyersMap();
+        this.GenerateMap();
         this.PlaceBiomes();
     }
 
-    private void GenerateTectonicPlates() {
-        Vector2Int step = Vector2Int.RoundToInt(((Vector2)this.size)/this.numberOfPlates);
-        // for (int x = 0; x < this.numberOfPlates.x; x++)
-        //     for (int baseY = 0; baseY < this.size.y; baseY += step.y) {
+    private void GenerateTectonicPlateCenters() {
+        for (int x = 0; x < this.numberOfPlates.x; x++)
+            for (int y = 0; y < this.numberOfPlates.y; y++)
+                this._plateCenters[x, y] = new Vector2Int(
+                    x*this._chunkStep.x + UnityEngine.Random.Range(0, this._chunkStep.x),
+                    y*this._chunkStep.y + UnityEngine.Random.Range(0, this._chunkStep.y)
+                );
+    }
+
+    private void GenerateTectonicPlateBorders() {
+        for (int x = 0; x < this.size.x; x++)
+            for (int y = 0; y < this.size.y; y++) {
+                Vector2Int pos = new Vector2Int(x, y);
+
+                // узнаём, к какой плите мы относимся
+                int minDistanceToPlate = 1_000_000; 
+                int minDistancePlateX = -1;
+                int minDistancePlateY = -1;
+
+                int chunkX = x / this._chunkStep.x;
+                int chunkY = y / this._chunkStep.y;
                 
-        //     }
+                for (int offsetX = -1; offsetX <= 1; offsetX++)
+                    for (int offsetY = -1; offsetY <= 1; offsetY++) {
+                        if (chunkX+offsetX < 0 || chunkX+offsetX >= this.numberOfPlates.x
+                                || chunkY+offsetY < 0 || chunkY+offsetY >= this.numberOfPlates.y)
+                            continue;
+                        
+                        int distance = this.Distance(this._plateCenters[chunkX+offsetX, chunkY+offsetY], pos);
+
+                        if (distance < minDistanceToPlate) {
+                            minDistanceToPlate = distance;
+                            minDistancePlateX = chunkX+offsetX;
+                            minDistancePlateY = chunkY+offsetY;
+                        }
+                    }
+                
+                this._plateCoords[x, y] = new Vector2Int(minDistancePlateX, minDistancePlateY);
+                
+                // отмечаем границы
+                if (x > 0 && this._plateCoords[x, y] != this._plateCoords[x-1, y]
+                        || y > 0 && this._plateCoords[x, y] != this._plateCoords[x, y-1]) {
+                    this._plateborders.Add(pos);
+                    this._mountainExpanded[x, y] = true;
+                }    
+            }
+
+    }
+
+    private void GenerateMultiplyersMap() {
+
+        foreach (Vector2Int pos in this._plateborders) {
+            Stack<(Vector2Int, float)> toMultiply = new Stack<(Vector2Int, float)>();
+
+            Vector2Int curpos = pos;
+            float curMultiplyer = this.mountainHeight;
+            this._maxMultiplyer = Mathf.Max(this._maxMultiplyer, curMultiplyer);
+
+            this._multiplyersMap[curpos.x, curpos.y] += curMultiplyer;
+
+            foreach (Vector2Int newpos in Array.FindAll(this.Neighbours(curpos), newpos => !this._mountainExpanded[newpos.x, newpos.y])) {
+                float newMultiplyer = curMultiplyer
+                    - this.mountainSlope - this.erosion.ValueAt(newpos.x, newpos.y)*this.erosionSlopeInfluence;
+                if (newMultiplyer > 1) {
+                    this._maxMultiplyer = Mathf.Max(this._maxMultiplyer, newMultiplyer);
+                    this._mountainExpanded[newpos.x, newpos.y] = true;
+                    toMultiply.Push((newpos, newMultiplyer));   
+                }
+            }
+
+            int c = 0;
+            while (toMultiply.Count > 0 && c < 10_000) {
+                (curpos, curMultiplyer) = toMultiply.Pop();
+
+                this._multiplyersMap[curpos.x, curpos.y] += curMultiplyer;
+
+                foreach (Vector2Int newpos in Array.FindAll(this.Neighbours(curpos), newpos => !this._mountainExpanded[newpos.x, newpos.y])) {
+                    float newMultiplyer = curMultiplyer
+                        - this.mountainSlope - this.erosion.ValueAt(newpos.x, newpos.y)*this.erosionSlopeInfluence;
+                    if (newMultiplyer > 1) {
+                        this._maxMultiplyer = Mathf.Max(this._maxMultiplyer, newMultiplyer);
+                        this._mountainExpanded[newpos.x, newpos.y] = true;
+                        toMultiply.Push((newpos, newMultiplyer));
+                    }
+                }
+                c++;
+            }
+            if (c == 10_000) Debug.Log("FUC");
+        }
+
     }
 
     private void GenerateMap() {
-        for (int x = 0; x < this.size.x; x++)
+        for (int x = 0; x < this.size.x; x++) {
             for (int y = 0; y < this.size.y; y++) {
-                float baseHeight = this.baseHeight.ValueAt(x, y);
+                Vector2Int pos = new Vector2Int(x, y);
 
+                float baseHeight = this.baseHeight.ValueAt(x, y);
+                float rigidity = this.rigidity.ValueAt(x, y);
+
+                baseHeight /= this._maxMultiplyer;
+                baseHeight *= this._multiplyersMap[x, y];
+
+                baseHeight *= rigidity*this.rigidityHeightInfluence;
+
+                // игнорируем клетки ниже уровня воды
                 if (baseHeight < this.waterLevel) continue;
 
+                // создаём клетку
                 int height = Mathf.RoundToInt(Mathf.Lerp(0, this.numberOfHeights-1, baseHeight));
 
                 GameObject pivot = Instantiate(
                     this.hexagonPrefab,
-                    this.InUnityCoords(
-                        new Vector2Int(x, y),
-                        (this.showHeightOnCells ? height : 0)
-                    ),
+                    this.InUnityCoords(pos, (this.showHeightOnCells ? height : 0)),
                     this.hexagonPrefab.transform.rotation,
                     this.transform
                 );
                 HexCell hexCell = pivot.transform.GetChild(0).GetComponent<HexCell>();
 
-                // set variables of LightTransporter(for optimization)
+                // покраска границ плит
+                // if (border) hexCell.GetComponent<Renderer>().material.color = new Vector4(140/256f, 109/256f, 95/256f, 0f);
+
+                // устанавливаем переменные LightTransporter'a (для оптимизации)
                 LightTransporter lightTransporter = hexCell.GetComponent<LightTransporter>();
                 lightTransporter.grid = this;
                 lightTransporter.turnManager = this._turnManager;
                 lightTransporter.cell = hexCell;                
 
-                // scale hexCell and move it's center
+                // раширяем клету и двигаем её центр (можно убрать эту часть и клетки будут просто подниматься по оси у)
                 hexCell.transform.localScale = new Vector3(
                     hexCell.transform.localScale.x,
                     hexCell.transform.localScale.y,
@@ -130,14 +246,15 @@ public class HexGrid : MonoBehaviour {
                     hexCell.transform.localPosition.z
                 );
 
-                // set variables of hexCell
+                // устанавливаем переменные клетки
                 hexCell.lightTransporter = lightTransporter;
                 hexCell.height = height;
                 
-                // set maps
+                // добавляем клетку на карту
                 this.pivots[x, y] = pivot;
                 this.hexCells[x, y] = hexCell;
             }
+        }
     }
 
     private void PlaceBiomes() {}
@@ -177,8 +294,10 @@ public class HexGrid : MonoBehaviour {
             ),
             posY
         );
+
         if (!this.InBoundsOfMap(pos))
             throw new System.Exception("координаты "+position.ToString()+" за пределами поля.");
+        
         return pos;
     }
 
@@ -192,8 +311,8 @@ public class HexGrid : MonoBehaviour {
             new Vector2Int(((pos.y % 2 == 0) ? pos.x-1 : pos.x+1), pos.y-1)
         };
         return Array.FindAll(potentialMoves, newpos =>
-            newpos.x >= 0 && newpos.x < this.size.x && newpos.y >= 0 && newpos.y < this.size.y 
-            && this.pivots[newpos.x, newpos.y] != null
+            this.InBoundsOfMap(newpos)
+            // && this.pivots[newpos.x, newpos.y] != null
             && (maxHeightDifference == -1 ?
                 true
                 : (restrictDownMovement ?

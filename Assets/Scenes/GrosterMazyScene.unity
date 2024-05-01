@@ -1025,6 +1025,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8349192589480795532, guid: 8b10a5220ed3dd14d89fbcb7eb4a3176,
+        type: 3}
+      propertyPath: maxZoom
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b10a5220ed3dd14d89fbcb7eb4a3176, type: 3}
 --- !u!1001 &7098207393726327973
@@ -1034,121 +1039,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: noise
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: seed.x
-      value: 123
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: seed.y
-      value: 123
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: size.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: size.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: spacing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: spacing.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: spacing.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightStep
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: randomSeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: waterLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightMap.scale
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: numberOfHeights
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: baseHeight.scale
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: linearHeightStep
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: showHeightOnCells
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightSteps.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightSteps.Array.data[0]
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightSteps.Array.data[1]
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightSteps.Array.data[2]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightSteps.Array.data[3]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightSteps.Array.data[4]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: heightSteps.Array.data[5]
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 7325931689074160785, guid: cece29dd214f2654e9af690c0e13a6df,
         type: 3}
       propertyPath: m_Name
