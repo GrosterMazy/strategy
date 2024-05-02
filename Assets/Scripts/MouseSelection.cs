@@ -42,7 +42,7 @@ public class MouseSelection : MonoBehaviour {
         }
 
         if (hasHit && hit != this.selected
-                //&& !EventSystem.current.IsPointerOverGameObject()
+                && !EventSystem.current.IsPointerOverGameObject()
                 ) {
             if (hit != this._lastHighlight) {
                 this._lastHighlight = hit;
@@ -63,7 +63,7 @@ public class MouseSelection : MonoBehaviour {
 
     private void UpdateSelection(Transform hit) {
         if (Input.GetMouseButtonDown(0)
-                //&& !EventSystem.current.IsPointerOverGameObject()
+                && !EventSystem.current.IsPointerOverGameObject()
                 ) {
             if (this.highlighted != null) {
                 

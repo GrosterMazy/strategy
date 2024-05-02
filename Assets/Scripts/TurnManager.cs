@@ -24,6 +24,14 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentTeamText;
     [SerializeField] private TextMeshProUGUI _remainingTimeText;
     [SerializeField] private TextMeshProUGUI _timeOfDayText;
+
+    private MouseSelection _mouseSelection;
+    private SelectedObjectInformationEnableController _selectedObjectInformationEnableController;
+
+    private void Awake()
+    {
+        InitComponentLinks();
+    }
     void Start()
     {
         FirstTurnStart();
@@ -63,6 +71,7 @@ public class TurnManager : MonoBehaviour
                 StartDay(); 
         }
         onTurnChanged?.Invoke();
+        SetChangesInOtherClassesOnTurnChanged();
     }
     private void StartNight()
     {
@@ -94,5 +103,16 @@ public class TurnManager : MonoBehaviour
         teamsDict[3] = "Third Team";
         teamsDict[4] = "Fourth Team";
         teamsDict[5] = "Fifth Team";
+    }
+
+    private void SetChangesInOtherClassesOnTurnChanged()
+    {
+        _selectedObjectInformationEnableController.SelectedObjectInformationSetActive(_mouseSelection.selected);
+    }
+
+    private void InitComponentLinks()
+    {
+        _mouseSelection = FindObjectOfType<MouseSelection>();
+        _selectedObjectInformationEnableController = FindObjectOfType<SelectedObjectInformationEnableController>();
     }
 }

@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SelectionController : MonoBehaviour
 {
+    public Action<Transform> onSelectedInformationChanged;
     public UnitDescription selectedUnit;
     public FirstFactionFacilities selectedFacility;
     public bool isAnyUnitSelected;
     public bool isAnyFirstFactionFacilitySelected;
     private UnitDescription _selectedBeforeUnit;
     private FirstFactionFacilities _selectedBeforeFacility;
-    private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
-    private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
-    private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
+    private MouseSelection _mouseSelection;
+    private HexGrid _hexGrid;
+    private PlacementManager _placementManager;
+
+    private void Awake()
+    {
+        InitComponentLinks();
+    }
 
     private void OnEnable()
     {
@@ -36,10 +43,13 @@ public class SelectionController : MonoBehaviour
             isAnyFirstFactionFacilitySelected = false;
             selectedFacility = null;
             if (_selectedBeforeFacility != null) _selectedBeforeFacility.IsSelected = false;
+
+            onSelectedInformationChanged?.Invoke(selected);
             return;
         }
         IsUnitSelected(selected);
         IsFirstFactionFacilitySelected(selected);
+        onSelectedInformationChanged?.Invoke(selected);
     }
     private void IsUnitSelected(Transform selected)
     {
@@ -90,5 +100,13 @@ public class SelectionController : MonoBehaviour
     private void OnAnyUnitDeath()
     {
         OnSelectionChanged(_mouseSelection.selected);
+    }
+
+
+    private void InitComponentLinks()
+    {
+        _mouseSelection = FindObjectOfType<MouseSelection>();
+        _hexGrid = FindObjectOfType<HexGrid>();
+        _placementManager = FindObjectOfType<PlacementManager>();
     }
 }

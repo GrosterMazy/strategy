@@ -7,17 +7,22 @@ public class UnitMovement : MonoBehaviour
 {
     public Func<Vector2Int, bool> WantToMoveOnCell; // вызывается до обновления координат на локальной сетке
     public Action MovedToCell; // вызывается после обновления координат на локальной сетке
-    private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();
-    private UnitDescription _unitDescription => GetComponent<UnitDescription>();
-    private TurnManager _turnManager => FindObjectOfType<TurnManager>();
+    private HighlightingController _highlightedController;
+    private UnitDescription _unitDescription;
+    private TurnManager _turnManager;
     private bool _isHighlightedNeighbour;
-    private ObjectOnGrid _objectOnGrid => GetComponent<ObjectOnGrid>();
-    private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
+    private ObjectOnGrid _objectOnGrid;
+    private PlacementManager _placementManager;
     private int _maxSpeed;
     public int spentSpeed = 0;
     private Transform _highlighted;
-    private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
-    private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
+    private MouseSelection _mouseSelection;
+    private HexGrid _hexGrid;
+
+    private void Awake()
+    {
+        InitComponentLinks();
+    }
     private void OnEnable()
     {
         TurnManager.onTurnChanged += UpdateSpeedValueOnTurnChanged;
@@ -77,5 +82,16 @@ public class UnitMovement : MonoBehaviour
     {
         _maxSpeed = _unitDescription.MovementSpeed;
         spentSpeed = 0;
+    }
+
+    private void InitComponentLinks()
+    {
+        _highlightedController = FindObjectOfType<HighlightingController>();
+        _unitDescription = GetComponent<UnitDescription>();
+        _turnManager = FindObjectOfType<TurnManager>();
+        _objectOnGrid = GetComponent<ObjectOnGrid>();
+        _placementManager = FindObjectOfType<PlacementManager>();
+        _mouseSelection = FindObjectOfType<MouseSelection>();
+        _hexGrid = FindObjectOfType<HexGrid>();
     }
 }

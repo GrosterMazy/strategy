@@ -31,7 +31,7 @@ public class HexGrid : MonoBehaviour {
     * f e *
     * * * *
     */
-    [SerializeField] private int spacing;
+    [SerializeField] private float spacing;
 
     [Header("Terrain Generation")]
     [SerializeField] private Noise baseHeight;

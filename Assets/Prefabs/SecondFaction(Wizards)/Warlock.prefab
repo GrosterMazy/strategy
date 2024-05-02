@@ -1,0 +1,372 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6387221082814792167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6387221082814792161}
+  - component: {fileID: 6387221082814792164}
+  - component: {fileID: 6387221082814792165}
+  - component: {fileID: 6387221082814792166}
+  - component: {fileID: 5238033596870829485}
+  - component: {fileID: 4107134960570834832}
+  - component: {fileID: 6397675707329890186}
+  - component: {fileID: 5177831250729846171}
+  m_Layer: 0
+  m_Name: Warlock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6387221082814792161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387221082814792167}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4225748096363156237}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6387221082814792164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387221082814792167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c37da588eef761a42afa655c2164d650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updatingHelpProperty: 0
+  SpelsList:
+  - Name: Circle
+    Description: 
+    Target_Header_: 
+    OnEnemyUnits: 1
+    OnTeammateUnits: 1
+    OnEnemyBuildings: 0
+    OnTeammateBuildings: 0
+    OnGround: 1
+    Target_EndHeader_: 
+    Shape_Header_: 
+    IsCircle: 1
+    IsLine: 0
+    IsThreeNeighbourCells: 0
+    Shape_EndHeader_: 
+    Conditions_Header_: 
+    MinRemainingActions: 2
+    SpendActions: 1
+    IsPassive: 0
+    IsOnButton: 1
+    IsCalling: 0
+    Conditions_EndHeader_: 
+    Ranges_Header_: 
+    CastRange: 0
+    CircleRange: 3
+    LineRange: 0
+    Ranges_EndHeader_: 
+    Damage_Header_: 
+    DamageCount: 50
+    PercentageDamageOfMaxTargetHealth: 0
+    PercentageDamageOfCurrentTargetHealth: 0
+    PercentageDamageOfMissingTargetHealth: 0
+    PercentageDamageOfMaxCasterHealth: 0
+    PercentageDamageOfCurrentCasterHealth: 0
+    PercentageDamageOfMissingCasterHealth: 0
+    ArmourPenetration: 3
+    Damage_EndHeader_: 
+    Heal_Header_: 
+    HealCount: 10
+    PercentageHealOfMaxTargetHealth: 0
+    PercentageHealOfCurrentTargetHealth: 0
+    PercentageHealOfMissingTargetHealth: 0
+    PercentageHealOfMaxCasterHealth: 0
+    PercentageHealOfCurrentCasterHealth: 0
+    PercentageHealOfMissingCasterHealth: 0
+    Heal_EndHeader_: 
+    EffectsListSize_Header_: 
+    Effects_DrawAnyway_: []
+    EffectsList_EndHeader_: 
+  - Name: ThreeNeighbourCells
+    Description: 
+    Target_Header_: 
+    OnEnemyUnits: 0
+    OnTeammateUnits: 0
+    OnEnemyBuildings: 0
+    OnTeammateBuildings: 0
+    OnGround: 0
+    Target_EndHeader_: 
+    Shape_Header_: 
+    IsCircle: 0
+    IsLine: 0
+    IsThreeNeighbourCells: 1
+    Shape_EndHeader_: 
+    Conditions_Header_: 
+    MinRemainingActions: 0
+    SpendActions: 0
+    IsPassive: 0
+    IsOnButton: 1
+    IsCalling: 0
+    Conditions_EndHeader_: 
+    Ranges_Header_: 
+    CastRange: 0
+    CircleRange: 0
+    LineRange: 0
+    Ranges_EndHeader_: 
+    Damage_Header_: 
+    DamageCount: 0
+    PercentageDamageOfMaxTargetHealth: 0
+    PercentageDamageOfCurrentTargetHealth: 0
+    PercentageDamageOfMissingTargetHealth: 0
+    PercentageDamageOfMaxCasterHealth: 0
+    PercentageDamageOfCurrentCasterHealth: 0
+    PercentageDamageOfMissingCasterHealth: 0
+    ArmourPenetration: 0
+    Damage_EndHeader_: 
+    Heal_Header_: 
+    HealCount: 0
+    PercentageHealOfMaxTargetHealth: 0
+    PercentageHealOfCurrentTargetHealth: 0
+    PercentageHealOfMissingTargetHealth: 0
+    PercentageHealOfMaxCasterHealth: 0
+    PercentageHealOfCurrentCasterHealth: 0
+    PercentageHealOfMissingCasterHealth: 0
+    Heal_EndHeader_: 
+    EffectsListSize_Header_: 
+    Effects_DrawAnyway_: []
+    EffectsList_EndHeader_: 
+  - Name: InLine
+    Description: 
+    Target_Header_: 
+    OnEnemyUnits: 0
+    OnTeammateUnits: 0
+    OnEnemyBuildings: 0
+    OnTeammateBuildings: 0
+    OnGround: 0
+    Target_EndHeader_: 
+    Shape_Header_: 
+    IsCircle: 0
+    IsLine: 1
+    IsThreeNeighbourCells: 0
+    Shape_EndHeader_: 
+    Conditions_Header_: 
+    MinRemainingActions: 0
+    SpendActions: 0
+    IsPassive: 0
+    IsOnButton: 1
+    IsCalling: 0
+    Conditions_EndHeader_: 
+    Ranges_Header_: 
+    CastRange: 0
+    CircleRange: 0
+    LineRange: 5
+    Ranges_EndHeader_: 
+    Damage_Header_: 
+    DamageCount: 0
+    PercentageDamageOfMaxTargetHealth: 0
+    PercentageDamageOfCurrentTargetHealth: 0
+    PercentageDamageOfMissingTargetHealth: 0
+    PercentageDamageOfMaxCasterHealth: 0
+    PercentageDamageOfCurrentCasterHealth: 0
+    PercentageDamageOfMissingCasterHealth: 0
+    ArmourPenetration: 0
+    Damage_EndHeader_: 
+    Heal_Header_: 
+    HealCount: 0
+    PercentageHealOfMaxTargetHealth: 0
+    PercentageHealOfCurrentTargetHealth: 0
+    PercentageHealOfMissingTargetHealth: 0
+    PercentageHealOfMaxCasterHealth: 0
+    PercentageHealOfCurrentCasterHealth: 0
+    PercentageHealOfMissingCasterHealth: 0
+    Heal_EndHeader_: 
+    EffectsListSize_Header_: 
+    Effects_DrawAnyway_: []
+    EffectsList_EndHeader_: 
+--- !u!114 &6387221082814792165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387221082814792167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6abb2cfec706c843a943add33da6c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalCoords: {x: 48, y: 48}
+  ArmorEfficiencyTable: []
+  IsSelected: 0
+  IsHighlighted: 0
+  ActionsPerTurn: 3
+  Armor: 5
+  TeamAffiliation: 0
+  MovementSpeed: 40
+  AttackRange: 2
+  Health: 80
+  AttackDamage: 3
+  FoodConsumption: 0
+  ArmorUnitEfficiencyMaxAmount: 15
+  ArmorEfficiencyDecreasementPerUnit: 1.5
+--- !u!114 &6387221082814792166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387221082814792167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57437c77df970c4fb986c4ddc26639d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spentSpeed: 0
+--- !u!114 &5238033596870829485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387221082814792167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8f3e023edfcbe419bb00bdb73089ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regenerationPercent: 0
+  currentHealth: 0
+--- !u!114 &4107134960570834832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387221082814792167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba2ee8d0c1178e42b1d9d5ed2250864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remainingActionsCount: 0
+--- !u!135 &6397675707329890186
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387221082814792167}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &5177831250729846171
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387221082814792167}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &7347518451684457554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4225748096363156237}
+  - component: {fileID: 6333657440756226869}
+  - component: {fileID: 4380937073849164532}
+  m_Layer: 0
+  m_Name: Cylinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4225748096363156237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347518451684457554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6387221082814792161}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6333657440756226869
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347518451684457554}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4380937073849164532
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347518451684457554}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
