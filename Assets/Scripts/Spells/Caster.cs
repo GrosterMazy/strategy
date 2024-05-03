@@ -5,15 +5,15 @@ using UnityEngine;
 public class Caster : MonoBehaviour
 {
     public bool updatingHelpProperty; // Вспомогательная переменная для инспектора
-    public List<SpelsDescription> SpelsList = new List<SpelsDescription>();
+    public List<SpellsDescription> SpellsList = new List<SpellsDescription>();
 
     List<Vector2Int> targetShapeCells = new List<Vector2Int>(); // Координаты всех клеток поля, на которые попадает спел
     List<HexCell> targetCells = new List<HexCell>();
     List<UnitDescription> targetUnits = new List<UnitDescription>();
     List<FacilityDescription> targetFacilities = new List<FacilityDescription>();
 
-    private SpelsDescription _preparedSpel = null;
-    private UnitDescription _spelCaster = null;
+    private SpellsDescription _preparedSpell = null;
+    private UnitDescription _spellCaster = null;
     private PlacementManager _placementManager;
     private HexGrid _hexGrid;
 
@@ -23,11 +23,11 @@ public class Caster : MonoBehaviour
     }
     private void OnEnable()
     {
-        MouseSelection.onSelectionChanged += CastPreparedSpel;
+        MouseSelection.onSelectionChanged += CastPreparedSpell;
     }
     private void OnDisable()
     {
-        MouseSelection.onSelectionChanged -= CastPreparedSpel;
+        MouseSelection.onSelectionChanged -= CastPreparedSpell;
     }
 
 
@@ -42,62 +42,62 @@ public class Caster : MonoBehaviour
         }
     }
 
-    public void PrepareSpel(SpelsDescription spel, UnitDescription caster) // Только для спелов, кастуемых через кнопку
+    public void PrepareSpell(SpellsDescription spell, UnitDescription caster) // Только для спелов, кастуемых через кнопку
     {
-        _preparedSpel = spel;
-        _spelCaster = caster;
+        _preparedSpell = spell;
+        _spellCaster = caster;
     }
 
-    private void CastPreparedSpel(Transform selected)
+    private void CastPreparedSpell(Transform selected)
     {
-        if (_preparedSpel != null && _spelCaster != null && selected != null)
+        if (_preparedSpell != null && _spellCaster != null && selected != null)
         {
-            CastSpel(_preparedSpel, _hexGrid.InLocalCoords(selected.position), _spelCaster);
+            CastSpell(_preparedSpell, _hexGrid.InLocalCoords(selected.position), _spellCaster);
             PaintCells(targetShapeCells, Color.red);
-            _preparedSpel = null;
-            _spelCaster = null;
+            _preparedSpell = null;
+            _spellCaster = null;
         }
         else
         {
-            _preparedSpel = null;
-            _spelCaster = null;
+            _preparedSpell = null;
+            _spellCaster = null;
         }
     }
 
-    private void CastSpel(SpelsDescription spel, Vector2Int targetPosition, UnitDescription caster)
+    private void CastSpell(SpellsDescription spell, Vector2Int targetPosition, UnitDescription caster)
     {
-        if (caster.GetComponent<UnitActions>().remainingActionsCount >= spel.MinRemainingActions)
+        if (caster.GetComponent<UnitActions>().remainingActionsCount >= spell.MinRemainingActions)
         {
-            ChooseTargets(spel, targetPosition, caster);
-            DoDamage(spel, targetUnits, targetFacilities, caster);
-            DoHeal(spel, targetUnits, targetFacilities, caster);
-            SpendActions(spel, caster);
+            ChooseTargets(spell, targetPosition, caster);
+            DoDamage(spell, targetUnits, targetFacilities, caster);
+            DoHeal(spell, targetUnits, targetFacilities, caster);
+            SpendActions(spell, caster);
         }
     }
 
-    private void ChooseTargets(SpelsDescription spel, Vector2Int targetPosition, UnitDescription caster)
+    private void ChooseTargets(SpellsDescription spell, Vector2Int targetPosition, UnitDescription caster)
     {
         targetShapeCells = new List<Vector2Int>();
         targetCells = new List<HexCell>();
         targetUnits = new List<UnitDescription>();
         targetFacilities = new List<FacilityDescription>();
 
-        ChooseCellsInShape(spel, targetPosition, caster);
+        ChooseCellsInShape(spell, targetPosition, caster);
 
 
         foreach (Vector2Int potentialTarget in targetShapeCells)
         {
-            ChooseTargetUnits(spel, potentialTarget, caster);
+            ChooseTargetUnits(spell, potentialTarget, caster);
 
-            ChooseTargetFacilities(spel, potentialTarget, caster);
+            ChooseTargetFacilities(spell, potentialTarget, caster);
 
-            ChooseTargetCells(spel, potentialTarget);
+            ChooseTargetCells(spell, potentialTarget);
         }
     }
 
-    private void ChooseCellsInShape(SpelsDescription spel, Vector2Int targetPosition, UnitDescription caster)
+    private void ChooseCellsInShape(SpellsDescription spell, Vector2Int targetPosition, UnitDescription caster)
     {
-        if (spel.IsThreeNeighbourCells)
+        if (spell.IsThreeNeighbourCells)
         {
             List<Vector2Int> casterNeighbours = new List<Vector2Int>(_hexGrid.Neighbours(caster.transform.position));
             List<Vector2Int> targetNeighbours = new List<Vector2Int>(_hexGrid.Neighbours(targetPosition));
@@ -114,7 +114,7 @@ public class Caster : MonoBehaviour
             }
         }
 
-        if (spel.IsLine)
+        if (spell.IsLine)
         {
             List<Vector2Int> casterNeighbours = new List<Vector2Int>(_hexGrid.Neighbours(caster.transform.position));
             List<Vector2Int> targetNeighbours = new List<Vector2Int>(_hexGrid.Neighbours(targetPosition));
@@ -122,7 +122,7 @@ public class Caster : MonoBehaviour
             {
                 Vector2Int previousTarget = _hexGrid.InLocalCoords(caster.transform.position);
                 targetShapeCells.Add(targetPosition);
-                for (int i = 1; i < spel.LineRange; i++)
+                for (int i = 1; i < spell.LineRange; i++)
                 {
                     List<Vector2Int> potentialTargets = new List<Vector2Int>();
                     foreach (Vector2Int targetNeighbour in _hexGrid.Neighbours(targetPosition))
@@ -151,10 +151,10 @@ public class Caster : MonoBehaviour
             }
         }
 
-        if (spel.IsCircle)
+        if (spell.IsCircle)
         {
             targetShapeCells.Add(targetPosition);
-            for (int i = 0; i < spel.CircleRange; i++)
+            for (int i = 0; i < spell.CircleRange; i++)
             {
                 List<Vector2Int> targetCellsCopy = new List<Vector2Int>();
                 foreach (Vector2Int choosedCell in targetShapeCells) // Создаём копию списка и заполняем её, иначе будет ругаться, что мы меняем список во время перебора его элементов
@@ -176,7 +176,7 @@ public class Caster : MonoBehaviour
         }
 
         /*
-        if (spel.IsLine) // Тут допущена ошибка, но из-за неё получался прикольный рисунок
+        if (spell.IsLine) // Тут допущена ошибка, но из-за неё получался прикольный рисунок
         {
             List<Vector2Int> casterNeighbours = new List<Vector2Int>(_hexGrid.Neighbours(caster.transform.position));
             List<Vector2Int> targetNeighbours = new List<Vector2Int>(_hexGrid.Neighbours(targetPosition));
@@ -184,7 +184,7 @@ public class Caster : MonoBehaviour
             {
                 Vector2Int previousTarget = _hexGrid.InLocalCoords(caster.transform.position);
                 targetShapeCells.Add(targetPosition);
-                for (int i = 1; i < spel.LineRange; i++)
+                for (int i = 1; i < spell.LineRange; i++)
                 {
                     List<Vector2Int> potentialTargets = new List<Vector2Int>();
                     foreach (Vector2Int targetNeighbour in _hexGrid.Neighbours(targetPosition))
@@ -215,62 +215,62 @@ public class Caster : MonoBehaviour
         */
     }
 
-    private void ChooseTargetUnits(SpelsDescription spel, Vector2Int potentialTarget, UnitDescription caster)
+    private void ChooseTargetUnits(SpellsDescription spell, Vector2Int potentialTarget, UnitDescription caster)
     {
         if (_placementManager.gridWithObjectsInformation[potentialTarget.x, potentialTarget.y] != null
             && _placementManager.gridWithObjectsInformation[potentialTarget.x, potentialTarget.y].TryGetComponent<UnitDescription>(out UnitDescription unitTarget))
         {
-            if (spel.OnEnemyUnits && unitTarget.TeamAffiliation != caster.TeamAffiliation)
+            if (spell.OnEnemyUnits && unitTarget.TeamAffiliation != caster.TeamAffiliation)
             {
                 targetUnits.Add(unitTarget);
             }
-            if (spel.OnTeammateUnits && unitTarget.TeamAffiliation == caster.TeamAffiliation)
+            if (spell.OnTeammateUnits && unitTarget.TeamAffiliation == caster.TeamAffiliation)
             {
                 targetUnits.Add(unitTarget);
             }
         }
     }
-    private void ChooseTargetFacilities(SpelsDescription spel, Vector2Int potentialTarget, UnitDescription caster)
+    private void ChooseTargetFacilities(SpellsDescription spell, Vector2Int potentialTarget, UnitDescription caster)
     {
         if (_placementManager.gridWithObjectsInformation[potentialTarget.x, potentialTarget.y] != null
             && _placementManager.gridWithObjectsInformation[potentialTarget.x, potentialTarget.y].TryGetComponent<FacilityDescription>(out FacilityDescription facilityTarget))
         {
-            if (spel.OnEnemyBuildings && facilityTarget.TeamAffiliation != caster.TeamAffiliation)
+            if (spell.OnEnemyBuildings && facilityTarget.TeamAffiliation != caster.TeamAffiliation)
             {
                 targetFacilities.Add(facilityTarget);
             }
-            if (spel.OnTeammateBuildings && facilityTarget.TeamAffiliation == caster.TeamAffiliation)
+            if (spell.OnTeammateBuildings && facilityTarget.TeamAffiliation == caster.TeamAffiliation)
             {
                 targetFacilities.Add(facilityTarget);
             }
         }
     }
-    private void ChooseTargetCells(SpelsDescription spel, Vector2Int potentialTarget)
+    private void ChooseTargetCells(SpellsDescription spell, Vector2Int potentialTarget)
     {
-        if (spel.OnGround && _hexGrid.hexCells[potentialTarget.x, potentialTarget.y] != null)
+        if (spell.OnGround && _hexGrid.hexCells[potentialTarget.x, potentialTarget.y] != null)
         {
             targetCells.Add(_hexGrid.hexCells[potentialTarget.x, potentialTarget.y]);
         }
     }
 
-    private void DoDamage(SpelsDescription spel, List<UnitDescription> units, List<FacilityDescription> facilities, UnitDescription caster)
+    private void DoDamage(SpellsDescription spell, List<UnitDescription> units, List<FacilityDescription> facilities, UnitDescription caster)
     {
         foreach (UnitDescription unit in units)
         {
             int oldArmour = unit.Armor;
             UnitHealth unitHealth = unit.GetComponent<UnitHealth>();
-            if (spel.ArmourPenetration != 0)
+            if (spell.ArmourPenetration != 0)
             {
-                unit.Armor = Mathf.Clamp(unit.Armor - spel.ArmourPenetration, 0, unit.Armor);
+                unit.Armor = Mathf.Clamp(unit.Armor - spell.ArmourPenetration, 0, unit.Armor);
                 unit.ArmorCounter();
             }
-            if (spel.DamageCount != 0) unitHealth.ApplyDamage(spel.DamageCount);
-            if (spel.PercentageDamageOfMaxTargetHealth != 0) unitHealth.ApplyPercentageDamageOfMaxHealth(spel.PercentageDamageOfMaxTargetHealth);
-            if (spel.PercentageDamageOfCurrentTargetHealth != 0) unitHealth.ApplyPercentageDamageOfCurrentHealth(spel.PercentageDamageOfCurrentTargetHealth);
-            if (spel.PercentageDamageOfMissingTargetHealth != 0) unitHealth.ApplyPercentageDamageOfMissingHealth(spel.PercentageDamageOfMissingTargetHealth);
-            if (spel.PercentageDamageOfMaxCasterHealth != 0) unitHealth.ApplyDamage(caster.Health * spel.PercentageDamageOfMaxCasterHealth / 100);
-            if (spel.PercentageDamageOfCurrentCasterHealth != 0) unitHealth.ApplyDamage(caster.GetComponent<UnitHealth>().currentHealth * spel.PercentageDamageOfMaxCasterHealth / 100);
-            if (spel.PercentageDamageOfMissingCasterHealth != 0) unitHealth.ApplyDamage((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spel.PercentageDamageOfMaxCasterHealth / 100);
+            if (spell.DamageCount != 0) unitHealth.ApplyDamage(spell.DamageCount);
+            if (spell.PercentageDamageOfMaxTargetHealth != 0) unitHealth.ApplyPercentageDamageOfMaxHealth(spell.PercentageDamageOfMaxTargetHealth);
+            if (spell.PercentageDamageOfCurrentTargetHealth != 0) unitHealth.ApplyPercentageDamageOfCurrentHealth(spell.PercentageDamageOfCurrentTargetHealth);
+            if (spell.PercentageDamageOfMissingTargetHealth != 0) unitHealth.ApplyPercentageDamageOfMissingHealth(spell.PercentageDamageOfMissingTargetHealth);
+            if (spell.PercentageDamageOfMaxCasterHealth != 0) unitHealth.ApplyDamage(caster.Health * spell.PercentageDamageOfMaxCasterHealth / 100);
+            if (spell.PercentageDamageOfCurrentCasterHealth != 0) unitHealth.ApplyDamage(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageDamageOfMaxCasterHealth / 100);
+            if (spell.PercentageDamageOfMissingCasterHealth != 0) unitHealth.ApplyDamage((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageDamageOfMaxCasterHealth / 100);
             unit.Armor = oldArmour;
             unit.ArmorCounter();
         }
@@ -279,56 +279,56 @@ public class Caster : MonoBehaviour
         {
             int oldArmour = facility.Armor;
             FacilityHealth facilityHealth = facility.GetComponent<FacilityHealth>();
-            if (spel.ArmourPenetration != 0)
+            if (spell.ArmourPenetration != 0)
             {
-                facility.Armor = Mathf.Clamp(facility.Armor - spel.ArmourPenetration, 0, facility.Armor);
+                facility.Armor = Mathf.Clamp(facility.Armor - spell.ArmourPenetration, 0, facility.Armor);
                 facility.ArmorCounter();
             }
-            if (spel.DamageCount != 0) facilityHealth.ApplyDamage(spel.DamageCount);
-            //        if (spel.PercentageDamageOfMaxTargetHealth != 0) facilityHealth.ApplyPercentageDamageOfMaxHealth(spel.PercentageDamageOfMaxTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            //        if (spel.PercentageDamageOfCurrentTargetHealth != 0) facilityHealth.ApplyPercentageDamageOfCurrentHealth(spel.PercentageDamageOfCurrentTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            //        if (spel.PercentageDamageOfMissingTargetHealth != 0) facilityHealth.ApplyPercentageDamageOfMissingHealth(spel.PercentageDamageOfMissingTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            if (spel.PercentageDamageOfMaxCasterHealth != 0) facilityHealth.ApplyDamage(caster.Health * spel.PercentageDamageOfMaxCasterHealth / 100);
-            if (spel.PercentageDamageOfCurrentCasterHealth != 0) facilityHealth.ApplyDamage(caster.GetComponent<UnitHealth>().currentHealth * spel.PercentageDamageOfMaxCasterHealth / 100);
-            if (spel.PercentageDamageOfMissingCasterHealth != 0) facilityHealth.ApplyDamage((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spel.PercentageDamageOfMaxCasterHealth / 100);
+            if (spell.DamageCount != 0) facilityHealth.ApplyDamage(spell.DamageCount);
+            //        if (spell.PercentageDamageOfMaxTargetHealth != 0) facilityHealth.ApplyPercentageDamageOfMaxHealth(spell.PercentageDamageOfMaxTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            //        if (spell.PercentageDamageOfCurrentTargetHealth != 0) facilityHealth.ApplyPercentageDamageOfCurrentHealth(spell.PercentageDamageOfCurrentTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            //        if (spell.PercentageDamageOfMissingTargetHealth != 0) facilityHealth.ApplyPercentageDamageOfMissingHealth(spell.PercentageDamageOfMissingTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            if (spell.PercentageDamageOfMaxCasterHealth != 0) facilityHealth.ApplyDamage(caster.Health * spell.PercentageDamageOfMaxCasterHealth / 100);
+            if (spell.PercentageDamageOfCurrentCasterHealth != 0) facilityHealth.ApplyDamage(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageDamageOfMaxCasterHealth / 100);
+            if (spell.PercentageDamageOfMissingCasterHealth != 0) facilityHealth.ApplyDamage((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageDamageOfMaxCasterHealth / 100);
             facility.Armor = oldArmour;
             facility.ArmorCounter();
         }
     }
 
-    private void DoHeal(SpelsDescription spel, List<UnitDescription> units, List<FacilityDescription> facilities, UnitDescription caster)
+    private void DoHeal(SpellsDescription spell, List<UnitDescription> units, List<FacilityDescription> facilities, UnitDescription caster)
     {
         foreach (UnitDescription unit in units)
         {
             UnitHealth unitHealth = unit.GetComponent<UnitHealth>();
-            if (spel.HealCount != 0) unitHealth.ApplyHeal(spel.HealCount);
-            if (spel.PercentageHealOfMaxTargetHealth != 0) unitHealth.ApplyPercentageHealOfMaxHealth(spel.PercentageHealOfMaxTargetHealth);
-            if (spel.PercentageHealOfCurrentTargetHealth != 0) unitHealth.ApplyPercentageHealOfCurrentHealth(spel.PercentageHealOfCurrentTargetHealth);
-            if (spel.PercentageHealOfMissingTargetHealth != 0) unitHealth.ApplyPercentageHealOfMissingHealth(spel.PercentageHealOfMissingTargetHealth);
-            if (spel.PercentageHealOfMaxCasterHealth != 0) unitHealth.ApplyHeal(caster.Health * spel.PercentageHealOfMaxCasterHealth / 100);
-            if (spel.PercentageHealOfCurrentCasterHealth != 0) unitHealth.ApplyHeal(caster.GetComponent<UnitHealth>().currentHealth * spel.PercentageHealOfCurrentCasterHealth / 100);
-            if (spel.PercentageHealOfMissingCasterHealth != 0) unitHealth.ApplyHeal((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spel.PercentageHealOfMissingCasterHealth / 100);
+            if (spell.HealCount != 0) unitHealth.ApplyHeal(spell.HealCount);
+            if (spell.PercentageHealOfMaxTargetHealth != 0) unitHealth.ApplyPercentageHealOfMaxHealth(spell.PercentageHealOfMaxTargetHealth);
+            if (spell.PercentageHealOfCurrentTargetHealth != 0) unitHealth.ApplyPercentageHealOfCurrentHealth(spell.PercentageHealOfCurrentTargetHealth);
+            if (spell.PercentageHealOfMissingTargetHealth != 0) unitHealth.ApplyPercentageHealOfMissingHealth(spell.PercentageHealOfMissingTargetHealth);
+            if (spell.PercentageHealOfMaxCasterHealth != 0) unitHealth.ApplyHeal(caster.Health * spell.PercentageHealOfMaxCasterHealth / 100);
+            if (spell.PercentageHealOfCurrentCasterHealth != 0) unitHealth.ApplyHeal(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageHealOfCurrentCasterHealth / 100);
+            if (spell.PercentageHealOfMissingCasterHealth != 0) unitHealth.ApplyHeal((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageHealOfMissingCasterHealth / 100);
         }
         foreach (FacilityDescription facility in facilities)
         {
             FacilityHealth facilityHealth = facility.GetComponent<FacilityHealth>();
             /*
-            if (spel.HealCount != 0) facilityHealth.ApplyHeal(spel.HealCount);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            if (spel.PercentageHealOfMaxTargetHealth != 0) facilityHealth.ApplyPercentageHealOfMaxHealth(spel.PercentageHealOfMaxTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            if (spel.PercentageHealOfCurrentTargetHealth != 0) facilityHealth.ApplyPercentageHealOfCurrentHealth(spel.PercentageHealOfCurrentTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            if (spel.PercentageHealOfMissingTargetHealth != 0) facilityHealth.ApplyPercentageHealOfMissingHealth(spel.PercentageHealOfMissingTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            if (spel.PercentageHealOfMaxCasterHealth != 0) facilityHealth.ApplyHeal(caster.Health * spel.PercentageHealOfMaxCasterHealth / 100);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            if (spel.PercentageHealOfCurrentCasterHealth != 0) facilityHealth.ApplyHeal(caster.GetComponent<UnitHealth>().currentHealth * spel.PercentageHealOfCurrentCasterHealth / 100);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
-            if (spel.PercentageHealOfMissingCasterHealth != 0) facilityHealth.ApplyHeal((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spel.PercentageHealOfMissingCasterHealth / 100);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            if (spell.HealCount != 0) facilityHealth.ApplyHeal(spell.HealCount);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            if (spell.PercentageHealOfMaxTargetHealth != 0) facilityHealth.ApplyPercentageHealOfMaxHealth(spell.PercentageHealOfMaxTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            if (spell.PercentageHealOfCurrentTargetHealth != 0) facilityHealth.ApplyPercentageHealOfCurrentHealth(spell.PercentageHealOfCurrentTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            if (spell.PercentageHealOfMissingTargetHealth != 0) facilityHealth.ApplyPercentageHealOfMissingHealth(spell.PercentageHealOfMissingTargetHealth);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            if (spell.PercentageHealOfMaxCasterHealth != 0) facilityHealth.ApplyHeal(caster.Health * spell.PercentageHealOfMaxCasterHealth / 100);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            if (spell.PercentageHealOfCurrentCasterHealth != 0) facilityHealth.ApplyHeal(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageHealOfCurrentCasterHealth / 100);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
+            if (spell.PercentageHealOfMissingCasterHealth != 0) facilityHealth.ApplyHeal((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageHealOfMissingCasterHealth / 100);  НУЖНО РЕАЛИЗОВАТЬ ЭТИ МЕТОДЫ В FacilityHealth
             */
         }
     }
 
-    private void SpendActions(SpelsDescription spel, UnitDescription caster)
+    private void SpendActions(SpellsDescription spell, UnitDescription caster)
     {
-        if (spel.SpendActions != 0)
+        if (spell.SpendActions != 0)
         {
-            caster.GetComponent<UnitActions>().remainingActionsCount -= spel.SpendActions;
+            caster.GetComponent<UnitActions>().remainingActionsCount -= spell.SpendActions;
         }
     }
 

@@ -761,7 +761,7 @@ MonoBehaviour:
   turn: 0
   timeToTurn: 3
   remainingTime: 0
-  dayDuration: 3
+  dayDuration: 100
   nightDuration: 3
   teamCount: 2
   currentTeam: 0
@@ -820,6 +820,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: {fileID: 8963582732331411993}
   Health: {fileID: 5159194380845396293}
+  spellButtonPrefab: {fileID: 1339495108138218888, guid: b2c2028bd218de54893bdfed32cf8c10,
+    type: 3}
+  background: {fileID: 2840268693873605310}
 --- !u!1 &7977727039706114087
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,8 +9,8 @@ using UnityEditor.SceneManagement;
 public class CasterEditor(old) : Editor
 {
     private Caster _caster;
-    private int _spelsCount;
-    List<bool> _spelsOpen = new List<bool>(); // Список, содержащий в себе информацию о том, какие спелы сейчас открыты в инспекторе
+    private int _spellsCount;
+    List<bool> _spellsOpen = new List<bool>(); // Список, содержащий в себе информацию о том, какие спелы сейчас открыты в инспекторе
     private void OnEnable()
     {
         _caster = (Caster)target;
@@ -19,28 +19,28 @@ public class CasterEditor(old) : Editor
     public override void OnInspectorGUI()
     {
         //        base.OnInspectorGUI();
-        SpelsCountChanger();
-        OpenSpelsManager();
+        SpellsCountChanger();
+        OpenSpellsManager();
 
-        for (int i = 0; i < _caster.SpelsList.Count; i++)
+        for (int i = 0; i < _caster.SpellsList.Count; i++)
         {
-            bool isOpen = _spelsOpen[i];
+            bool isOpen = _spellsOpen[i];
             
-            _spelsOpen[i] = EditorGUILayout.DropdownButton(GUIContent.none, FocusType.Passive);
+            _spellsOpen[i] = EditorGUILayout.DropdownButton(GUIContent.none, FocusType.Passive);
         }
 /*
-        for (int i = 0; i < _spelsCount; i++)
+        for (int i = 0; i < _spellsCount; i++)
         {
-            bool isOpen = _spelsOpen[i];
-            _spelsOpen[i] = EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, "Spel " + i);
+            bool isOpen = _spellsOpen[i];
+            _spellsOpen[i] = EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, "Spell " + i);
 
-            if (_spelsOpen[i])
+            if (_spellsOpen[i])
             {
                 EditorGUI.indentLevel++;
                 //                EditorGUILayout.LabelField("Targets");
                 EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, "Targets");
                 EditorGUI.indentLevel++;
-                _caster.SpelsList[i].OnEnemy = EditorGUILayout.Toggle("On Enemy", _caster.SpelsList[i].OnEnemy);
+                _caster.SpellsList[i].OnEnemy = EditorGUILayout.Toggle("On Enemy", _caster.SpellsList[i].OnEnemy);
 
                 EditorGUI.indentLevel--;
 
@@ -62,33 +62,33 @@ public class CasterEditor(old) : Editor
         EditorSceneManager.MarkSceneDirty(obj.scene);
     }
 
-    private void SpelsCountChanger()
+    private void SpellsCountChanger()
     {
-        _spelsCount = Mathf.Max(0, EditorGUILayout.IntField("Size", _caster.SpelsList.Count));
+        _spellsCount = Mathf.Max(0, EditorGUILayout.IntField("Size", _caster.SpellsList.Count));
 
-        while (_spelsCount > _caster.SpelsList.Count)
+        while (_spellsCount > _caster.SpellsList.Count)
         {
-            _caster.SpelsList.Add(null);
+            _caster.SpellsList.Add(null);
 
         }
 
-        while (_spelsCount < _caster.SpelsList.Count)
+        while (_spellsCount < _caster.SpellsList.Count)
         {
-            _caster.SpelsList.RemoveAt(_caster.SpelsList.Count - 1);
-            _spelsOpen.RemoveAt(_spelsOpen.Count - 1);
+            _caster.SpellsList.RemoveAt(_caster.SpellsList.Count - 1);
+            _spellsOpen.RemoveAt(_spellsOpen.Count - 1);
         }
     }
 
-    private void OpenSpelsManager()
+    private void OpenSpellsManager()
     {
-        while (_spelsCount > _spelsOpen.Count)
+        while (_spellsCount > _spellsOpen.Count)
         {
-            _spelsOpen.Add(false);
+            _spellsOpen.Add(false);
         }
 
-        while (_spelsCount < _spelsOpen.Count)
+        while (_spellsCount < _spellsOpen.Count)
         {
-            _spelsOpen.RemoveAt(_spelsOpen.Count - 1);
+            _spellsOpen.RemoveAt(_spellsOpen.Count - 1);
         }
     }
 }

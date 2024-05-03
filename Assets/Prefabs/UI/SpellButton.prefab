@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6956680650443896363}
   - component: {fileID: 4514656327627966824}
   m_Layer: 5
-  m_Name: SpelButton
+  m_Name: SpellButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

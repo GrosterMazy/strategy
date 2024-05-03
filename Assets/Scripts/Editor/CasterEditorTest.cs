@@ -14,7 +14,7 @@ public class CasterEditorTest : Editor
     {
         _caster = (Caster)target;
         serializedObject = new SerializedObject(_caster);
-        mainProperty = serializedObject.FindProperty("SpelsList");
+        mainProperty = serializedObject.FindProperty("SpellsList");
     }
     public override void OnInspectorGUI()
     {

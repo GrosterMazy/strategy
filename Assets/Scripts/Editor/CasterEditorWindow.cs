@@ -8,14 +8,14 @@ public class CasterEditorWindow : ExtendedEditorWindow
 {
     public static void Open(Caster _caster)
     {
-        CasterEditorWindow window = GetWindow<CasterEditorWindow>(_caster.gameObject.name + " Spels Editor");
+        CasterEditorWindow window = GetWindow<CasterEditorWindow>(_caster.gameObject.name + " Spells Editor");
         window.serializedObject = new SerializedObject(_caster);
         window.caster = _caster;
     }
 
     private void OnGUI()
     {
-        currentProperty = serializedObject.FindProperty("SpelsList");
+        currentProperty = serializedObject.FindProperty("SpellsList");
 
         EditorGUILayout.BeginHorizontal();
 
@@ -30,7 +30,7 @@ public class CasterEditorWindow : ExtendedEditorWindow
         }
         else
         {
-            EditorGUILayout.LabelField("Select a spel from the list");
+            EditorGUILayout.LabelField("Select a spell from the list");
         }
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();

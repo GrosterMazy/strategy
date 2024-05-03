@@ -25,7 +25,7 @@ public class CasterEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        if (GUILayout.Button("Open Spels Editor"))
+        if (GUILayout.Button("Open Spells Editor"))
         {
             CasterEditorWindow.Open((Caster)target);
         }

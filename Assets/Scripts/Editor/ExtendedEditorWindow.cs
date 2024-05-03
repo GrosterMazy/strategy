@@ -10,8 +10,8 @@ public class ExtendedEditorWindow : EditorWindow
     protected CasterEditorWindow window;
     protected SerializedProperty currentProperty;
 
-    private Dictionary<int, bool> destroySpel = new Dictionary<int, bool>();
-    private int helperDestroySpelDictInit = 0;
+    private Dictionary<int, bool> destroySpell = new Dictionary<int, bool>();
+    private int helperDestroySpellDictInit = 0;
 
     private string selectedPropertyPath;
     protected SerializedProperty selectedProperty;
@@ -102,17 +102,17 @@ public class ExtendedEditorWindow : EditorWindow
 
     protected void DrawSidebar(SerializedProperty prop)
     {
-        int spelIndex = 0;
-        if (helperDestroySpelDictInit == 0) // Инициализация словаря
+        int spellIndex = 0;
+        if (helperDestroySpellDictInit == 0) // Инициализация словаря
         {
             for (int i = 0; i < 50; i++)
             {
-                destroySpel[i] = false;
+                destroySpell[i] = false;
             }
         }
-        helperDestroySpelDictInit += 1;
+        helperDestroySpellDictInit += 1;
 
-        EditorGUILayout.LabelField("Spels:");
+        EditorGUILayout.LabelField("Spells:");
         foreach (SerializedProperty p in prop)
         {
 
@@ -120,14 +120,14 @@ public class ExtendedEditorWindow : EditorWindow
             
             if (GUILayout.Button("X", GUILayout.MaxWidth(20)))
             {
-                destroySpel[spelIndex] = !destroySpel[spelIndex];
+                destroySpell[spellIndex] = !destroySpell[spellIndex];
             }
-            if (destroySpel[spelIndex])
+            if (destroySpell[spellIndex])
             {
                 EditorGUILayout.LabelField("Are u sure?", GUILayout.MaxWidth(65));
                 if (GUILayout.Button("V", GUILayout.MaxWidth(20)))
                 {
-                    caster.SpelsList.RemoveAt(spelIndex);
+                    caster.SpellsList.RemoveAt(spellIndex);
                     ReCreateWindow(window, caster);
                 }
             }
@@ -136,7 +136,7 @@ public class ExtendedEditorWindow : EditorWindow
                 selectedPropertyPath = p.propertyPath;
             }
             EditorGUILayout.EndHorizontal();
-            spelIndex++;
+            spellIndex++;
         }
 
         if (!string.IsNullOrEmpty(selectedPropertyPath))
@@ -148,19 +148,19 @@ public class ExtendedEditorWindow : EditorWindow
 
         if (GUILayout.Button("+", GUILayout.MinHeight(45)))
         {
-            caster.SpelsList.Add(null);
+            caster.SpellsList.Add(null);
             ReCreateWindow(window, caster);
         }
     }
-    private void SetSpelsCount(int spelsCount)
+    private void SetSpellsCount(int spellsCount)
     {
-        while (caster.SpelsList.Count < spelsCount)
+        while (caster.SpellsList.Count < spellsCount)
         {
-            caster.SpelsList.Add(null);
+            caster.SpellsList.Add(null);
         }
-        while (caster.SpelsList.Count > spelsCount)
+        while (caster.SpellsList.Count > spellsCount)
         {
-            caster.SpelsList.RemoveAt(caster.SpelsList.Count - 1);
+            caster.SpellsList.RemoveAt(caster.SpellsList.Count - 1);
         }
     }
 
@@ -227,7 +227,7 @@ public class ExtendedEditorWindow : EditorWindow
         CasterEditorWindow.Open(caster);
         for (int i = 0; i < 50; i++)
         {
-            destroySpel[i] = false;
+            destroySpell[i] = false;
         }
     }
 

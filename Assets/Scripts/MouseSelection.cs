@@ -19,9 +19,13 @@ public class MouseSelection : MonoBehaviour {
     }
     [NonSerialized] public static Action<Transform> onSelectionChanged; // вызывается раньше изменения переменной и перекраски клетки
 
-    private Camera _camera => this.GetComponent<Camera>();
+    private Camera _camera;
     private Color _highlightedOldColor, _selectedOldColor;
     private Transform _lastHighlight = null;
+
+    private void Awake() {
+        this._camera = this.GetComponent<Camera>();
+    }
 
     private void Update() {
         RaycastHit raycastHit;
@@ -42,7 +46,7 @@ public class MouseSelection : MonoBehaviour {
         }
 
         if (hasHit && hit != this.selected
-                && !EventSystem.current.IsPointerOverGameObject()
+                // && !EventSystem.current.IsPointerOverGameObject()
                 ) {
             if (hit != this._lastHighlight) {
                 this._lastHighlight = hit;

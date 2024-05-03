@@ -9,10 +9,10 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
 {
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Health;
-    public GameObject spelButtonPrefab;
+    public GameObject spellButtonPrefab;
     public GameObject background;
 
-    private List<GameObject> _spelButtons = new List<GameObject>();
+    private List<GameObject> _spellButtons = new List<GameObject>();
     private float _backgroundWidth;
     private Vector3 space = new Vector3(70, 0, 0);
     private SelectionController _selectionController;
@@ -30,9 +30,9 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (GameObject spelButton in _spelButtons)
+        foreach (GameObject spellButton in _spellButtons)
         {
-            Destroy(spelButton);
+            Destroy(spellButton);
         }
     }
 
@@ -63,17 +63,17 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
             if (_caster != null)
             {
                 Vector3 offset = new Vector3(-_backgroundWidth / 2 + 45, 0, 0);
-                foreach (SpelsDescription spel in _caster.SpelsList)
+                foreach (SpellsDescription spell in _caster.SpellsList)
                 {
-                    if (spel.IsOnButton)
+                    if (spell.IsOnButton)
                     {
-                        GameObject newSpelButton = Instantiate(spelButtonPrefab, background.transform);
-                        newSpelButton.GetComponent<Button>().onClick.AddListener(() => _caster.PrepareSpel(spel, _caster.GetComponent<UnitDescription>()));
-                        _spelButtons.Add(newSpelButton);
-                        RectTransform newSpelButtonRect = newSpelButton.GetComponent<RectTransform>();
-                        float newX = newSpelButtonRect.rect.position.x + offset.x;
-                        float newY = newSpelButtonRect.rect.position.y + offset.y;
-                        newSpelButtonRect.localPosition += offset;
+                        GameObject newSpellButton = Instantiate(spellButtonPrefab, background.transform);
+                        newSpellButton.GetComponent<Button>().onClick.AddListener(() => _caster.PrepareSpell(spell, _caster.GetComponent<UnitDescription>()));
+                        _spellButtons.Add(newSpellButton);
+                        RectTransform newSpellButtonRect = newSpellButton.GetComponent<RectTransform>();
+                        float newX = newSpellButtonRect.rect.position.x + offset.x;
+                        float newY = newSpellButtonRect.rect.position.y + offset.y;
+                        newSpellButtonRect.localPosition += offset;
                         offset += space;
                     }
                 }

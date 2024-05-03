@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable] public class SpelsDescription
+[Serializable] public class SpellsDescription
 {
     public string Name;
     public string Description;
