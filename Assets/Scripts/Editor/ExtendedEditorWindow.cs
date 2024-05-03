@@ -102,6 +102,18 @@ public class ExtendedEditorWindow : EditorWindow
 
     protected void DrawSidebar(SerializedProperty prop)
     {
+        GUIStyle SideBarHeader = new GUIStyle(EditorStyles.label);
+        SideBarHeader.richText = true;
+        SideBarHeader.fontSize = 18;
+        GUIStyle SelectedSpell = new GUIStyle(EditorStyles.miniButton);
+        SelectedSpell.normal.textColor = Color.green;
+        SelectedSpell.active.textColor = Color.green;
+        SelectedSpell.onActive.textColor = Color.green;
+        SelectedSpell.onFocused.textColor = Color.green;
+        SelectedSpell.onHover.textColor = Color.green;
+        SelectedSpell.onNormal.textColor = Color.green;
+        SelectedSpell.hover.textColor = Color.green;
+        SelectedSpell.richText = true;
         int spellIndex = 0;
         if (helperDestroySpellDictInit == 0) // Инициализация словаря
         {
@@ -112,10 +124,9 @@ public class ExtendedEditorWindow : EditorWindow
         }
         helperDestroySpellDictInit += 1;
 
-        EditorGUILayout.LabelField("Spells:");
+        EditorGUILayout.LabelField("<b>Spells:</b>", SideBarHeader);
         foreach (SerializedProperty p in prop)
         {
-
             EditorGUILayout.BeginHorizontal();
             
             if (GUILayout.Button("X", GUILayout.MaxWidth(20)))
@@ -131,9 +142,19 @@ public class ExtendedEditorWindow : EditorWindow
                     ReCreateWindow(window, caster);
                 }
             }
-            if (GUILayout.Button(p.displayName))/////////////////
+            if (p.propertyPath == selectedPropertyPath)
             {
-                selectedPropertyPath = p.propertyPath;
+                if (GUILayout.Button(p.displayName, SelectedSpell))
+                {
+                    selectedPropertyPath = p.propertyPath;
+                }
+            }
+            else
+            {
+                if (GUILayout.Button(p.displayName))
+                {
+                    selectedPropertyPath = p.propertyPath;
+                }
             }
             EditorGUILayout.EndHorizontal();
             spellIndex++;

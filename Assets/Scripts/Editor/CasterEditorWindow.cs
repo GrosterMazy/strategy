@@ -15,27 +15,7 @@ public class CasterEditorWindow : ExtendedEditorWindow
 
     private void OnGUI()
     {
-        currentProperty = serializedObject.FindProperty("SpellsList");
-
-        EditorGUILayout.BeginHorizontal();
-
-        EditorGUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
-        DrawSidebar(currentProperty);
-        EditorGUILayout.EndVertical();
-
-        EditorGUILayout.BeginVertical("box", GUILayout.ExpandHeight(true));
-        if(selectedProperty != null)
-        {
-            DrawSelectedPropertiesPanel();
-        }
-        else
-        {
-            EditorGUILayout.LabelField("Select a spell from the list");
-        }
-        EditorGUILayout.EndVertical();
-        EditorGUILayout.EndHorizontal();
-
-        Apply();
+        DrawWindow();
     }
 
     private void DrawSelectedPropertiesPanel()
@@ -49,5 +29,31 @@ public class CasterEditorWindow : ExtendedEditorWindow
 
         //DrawProperties(selectedProperty, true);
 
+    }
+
+
+    public void DrawWindow()
+    {
+        currentProperty = serializedObject.FindProperty("SpellsList");
+
+        EditorGUILayout.BeginHorizontal();
+
+        EditorGUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
+        DrawSidebar(currentProperty);
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.BeginVertical("box", GUILayout.ExpandHeight(true));
+        if (selectedProperty != null)
+        {
+            DrawSelectedPropertiesPanel();
+        }
+        else
+        {
+            EditorGUILayout.LabelField("Select a spell from the list");
+        }
+        EditorGUILayout.EndVertical();
+        EditorGUILayout.EndHorizontal();
+
+        Apply();
     }
 }

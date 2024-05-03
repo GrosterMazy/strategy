@@ -46,7 +46,7 @@ public class MouseSelection : MonoBehaviour {
         }
 
         if (hasHit && hit != this.selected
-                // && !EventSystem.current.IsPointerOverGameObject()
+                 && !EventSystem.current.IsPointerOverGameObject()
                 ) {
             if (hit != this._lastHighlight) {
                 this._lastHighlight = hit;

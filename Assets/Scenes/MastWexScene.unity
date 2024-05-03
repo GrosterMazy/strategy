@@ -523,8 +523,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updatingHelpProperty: 1
-  SpelsList:
-  - Name: 11
+  SpellsList:
+  - Name: 
     Description: 
     Target_Header_: 
     OnEnemyUnits: 0
@@ -570,10 +570,9 @@ MonoBehaviour:
     PercentageHealOfMissingCasterHealth: 0
     Heal_EndHeader_: 
     EffectsListSize_Header_: 
-    Effects_DrawAnyway_:
-    - 
+    Effects_DrawAnyway_: []
     EffectsList_EndHeader_: 
-  - Name: 22
+  - Name: 
     Description: 
     Target_Header_: 
     OnEnemyUnits: 0
@@ -619,59 +618,9 @@ MonoBehaviour:
     PercentageHealOfMissingCasterHealth: 0
     Heal_EndHeader_: 
     EffectsListSize_Header_: 
-    Effects_DrawAnyway_:
-    - 
+    Effects_DrawAnyway_: []
     EffectsList_EndHeader_: 
-  - Name: 33
-    Description: 
-    Target_Header_: 
-    OnEnemyUnits: 0
-    OnTeammateUnits: 0
-    OnEnemyBuildings: 0
-    OnTeammateBuildings: 0
-    OnGround: 0
-    Target_EndHeader_: 
-    Shape_Header_: 
-    IsCircle: 0
-    IsLine: 0
-    IsThreeNeighbourCells: 0
-    Shape_EndHeader_: 
-    Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
-    IsPassive: 0
-    IsOnButton: 0
-    IsCalling: 0
-    Conditions_EndHeader_: 
-    Ranges_Header_: 
-    CastRange: 0
-    CircleRange: 0
-    LineRange: 0
-    Ranges_EndHeader_: 
-    Damage_Header_: 
-    DamageCount: 0
-    PercentageDamageOfMaxTargetHealth: 0
-    PercentageDamageOfCurrentTargetHealth: 0
-    PercentageDamageOfMissingTargetHealth: 0
-    PercentageDamageOfMaxCasterHealth: 0
-    PercentageDamageOfCurrentCasterHealth: 0
-    PercentageDamageOfMissingCasterHealth: 0
-    ArmourPenetration: 0
-    Damage_EndHeader_: 
-    Heal_Header_: 
-    HealCount: 0
-    PercentageHealOfMaxTargetHealth: 0
-    PercentageHealOfCurrentTargetHealth: 0
-    PercentageHealOfMissingTargetHealth: 0
-    PercentageHealOfMaxCasterHealth: 0
-    PercentageHealOfCurrentCasterHealth: 0
-    PercentageHealOfMissingCasterHealth: 0
-    Heal_EndHeader_: 
-    EffectsListSize_Header_: 
-    Effects_DrawAnyway_:
-    - 
-    EffectsList_EndHeader_: 
-  - Name: 44
+  - Name: 
     Description: 
     Target_Header_: 
     OnEnemyUnits: 0
@@ -966,8 +915,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updatingHelpProperty: 1
-  SpelsList:
-  - Name: 1
+  SpellsList:
+  - Name: 
     Description: 
     Target_Header_: 
     OnEnemyUnits: 0
@@ -1015,55 +964,7 @@ MonoBehaviour:
     EffectsListSize_Header_: 
     Effects_DrawAnyway_: []
     EffectsList_EndHeader_: 
-  - Name: 2
-    Description: 
-    Target_Header_: 
-    OnEnemyUnits: 0
-    OnTeammateUnits: 0
-    OnEnemyBuildings: 0
-    OnTeammateBuildings: 0
-    OnGround: 0
-    Target_EndHeader_: 
-    Shape_Header_: 
-    IsCircle: 0
-    IsLine: 0
-    IsThreeNeighbourCells: 0
-    Shape_EndHeader_: 
-    Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
-    IsPassive: 0
-    IsOnButton: 0
-    IsCalling: 0
-    Conditions_EndHeader_: 
-    Ranges_Header_: 
-    CastRange: 0
-    CircleRange: 0
-    LineRange: 0
-    Ranges_EndHeader_: 
-    Damage_Header_: 
-    DamageCount: 0
-    PercentageDamageOfMaxTargetHealth: 0
-    PercentageDamageOfCurrentTargetHealth: 0
-    PercentageDamageOfMissingTargetHealth: 0
-    PercentageDamageOfMaxCasterHealth: 0
-    PercentageDamageOfCurrentCasterHealth: 0
-    PercentageDamageOfMissingCasterHealth: 0
-    ArmourPenetration: 0
-    Damage_EndHeader_: 
-    Heal_Header_: 
-    HealCount: 0
-    PercentageHealOfMaxTargetHealth: 0
-    PercentageHealOfCurrentTargetHealth: 0
-    PercentageHealOfMissingTargetHealth: 0
-    PercentageHealOfMaxCasterHealth: 0
-    PercentageHealOfCurrentCasterHealth: 0
-    PercentageHealOfMissingCasterHealth: 0
-    Heal_EndHeader_: 
-    EffectsListSize_Header_: 
-    Effects_DrawAnyway_: []
-    EffectsList_EndHeader_: 
-  - Name: 3
+  - Name: 
     Description: 
     Target_Header_: 
     OnEnemyUnits: 0
@@ -1279,12 +1180,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cece29dd214f2654e9af690c0e13a6df, type: 3}
---- !u!1 &1824990503 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2840268693873605310, guid: 848e43af215a9f34abdd8833b867bdae,
-    type: 3}
-  m_PrefabInstance: {fileID: 7578056219786641489}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1884974911
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1346,6 +1241,161 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].Name
+      value: FireBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].Name
+      value: FireLine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].Name
+      value: HEAL
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].IsLine
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].IsCircle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].OnGround
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].OnGround
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].OnGround
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].LineRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].IsOnButton
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].IsOnButton
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].IsOnButton
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].CircleRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].DamageCount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].OnEnemyUnits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].OnEnemyUnits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].OnEnemyUnits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].OnTeammateUnits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].OnTeammateUnits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].OnTeammateUnits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].OnEnemyBuildings
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].OnEnemyBuildings
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].OnEnemyBuildings
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].OnTeammateBuildings
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].OnTeammateBuildings
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].OnTeammateBuildings
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].IsThreeNeighbourCells
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].PercentageDamageOfMaxTargetHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[1].PercentageDamageOfMaxCasterHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[2].PercentageHealOfMissingTargetHealth
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792167, guid: da311e6d5458b1e45a50beb5610b98d0,
         type: 3}
@@ -1752,22 +1802,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2694656030504142501, guid: 848e43af215a9f34abdd8833b867bdae,
-        type: 3}
-      propertyPath: dayDuration
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375487973427200840, guid: 848e43af215a9f34abdd8833b867bdae,
-        type: 3}
-      propertyPath: background
-      value: 
-      objectReference: {fileID: 1824990503}
-    - target: {fileID: 5375487973427200840, guid: 848e43af215a9f34abdd8833b867bdae,
-        type: 3}
-      propertyPath: spelButtonPrefab
-      value: 
-      objectReference: {fileID: 1339495108138218888, guid: b2c2028bd218de54893bdfed32cf8c10,
-        type: 3}
     - target: {fileID: 7831433831925700234, guid: 848e43af215a9f34abdd8833b867bdae,
         type: 3}
       propertyPath: m_Name
