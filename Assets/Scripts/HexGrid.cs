@@ -507,7 +507,7 @@ public class HexGrid : MonoBehaviour {
         float temperature = this.temperature.ValueAt(pos.x, pos.y);
         float wetness = this.wetness.ValueAt(pos.x, pos.y);
 
-        if (temperature < this.veryColdLevel) return Biome.EternalSnow;
+        if (temperature <= this.veryColdLevel) return Biome.EternalSnow;
         if (temperature < this.coldLevel) return (wetness < this.normalWetnessLevel) ? Biome.Tundra : Biome.Taiga;
         if (temperature < this.normalTemperatureLevel) return (UnityEngine.Random.value < 0.5f) ? Biome.Forest : Biome.Plains;
         if (temperature < this.hotLevel) return (wetness < this.normalWetnessLevel) ? Biome.Steppe : Biome.Jungle;
