@@ -47,6 +47,10 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
         {
             _caster = selectedCaster;
         }
+        else
+        {
+            _caster = null;
+        }
     }
 
     private void DrawInformationPanel()
@@ -54,7 +58,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
         if (_selectionController.isAnyFirstFactionFacilitySelected)
         {
             Name.SetText(_selectionController.selectedFacility.name);
-            Health.SetText("Health: " + _selectionController.selectedFacility.GetComponent<FacilityHealth>().СurrentHealth.ToString() + " / " + _selectionController.selectedFacility.MaxHealth.ToString());
+            Health.SetText("Health: " + _selectionController.selectedFacility.GetComponent<FacilityHealth>().currentHealth.ToString() + " / " + _selectionController.selectedFacility.MaxHealth.ToString());
         }
         else if (_selectionController.isAnyUnitSelected)
         {

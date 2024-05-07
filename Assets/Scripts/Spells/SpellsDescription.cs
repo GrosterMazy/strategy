@@ -21,18 +21,20 @@ using System;
     
     public string Shape_Header_;
 
+    public bool ExcludeCaster;
     public bool IsCircle;
     public bool IsLine;
-    public bool IsThreeNeighbourCells;
+    public bool IsTriangle; // Реализовать
+    public bool IsStar;
+    public bool IsThreeLinesForward;
     public string Shape_EndHeader_;
 
     public string Conditions_Header_;
 
     public int MinRemainingActions;
     public int SpendActions;
-    public bool IsPassive;
-    public bool IsOnButton;
-    public bool IsCalling;
+    public int SpendDarkness; // Реализовать
+    public bool IsOnButton=true;
     public string Conditions_EndHeader_;
 
     
@@ -41,6 +43,8 @@ using System;
     public int CastRange;
     public int CircleRange;
     public int LineRange;
+    public int StarRange;
+    public int ThreeLineRange;
     public string Ranges_EndHeader_;
 
     public string Damage_Header_;
@@ -72,6 +76,6 @@ using System;
     public string EffectsListSize_Header_;
 
     [Tooltip("Состояния, присваиваемые цели")]
-    public List<string> Effects_DrawAnyway_;
+    public List<EnumEffectsTranslator.EffetsEnum> Effects_DrawAnyway_;
     public string EffectsList_EndHeader_;
 }

@@ -23,7 +23,7 @@ public class AssetHandler
 [CustomEditor(typeof(Caster))]
 public class CasterEditor : Editor
 {
-    private SerializedObject serializedObject;
+    new private SerializedObject serializedObject;
     private Caster caster;
     private CasterEditorWindow window;
     private SerializedProperty currentProperty;

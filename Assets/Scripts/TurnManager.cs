@@ -107,6 +107,10 @@ public class TurnManager : MonoBehaviour
 
     private void SetChangesInOtherClassesOnTurnChanged()
     {
+        foreach (EffectsDescription effect in FindObjectsOfType<EffectsDescription>())
+        {
+            effect.ReduceRemainingLifeTimeOnTurnChanged();
+        }
         _selectedObjectInformationEnableController.SelectedObjectInformationSetActive(_mouseSelection.selected);
     }
 
