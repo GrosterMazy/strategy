@@ -195,12 +195,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
         type: 3}
+      propertyPath: SpellsList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
       propertyPath: SpelsList.Array.data[3].Name
       value: Urmom
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
         type: 3}
+      propertyPath: SpellsList.Array.data[0].Name
+      value: urmom
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
       propertyPath: SpelsList.Array.data[3].IsLine
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].IsLine
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
@@ -215,8 +230,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
         type: 3}
+      propertyPath: SpellsList.Array.data[0].IsCircle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].OnGround
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
       propertyPath: SpelsList.Array.data[3].LineRange
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].CastRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].LineRange
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
         type: 3}
@@ -235,8 +270,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
         type: 3}
+      propertyPath: SpellsList.Array.data[0].CircleRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].Description
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
       propertyPath: SpelsList.Array.data[3].OnEnemyUnits
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].OnEnemyUnits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
         type: 3}
@@ -261,6 +311,11 @@ PrefabInstance:
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
         type: 3}
       propertyPath: SpelsList.Array.data[3].IsThreeNeighbourCells
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
+        type: 3}
+      propertyPath: SpellsList.Array.data[0].IsThreeNeighbourCells
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6387221082814792164, guid: da311e6d5458b1e45a50beb5610b98d0,
@@ -1338,6 +1393,61 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: forestColor.b
+      value: 0.040049836
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: forestColor.g
+      value: 0.5660378
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: forestColor.r
+      value: 0.26847884
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: jungleColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: jungleColor.g
+      value: 0.8679245
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: jungleColor.r
+      value: 0.35298377
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: tundraColor.b
+      value: 0.34082413
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: tundraColor.g
+      value: 0.6509434
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: tundraColor.r
+      value: 0.39607528
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: deepWaterColor.b
+      value: 0.67058825
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: deepWaterColor.g
+      value: 0.25786072
+      objectReference: {fileID: 0}
     - target: {fileID: 7325931689074160785, guid: cece29dd214f2654e9af690c0e13a6df,
         type: 3}
       propertyPath: m_Name

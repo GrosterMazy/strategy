@@ -3,13 +3,14 @@ using System;
 
 public class HexCell : MonoBehaviour 
 {
-    public float LightRate = 0; //коэффициент освещенности (КО) клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
+    [NonSerialized] public float LightRate = 0; //коэффициент освещенности (КО) клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
     private GameObject _darknessnPrefab;
     private GameObject _darknessInstance;
     [NonSerialized] public LightTransporter lightTransporter;
-    public int height;
-    public float heightNormalized; // высота в диапазоне от 0 до 1
-    public Biome biome;
+    [NonSerialized] public Vector2Int localPos;
+    [NonSerialized] public int height;
+    [NonSerialized] public float heightNormalized; // высота в диапазоне от 0 до 1
+    [NonSerialized] public Biome biome;
     
     private void Start()
     {

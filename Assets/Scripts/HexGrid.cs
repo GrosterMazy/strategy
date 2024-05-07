@@ -440,6 +440,7 @@ public class HexGrid : MonoBehaviour {
                 hexCell.lightTransporter = lightTransporter;
                 hexCell.height = height;
                 hexCell.heightNormalized = heightNormalized;
+                hexCell.localPos = pos;
                 hexCell.biome = this.BiomeOn(pos, heightNormalized);
 
                 // берём Renderer
