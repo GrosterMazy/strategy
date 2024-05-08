@@ -118,23 +118,38 @@ public class HexGrid : MonoBehaviour {
     [SerializeField, Range(0f, 1f)] private float veryColdLevel; // спавнятся только вечные снега
 
     [SerializeField] private Noise wetness;
-    [SerializeField, Range(0f, 1f)] private float veryWetLevel;
+    // [SerializeField, Range(0f, 1f)] private float veryWetLevel; // сейчас не используется
     [SerializeField, Range(0f, 1f)] private float wetLevel;
     [SerializeField, Range(0f, 1f)] private float normalWetnessLevel;
     [SerializeField, Range(0f, 1f)] private float dryLevel;
-    [SerializeField, Range(0f, 1f)] private float veryDryLevel;
+    // [SerializeField, Range(0f, 1f)] private float veryDryLevel; // сейчас не используется
+
+    [SerializeField] private ObjectOnGrid treePrefab;
+    [SerializeField] private ObjectOnGrid woodPrefab;
 
     [SerializeField] private Color desertColor;
+
     [SerializeField] private Color jungleColor;
+    [SerializeField, Range(0f, 1f)] private float jungleTreeAmount = 0.9f;
+    [SerializeField, Range(0f, 1f)] private float jungleWoodAmount = 0.01f;
 
     [SerializeField] private Color steppeColor;
+    [SerializeField, Range(0f, 1f)] private float steppeWoodAmount = 0.01f;
 
     [SerializeField] private Color plainsColor;
+    [SerializeField, Range(0f, 1f)] private float plainsTreeAmount = 0.01f;
+    [SerializeField, Range(0f, 1f)] private float plainsWoodAmount = 0.01f;
+
     [SerializeField] private Color forestColor;
+    [SerializeField, Range(0f, 1f)] private float forestTreeAmount = 0.9f;
+    [SerializeField, Range(0f, 1f)] private float forestWoodAmount = 0.01f;
 
     [SerializeField] private Color taigaColor;
+    [SerializeField, Range(0f, 1f)] private float taigaTreeAmount = 1f;
+    [SerializeField, Range(0f, 1f)] private float taigaWoodAmount = 0f;
 
     [SerializeField] private Color tundraColor;
+    [SerializeField, Range(0f, 1f)] private float tundraWoodAmount = 0.05f;
 
     [SerializeField] private Color eternalSnowColor;
     private TurnManager _turnManager;
@@ -454,31 +469,100 @@ public class HexGrid : MonoBehaviour {
                     else hexCellRenderer.material.color = this.waterCoastColor;
                 }
                 // красим горы
-                else if (heightNormalized > this.mountainsLevel) {
+                else if (heightNormalized > this.mountainsLevel)
                     hexCellRenderer.material.color = this.mountainsColor;
-                } 
-                // красим землю по биому
+                // красим землю по биому и спавним растительность
                 else switch (hexCell.biome) {
                     case Biome.EternalSnow:
                         hexCellRenderer.material.color = this.eternalSnowColor;
                         break;
                     case Biome.Tundra:
                         hexCellRenderer.material.color = this.tundraColor;
+                        if (UnityEngine.Random.value < this.tundraWoodAmount)
+                            Instantiate(
+                                this.woodPrefab,
+                                pivot.transform.position,
+                                this.woodPrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
                         break;
                     case Biome.Taiga:
                         hexCellRenderer.material.color = this.taigaColor;
+                        if (UnityEngine.Random.value < this.taigaTreeAmount)
+                            Instantiate(
+                                this.treePrefab,
+                                pivot.transform.position,
+                                this.treePrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
+                        else if (UnityEngine.Random.value < this.taigaWoodAmount)
+                            Instantiate(
+                                this.woodPrefab,
+                                pivot.transform.position,
+                                this.woodPrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
                         break;
                     case Biome.Forest:
                         hexCellRenderer.material.color = this.forestColor;
+                        if (UnityEngine.Random.value < this.forestTreeAmount)
+                            Instantiate(
+                                this.treePrefab,
+                                pivot.transform.position,
+                                this.treePrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
+                        else if (UnityEngine.Random.value < this.forestWoodAmount)
+                            Instantiate(
+                                this.woodPrefab,
+                                pivot.transform.position,
+                                this.woodPrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
                         break;
                     case Biome.Plains:
                         hexCellRenderer.material.color = this.plainsColor;
+                        if (UnityEngine.Random.value < this.plainsTreeAmount)
+                            Instantiate(
+                                this.treePrefab,
+                                pivot.transform.position,
+                                this.treePrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
+                        else if (UnityEngine.Random.value < this.plainsWoodAmount)
+                            Instantiate(
+                                this.woodPrefab,
+                                pivot.transform.position,
+                                this.woodPrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
                         break;
                     case Biome.Steppe:
                         hexCellRenderer.material.color = this.steppeColor;
+                        if (UnityEngine.Random.value < this.steppeWoodAmount)
+                            Instantiate(
+                                this.woodPrefab,
+                                pivot.transform.position,
+                                this.woodPrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
                         break;
                     case Biome.Jungle:
                         hexCellRenderer.material.color = this.jungleColor;
+                        if (UnityEngine.Random.value < this.jungleTreeAmount)
+                            Instantiate(
+                                this.treePrefab,
+                                pivot.transform.position,
+                                this.treePrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
+                        else if (UnityEngine.Random.value < this.jungleWoodAmount)
+                            Instantiate(
+                                this.woodPrefab,
+                                pivot.transform.position,
+                                this.woodPrefab.transform.rotation,
+                                this.transform
+                            ).LocalCoords = pos;
                         break;
                     case Biome.Desert:
                         hexCellRenderer.material.color = this.desertColor;
@@ -509,8 +593,8 @@ public class HexGrid : MonoBehaviour {
         float wetness = this.wetness.ValueAt(pos.x, pos.y);
 
         if (temperature <= this.veryColdLevel) return Biome.EternalSnow;
-        if (temperature < this.coldLevel) return (wetness < this.normalWetnessLevel) ? Biome.Tundra : Biome.Taiga;
-        if (temperature < this.normalTemperatureLevel) return (UnityEngine.Random.value < 0.5f) ? Biome.Forest : Biome.Plains;
+        if (temperature < this.coldLevel) return (wetness < this.dryLevel) ? Biome.Tundra : Biome.Taiga;
+        if (temperature < this.normalTemperatureLevel) return (wetness < this.wetLevel) ? Biome.Plains : Biome.Forest;
         if (temperature < this.hotLevel) return (wetness < this.normalWetnessLevel) ? Biome.Steppe : Biome.Jungle;
         if (temperature < this.veryHotLevel) return Biome.Desert;
 

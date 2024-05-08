@@ -68,7 +68,7 @@ MonoBehaviour:
   waterCoastLevel: 0.25
   waterColor: {r: 0, g: 0.44219995, b: 0.8867924, a: 0}
   waterLevel: 0.2
-  deepWaterColor: {r: 0, g: 0.06301247, b: 0.6698113, a: 0}
+  deepWaterColor: {r: 0, g: 0.25786072, b: 0.67058825, a: 0}
   deepWaterLevel: 0.15
   mountainsHeightInfluence: 4
   numberOfTectonicPlates: {x: 2, y: 3}
@@ -116,16 +116,28 @@ MonoBehaviour:
     scale: 30
     randomSeed: 1
     seed: {x: 0, y: 0}
-  veryWetLevel: 1
   wetLevel: 0.8
   normalWetnessLevel: 0.6
   dryLevel: 0.4
-  veryDryLevel: 0.2
-  desertColor: {r: 0.8251442, g: 0.9150943, b: 0, a: 0}
-  jungleColor: {r: 0, g: 1, b: 0, a: 0}
-  steppeColor: {r: 0.94509804, g: 0.7908332, b: 0.2352941, a: 0}
+  treePrefab: {fileID: 5444011040960015596, guid: 70672f6c914ef2b4f9022a9e79332bba,
+    type: 3}
+  woodPrefab: {fileID: 6959064768657503403, guid: 823bf43d0c27e6845bea529cb28befad,
+    type: 3}
+  desertColor: {r: 1, g: 0.93343675, b: 0.2235294, a: 0}
+  jungleColor: {r: 0.35298377, g: 0.8679245, b: 0, a: 0}
+  jungleTreeAmount: 0.9
+  jungleWoodAmount: 0.1
+  steppeColor: {r: 0.90588236, g: 0.69063944, b: 0.27843142, a: 0}
+  steppeWoodAmount: 0.01
   plainsColor: {r: 0.54509807, g: 0.93333334, b: 0.24705882, a: 0}
-  forestColor: {r: 0.33333334, g: 0.72156864, b: 0.03529412, a: 0}
+  plainsTreeAmount: 0.01
+  plainsWoodAmount: 0.01
+  forestColor: {r: 0.26847884, g: 0.5660378, b: 0.040049836, a: 0}
+  forestTreeAmount: 0.9
+  forestWoodAmount: 0.1
   taigaColor: {r: 0.16862746, g: 0.4392157, b: 0.15294118, a: 0}
-  tundraColor: {r: 0.68235296, g: 1, b: 0.6117647, a: 0}
+  taigaTreeAmount: 1
+  taigaWoodAmount: 0
+  tundraColor: {r: 0.39607528, g: 0.6509434, b: 0.34082413, a: 0}
+  tundraWoodAmount: 0.1
   eternalSnowColor: {r: 1, g: 1, b: 1, a: 0}
