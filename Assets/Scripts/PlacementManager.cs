@@ -5,8 +5,10 @@ using System;
 
 public class PlacementManager : MonoBehaviour
 {
-    private Vector2Int _size;
+    public Action onGridCreated;
     [NonSerialized] public ObjectOnGrid[,] gridWithObjectsInformation; // Сетка с информацией об объектах, которую можно получить, обратившись к этому массиву по координатам.
+
+    private Vector2Int _size;
     private ObjectOnGrid[] _objectsOnGrid;
     private HexGrid _hexGrid;
     void Awake()
@@ -31,6 +33,7 @@ public class PlacementManager : MonoBehaviour
             gridWithObjectsInformation[_unitLocalCoords.x, _unitLocalCoords.y] = _objectOnGrid;
             _objectOnGrid.transform.position = _hexGrid.InUnityCoords(_unitLocalCoords);
         }
+        onGridCreated?.Invoke();
     }
     public void UpdateGrid(Vector2Int oldPos, Vector2Int newPos, ObjectOnGrid objectOnGird)
     {
