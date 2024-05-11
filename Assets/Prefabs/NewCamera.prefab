@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToFollow: {fileID: 7389076026409502089}
-  speed: 5
+  speed: 3.5
 --- !u!114 &8779618635815844225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7389076025714455649}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60bcd7e1e51a1834d9909702e84ab4ef, type: 3}
   m_Name: 
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   zoomSpeed: 50
-  minZoom: 10
+  minZoom: 5
   maxZoom: 100
 --- !u!1 &7389076027536664374
 GameObject:

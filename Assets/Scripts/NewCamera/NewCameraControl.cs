@@ -15,6 +15,6 @@ public class NewCameraControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _transform.position = Vector3.Lerp(_transform.position, objectToFollow.position, Time.fixedDeltaTime * speed) + Vector3.up / 4;
+        _transform.position = Vector3.Lerp(_transform.position, objectToFollow.position, Time.fixedDeltaTime) + Vector3.up / 4;
     }
 }

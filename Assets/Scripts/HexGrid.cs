@@ -152,9 +152,32 @@ public class HexGrid : MonoBehaviour {
     [SerializeField, Range(0f, 1f)] private float tundraWoodAmount = 0.05f;
 
     [SerializeField] private Color eternalSnowColor;
+
+    private Material[] _plainsMats;
+    private Material[] _forestMats;
+    private Material[] _taigaMats;
+    private Material[] _tundraMats;
+    private Material[] _jungleMats;
+    private Material[] _mountainsMats;
+    private Material[] _desertMats;
+    private Material[] _snowMats;
+    private Material[] _steppeMats;
+
     private TurnManager _turnManager;
 
     private void Awake() {
+
+        //подгрузка материалов
+        _plainsMats = Resources.LoadAll<Material>("Materials/Nature/Plains");
+        _forestMats = Resources.LoadAll<Material>("Materials/Nature/Forest");
+        _taigaMats = Resources.LoadAll<Material>("Materials/Nature/Taiga");
+        _tundraMats = Resources.LoadAll<Material>("Materials/Nature/Tundra");
+        _jungleMats = Resources.LoadAll<Material>("Materials/Nature/Jungle");
+        _desertMats = Resources.LoadAll<Material>("Materials/Nature/Desert");
+        _mountainsMats = Resources.LoadAll<Material>("Materials/Nature/Mountains");
+        _steppeMats = Resources.LoadAll<Material>("Materials/Nature/Steppe");
+        _snowMats= Resources.LoadAll<Material>("Materials/Nature/Snow");
+
         // Base
         this._hexagonPrefabRenderer = this.hexagonPrefab.transform.GetChild(0).GetComponent<Renderer>();
         this.pivots = new GameObject[this.size.x, this.size.y];
@@ -470,14 +493,14 @@ public class HexGrid : MonoBehaviour {
                 }
                 // красим горы
                 else if (heightNormalized > this.mountainsLevel)
-                    hexCellRenderer.material.color = this.mountainsColor;
+                    hexCellRenderer.material = _mountainsMats[UnityEngine.Random.Range(0, _mountainsMats.Length)];
                 // красим землю по биому и спавним растительность
                 else switch (hexCell.biome) {
                     case Biome.EternalSnow:
-                        hexCellRenderer.material.color = this.eternalSnowColor;
-                        break;
+                            hexCellRenderer.material = _snowMats[UnityEngine.Random.Range(0, _snowMats.Length)];
+                            break;
                     case Biome.Tundra:
-                        hexCellRenderer.material.color = this.tundraColor;
+                        hexCellRenderer.material = _tundraMats[UnityEngine.Random.Range(0, _tundraMats.Length)];
                         if (UnityEngine.Random.value < this.tundraWoodAmount)
                             Instantiate(
                                 this.woodPrefab,
@@ -487,7 +510,7 @@ public class HexGrid : MonoBehaviour {
                             ).LocalCoords = pos;
                         break;
                     case Biome.Taiga:
-                        hexCellRenderer.material.color = this.taigaColor;
+                        hexCellRenderer.material = _taigaMats[UnityEngine.Random.Range(0, _taigaMats.Length)];
                         if (UnityEngine.Random.value < this.taigaTreeAmount)
                             Instantiate(
                                 this.treePrefab,
@@ -504,8 +527,8 @@ public class HexGrid : MonoBehaviour {
                             ).LocalCoords = pos;
                         break;
                     case Biome.Forest:
-                        hexCellRenderer.material.color = this.forestColor;
-                        if (UnityEngine.Random.value < this.forestTreeAmount)
+                            hexCellRenderer.material = _forestMats[UnityEngine.Random.Range(0, _forestMats.Length)];
+                            if (UnityEngine.Random.value < this.forestTreeAmount)
                             Instantiate(
                                 this.treePrefab,
                                 pivot.transform.position,
@@ -521,8 +544,8 @@ public class HexGrid : MonoBehaviour {
                             ).LocalCoords = pos;
                         break;
                     case Biome.Plains:
-                        hexCellRenderer.material.color = this.plainsColor;
-                        if (UnityEngine.Random.value < this.plainsTreeAmount)
+                        hexCellRenderer.material = _plainsMats[UnityEngine.Random.Range(0, _plainsMats.Length)];
+                            if (UnityEngine.Random.value < this.plainsTreeAmount)
                             Instantiate(
                                 this.treePrefab,
                                 pivot.transform.position,
@@ -538,8 +561,8 @@ public class HexGrid : MonoBehaviour {
                             ).LocalCoords = pos;
                         break;
                     case Biome.Steppe:
-                        hexCellRenderer.material.color = this.steppeColor;
-                        if (UnityEngine.Random.value < this.steppeWoodAmount)
+                            hexCellRenderer.material = _steppeMats[UnityEngine.Random.Range(0, _steppeMats.Length)];
+                            if (UnityEngine.Random.value < this.steppeWoodAmount)
                             Instantiate(
                                 this.woodPrefab,
                                 pivot.transform.position,
@@ -548,7 +571,7 @@ public class HexGrid : MonoBehaviour {
                             ).LocalCoords = pos;
                         break;
                     case Biome.Jungle:
-                        hexCellRenderer.material.color = this.jungleColor;
+                        hexCellRenderer.material = _jungleMats[UnityEngine.Random.Range(0, _jungleMats.Length)];
                         if (UnityEngine.Random.value < this.jungleTreeAmount)
                             Instantiate(
                                 this.treePrefab,
@@ -565,8 +588,8 @@ public class HexGrid : MonoBehaviour {
                             ).LocalCoords = pos;
                         break;
                     case Biome.Desert:
-                        hexCellRenderer.material.color = this.desertColor;
-                        break;
+                            hexCellRenderer.material = _desertMats[UnityEngine.Random.Range(0, _desertMats.Length)];
+                            break;
                 }
 
                 // добавляем клетку на карту

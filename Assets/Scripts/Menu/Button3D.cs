@@ -12,7 +12,16 @@ public class Button3D : MonoBehaviour
     [SerializeField] private float AnimationSpeedDown=1;
 
     private bool _IsMouseOver=false;
+    private HexGrid _grid;
+    private Vector3 _cell;
 
+    private void Awake() { _grid = FindObjectOfType<HexGrid>(); }
+    private void Start()
+    {
+        //  Destroy(_grid.hexCells[_grid.InLocalCoords(transform.position).x, _grid.InLocalCoords(transform.position).y].gameObject);
+        _cell = _grid.hexCells[_grid.InLocalCoords(transform.position).x, _grid.InLocalCoords(transform.position).y].transform.position;
+        transform.position= new Vector3(_cell.x,MinPosition.y,_cell.z);
+    }
     private void OnMouseDown()
     {
         OnClick.Invoke();
