@@ -19,6 +19,10 @@ public class MouseSelection : MonoBehaviour {
     }
     [NonSerialized] public static Action<Transform> onSelectionChanged; // вызывается раньше изменения переменной и перекраски клетки
 
+    [NonSerialized] public static Action<Transform> onSelectionHighlighted; // вызывается при наведении мышкой на выделенную клетку
+    [NonSerialized] public static Action<Transform> onSelectionClick; // вызывается при клике на выделенную клетку
+    [NonSerialized] public static Action onClickOutside; // вызывается при клике в пустоту
+
     private Camera _camera;
     private Color _highlightedOldColor, _selectedOldColor;
     private Transform _lastHighlight = null;
@@ -36,7 +40,7 @@ public class MouseSelection : MonoBehaviour {
             1 << 8 // коллайдится только с 8-ым слоем
         );
         this.UpdateHighlight(hasHit, raycastHit.transform);
-        this.UpdateSelection(raycastHit.transform);
+        this.UpdateSelection(hasHit, raycastHit.transform);
     }
     private void UpdateHighlight(bool hasHit, Transform hit) {
         // возвращаем старый цвет highlight'у из прошлого фрейма
@@ -45,9 +49,7 @@ public class MouseSelection : MonoBehaviour {
             this.highlighted = null;
         }
 
-        if (hasHit && hit != this.selected
-                 && !EventSystem.current.IsPointerOverGameObject()
-                ) {
+        if (hasHit && hit != this.selected && !EventSystem.current.IsPointerOverGameObject()) {
             if (hit != this._lastHighlight) {
                 this._lastHighlight = hit;
                 MouseSelection.onHighlightChanged?.Invoke(this._lastHighlight);
@@ -62,13 +64,13 @@ public class MouseSelection : MonoBehaviour {
         else if (this._lastHighlight != null) {
             this._lastHighlight = null;
             MouseSelection.onHighlightChanged?.Invoke(this._lastHighlight);
+            if (hasHit && hit == this.selected && !EventSystem.current.IsPointerOverGameObject())
+                MouseSelection.onSelectionHighlighted?.Invoke(this.selected);
         }
     }
 
-    private void UpdateSelection(Transform hit) {
-        if (Input.GetMouseButtonDown(0)
-                && !EventSystem.current.IsPointerOverGameObject()
-                ) {
+    private void UpdateSelection(bool hasHit, Transform hit) {
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
             if (this.highlighted != null) {
                 
                 // возвращаем старый цвет старому selection'у
@@ -96,6 +98,9 @@ public class MouseSelection : MonoBehaviour {
 
                 // меняем переменную
                 MouseSelection.onSelectionChanged?.Invoke(null);
+                if (hasHit) MouseSelection.onSelectionClick?.Invoke(this.selected);
+                else MouseSelection.onClickOutside?.Invoke();
+
                 this.selected = null;
             }
         }
