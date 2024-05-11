@@ -11,6 +11,8 @@ public class HexCell : MonoBehaviour
     [NonSerialized] public int height;
     [NonSerialized] public float heightNormalized; // высота в диапазоне от 0 до 1
     [NonSerialized] public Biome biome;
+    [NonSerialized] public bool isMountain = false;
+    [NonSerialized] public bool isWater = false;
     
     private void Start()
     {

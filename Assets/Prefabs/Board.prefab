@@ -106,6 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8291205664975074979}
   - component: {fileID: 6370256542029882500}
+  - component: {fileID: 5444204479381042865}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -238,3 +239,15 @@ MonoBehaviour:
   tundraColor: {r: 0.39607528, g: 0.6509434, b: 0.34082413, a: 0}
   tundraWoodAmount: 0.1
   eternalSnowColor: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &5444204479381042865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7325931689074160785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ca73f31a0c873340bf0de442a4d78ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -490,10 +490,13 @@ public class HexGrid : MonoBehaviour {
                     else if (heightNormalized < this.waterLevel) hexCellRenderer.material.color = this.waterColor;
                     // TODO: rivers
                     else hexCellRenderer.material.color = this.waterCoastColor;
+                    hexCell.isWater = true;
                 }
                 // красим горы
-                else if (heightNormalized > this.mountainsLevel)
+                else if (heightNormalized > this.mountainsLevel) {
                     hexCellRenderer.material = _mountainsMats[UnityEngine.Random.Range(0, _mountainsMats.Length)];
+                    hexCell.isMountain = true;
+                }
                 // красим землю по биому и спавним растительность
                 else switch (hexCell.biome) {
                     case Biome.EternalSnow:
