@@ -139,5 +139,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 5, y: 3}
   NumberOfItems: 5
-  WeightOfOneItem: 3
-  Name: Wood
+  Name: Tree
+  _coordsOnGrid: {fileID: 6959064768657503403}

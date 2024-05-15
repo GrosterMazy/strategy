@@ -11,9 +11,15 @@ public class HighlightingController : MonoBehaviour
     private Transform _highlighted;
     private UnitDescription _highlightedBeforeUnit;
     private FirstFactionFacilities _highlightedBeforeFirstFactionFacility;
-    private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
-    private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
-    private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
+    private MouseSelection _mouseSelection;
+    private PlacementManager _placementManager;
+    private HexGrid _hexGrid;
+
+    private void Awake()
+    {
+        InitComponentLinks();
+    }
+
     private void OnEnable()
     {
         MouseSelection.onHighlightChanged += OnHighlightedChanged;
@@ -94,5 +100,12 @@ public class HighlightingController : MonoBehaviour
         }
         IsUnitHighlighted(highlighted);
         IsFirstFactionFacilityHighlighted(highlighted);
+    }
+
+    private void InitComponentLinks()
+    {
+        _mouseSelection = FindObjectOfType<MouseSelection>();
+        _placementManager = FindObjectOfType<PlacementManager>();
+        _hexGrid = FindObjectOfType<HexGrid>();
     }
 }

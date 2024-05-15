@@ -1,17 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ToughResources : ObjectOnGrid // Ресурсы, которые нужно добывать
 {
     public string Name;
-    public float WeightOfOneItem;
+    [NonSerialized] public float WeightOfOneItem;
     public float actionsToGetPiece; // Стандартное Кол-во действий, которые должен потратить рабочий, чтобы получить некоторое кол-во ресурса
     public float actionsToBreak; // Кол-во действий, которые должен потратить рабочий, чтобы срубить дерево, или чтобы рудник истощился и тд
     public int piece;
     public int awardForBreak;
-    private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
+    private PlacementManager _placementManager;
     private float _remainingActionsToGetPiece; // Оставшееся кол-во действий, которые должен потратить рабочий, чтобы получить некоторое кол-во ресурса
+
+    private void Awake()
+    {
+        InitComponentLinks();
+    }
 
     private void Start()
     {
@@ -41,5 +47,11 @@ public class ToughResources : ObjectOnGrid // Ресурсы, которые н�
             return awardForBreak + countOfPiece * piece;
         }
         return countOfPiece * piece;
+    }
+
+    private void InitComponentLinks()
+    {
+        _placementManager = FindObjectOfType<PlacementManager>();
+        WeightOfOneItem = ResourcesWeights.ResourcesWeightsPerItemTable[Name];
     }
 }

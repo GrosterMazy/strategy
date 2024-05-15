@@ -7,6 +7,9 @@ using TMPro;
 public class TurnManager : MonoBehaviour
 {
     [NonSerialized] public static Action onTurnChanged;
+    [NonSerialized] public static Action DayStarts;
+    [NonSerialized] public static Action NightStarts;
+
     public bool isDay;
     public int turn;
     public float timeToTurn;
@@ -22,8 +25,13 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _remainingTimeText;
     [SerializeField] private TextMeshProUGUI _timeOfDayText;
 
+    private MouseSelection _mouseSelection;
+    private SelectedObjectInformationEnableController _selectedObjectInformationEnableController;
 
-
+    private void Awake()
+    {
+        InitComponentLinks();
+    }
     void Start()
     {
         FirstTurnStart();
@@ -48,7 +56,6 @@ public class TurnManager : MonoBehaviour
     }
     private void NextTurn()
     {
-        onTurnChanged?.Invoke();
         currentTeam = 1;
         turn += 1;
         _currentTeamText.SetText("Current Team: " + teamsDict[currentTeam]);
@@ -61,16 +68,20 @@ public class TurnManager : MonoBehaviour
         else if (turn % (dayDuration + nightDuration + 1) - dayDuration <= 0)
         {
             if (!isDay)
-                StartDay();
+                StartDay(); 
         }
+        onTurnChanged?.Invoke();
+        SetChangesInOtherClassesOnTurnChanged();
     }
     private void StartNight()
     {
+        NightStarts?.Invoke();
         isDay = false;
         _timeOfDayText.SetText("Night");
     }
     private void StartDay()
     {
+        DayStarts?.Invoke();
         isDay = true;
         _timeOfDayText.SetText("Day");
     }
@@ -92,5 +103,16 @@ public class TurnManager : MonoBehaviour
         teamsDict[3] = "Third Team";
         teamsDict[4] = "Fourth Team";
         teamsDict[5] = "Fifth Team";
+    }
+
+    private void SetChangesInOtherClassesOnTurnChanged()
+    {
+        _selectedObjectInformationEnableController.SelectedObjectInformationSetActive(_mouseSelection.selected);
+    }
+
+    private void InitComponentLinks()
+    {
+        _mouseSelection = FindObjectOfType<MouseSelection>();
+        _selectedObjectInformationEnableController = FindObjectOfType<SelectedObjectInformationEnableController>();
     }
 }

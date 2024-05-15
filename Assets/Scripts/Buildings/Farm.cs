@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Foundry : Building
-{ 
+public class Farm : FirstFactionProductionBuildingDescription
+{
 }

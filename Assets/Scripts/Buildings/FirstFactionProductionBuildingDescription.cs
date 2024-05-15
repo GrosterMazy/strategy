@@ -4,27 +4,26 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class Building : FirstFactionFacilities
+public class FirstFactionProductionBuildingDescription : FirstFactionFacilities
 {
     public Administratum Administratum;
-    public Dictionary<string, int> Storage = new Dictionary<string, int>();
 
-    public float LightBuildingFoundationCost;
-    public float FoodBuildingFoundationCost;
-    public float OreBuildingFoundationCost;
-    public float WoodBuildingFoundationCost;
+    public int LightBuildingFoundationCost;
+    public int FoodBuildingFoundationCost;
+    public int OreBuildingFoundationCost;
+    public int WoodBuildingFoundationCost;
 
-    public float LightConstructionCost;
-    public float FoodConstructionCost;
-    public float OreConstructionCost;
-    public float WoodConstructionCost;
+    public int LightConstructionCost;
+    public int FoodConstructionCost;
+    public int OreConstructionCost;
+    public int WoodConstructionCost;
 
     public void ResourcesConsumption() { 
         if (WorkerOnSite) { 
             Administratum.WasteResources(LightConsumption, OreConsumption, WoodConsumption, FoodConsumption); } }
 
     public void BuildingExpenses(string _typeOfExpense) {
-        float _lightExpense; float _oreExpense; float _woodExpense; float _foodExpense;
+        int _lightExpense; int _oreExpense; int _woodExpense; int _foodExpense;
         if (_typeOfExpense == "Foundation") {
             _lightExpense = LightBuildingFoundationCost; _oreExpense = OreBuildingFoundationCost; _woodExpense = WoodBuildingFoundationCost; _foodExpense = FoodBuildingFoundationCost; }     
         else if (_typeOfExpense == "Construction") {

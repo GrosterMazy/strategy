@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8185391791977925946}
   - component: {fileID: 7593197299357055257}
   - component: {fileID: 3087573477729950724}
-  - component: {fileID: 5525311697223583755}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -80,20 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &5525311697223583755
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81783007139602738}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &8698055793455656313
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +92,8 @@ GameObject:
   - component: {fileID: 1003853098}
   - component: {fileID: 788805558}
   - component: {fileID: 8932080938984351767}
+  - component: {fileID: 2562180130533850943}
+  - component: {fileID: 2216002252162424162}
   m_Layer: 0
   m_Name: WorkerUnit
   m_TagString: Untagged
@@ -141,18 +128,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d989d4ea3aa6f7745b29b2d9f9861da6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalCoords: {x: 50, y: 50}
+  LocalCoords: {x: 4, y: 5}
   ArmorEfficiencyTable: []
-  ActionsPerTurn: 0
+  IsSelected: 0
+  IsHighlighted: 0
+  ActionsPerTurn: 1
   Armor: 0
+  TeamAffiliation: 1
   MovementSpeed: 3
   AttackRange: 0
-  Health: 0
+  Health: 40
   AttackDamage: 0
   FoodConsumption: 0
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
-  WeightCapacityMax: 0
+  RangedLoadDistance: 1000
+  miningModifier: 0
+  WeightCapacityMax: 10
 --- !u!114 &1003853098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57437c77df970c4fb986c4ddc26639d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 0
   spentSpeed: 0
 --- !u!114 &788805558
 MonoBehaviour:
@@ -194,3 +185,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   remainingActionsCount: 0
+--- !u!54 &2562180130533850943
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698055793455656313}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &2216002252162424162
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698055793455656313}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1, z: 0}

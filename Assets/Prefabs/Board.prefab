@@ -43,12 +43,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6298927c148744e843a9cb58d4fbdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexagonPrefab: {fileID: 7310844489074244817, guid: 776b9be14408faa4fa41a013ddb8fe4b,
+  hexagonPrefab: {fileID: 5665832294305024598, guid: d128650f6653d614197c2cbe50459ea9,
     type: 3}
-  size: {x: 20, y: 20}
-  spacing: {x: 0, y: 0}
-  noise: 0
-  randomSeed: 1
-  seed: {x: 0, y: 0}
-  waterLevel: 0.3
-  smoothness: 10
+  size: {x: 100, y: 100}
+  spacing: 0.05
+  heightMappingDownshift: 0
+  numberOfHeights: 75
+  showHeightOnCells: 1
+  linearHeightStep: 1
+  heightStep: 0.25
+  heights: []
+  overallBaseTerrainHeightInfluence: 2
+  baseTerrain:
+    scale: 10
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  baseTerrainHeightInfluence: 1
+  baseTerrainRigidity:
+    scale: 40
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  baseTerrainRigidityHeightInfluence: 1
+  waterCoastColor: {r: 0.41037738, g: 0.6607312, b: 1, a: 0}
+  waterCoastLevel: 0.25
+  waterColor: {r: 0, g: 0.44219995, b: 0.8867924, a: 0}
+  waterLevel: 0.2
+  deepWaterColor: {r: 0, g: 0.06301247, b: 0.6698113, a: 0}
+  deepWaterLevel: 0.15
+  mountainsHeightInfluence: 4
+  numberOfTectonicPlates: {x: 2, y: 3}
+  mountainSlope: 0.1666
+  regulateMountainsHeight: 1
+  mountainsHeightMultiplyer:
+    scale: 20
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  mountainsErosion:
+    scale: 5
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  mountainsErosionSlopeInfluence: 0.17
+  mountainsColor: {r: 0.6509434, g: 0.4125339, b: 0.29169634, a: 0}
+  mountainsLevel: 0.5
+  highlandsHeightInfluence: 1.9
+  numberOfHighlandsPlates: {x: 15, y: 15}
+  highlandsAmount: 0.3
+  regulateHighlandsHeight: 1
+  highlandsHeightMultiplyer:
+    scale: 20
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  highlandsErosion:
+    scale: 5
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  highlandsErosionSlopeInfluence: 4
+  rigidity:
+    scale: 30
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  rigidityHeightInfluence: 0.25
+  temperature:
+    scale: 30
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  veryHotLevel: 1
+  hotLevel: 0.8
+  normalTemperatureLevel: 0.6
+  coldLevel: 0.4
+  veryColdLevel: 0.2
+  wetness:
+    scale: 30
+    randomSeed: 1
+    seed: {x: 0, y: 0}
+  veryWetLevel: 1
+  wetLevel: 0.8
+  normalWetnessLevel: 0.6
+  dryLevel: 0.4
+  veryDryLevel: 0.2
+  desertColor: {r: 0.8251442, g: 0.9150943, b: 0, a: 0}
+  jungleColor: {r: 0, g: 1, b: 0, a: 0}
+  steppeColor: {r: 0.94509804, g: 0.7908332, b: 0.2352941, a: 0}
+  plainsColor: {r: 0.54509807, g: 0.93333334, b: 0.24705882, a: 0}
+  forestColor: {r: 0.33333334, g: 0.72156864, b: 0.03529412, a: 0}
+  taigaColor: {r: 0.16862746, g: 0.4392157, b: 0.15294118, a: 0}
+  tundraColor: {r: 0.68235296, g: 1, b: 0.6117647, a: 0}
+  eternalSnowColor: {r: 1, g: 1, b: 1, a: 0}

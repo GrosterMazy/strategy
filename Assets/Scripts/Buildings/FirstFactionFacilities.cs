@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FirstFactionFacilities : FacilityDescription
 {
-    public float FoodConsumption;
-    public float OreConsumption;
-    public float WoodConsumption;
-    public float LightConsumption;
+    public int FoodConsumption;
+    public int OreConsumption;
+    public int WoodConsumption;
+    public int LightConsumption;
 }

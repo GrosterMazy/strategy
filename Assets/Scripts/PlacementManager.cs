@@ -5,12 +5,13 @@ using System;
 
 public class PlacementManager : MonoBehaviour
 {
-    private Vector2Int _size => FindObjectOfType<HexGrid>().size;
+    private Vector2Int _size;
     [NonSerialized] public ObjectOnGrid[,] gridWithObjectsInformation; // Сетка с информацией об объектах, которую можно получить, обратившись к этому массиву по координатам.
     private ObjectOnGrid[] _objectsOnGrid;
-    private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
+    private HexGrid _hexGrid;
     void Awake()
     {
+        InitComponentLinks();
         CreateEmptyGridAwake();
     }
     private void CreateEmptyGridAwake()
@@ -45,5 +46,12 @@ public class PlacementManager : MonoBehaviour
     {
         gridWithObjectsInformation[_hexGrid.InLocalCoords(oldPos.position).x, _hexGrid.InLocalCoords(oldPos.position).y] = null;
         gridWithObjectsInformation[_hexGrid.InLocalCoords(oldPos.position).x, _hexGrid.InLocalCoords(oldPos.position).y] = objectOnGrid;
+    }
+
+
+    private void InitComponentLinks()
+    {
+        _size = FindObjectOfType<HexGrid>().size;
+        _hexGrid = FindObjectOfType<HexGrid>();
     }
 }

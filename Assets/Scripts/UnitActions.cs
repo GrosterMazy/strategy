@@ -5,11 +5,16 @@ using UnityEngine;
 public class UnitActions : MonoBehaviour
 {
     public int remainingActionsCount;
-    private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
-    private SelectionController _selectionController => FindObjectOfType<SelectionController>();
-    private HighlightingController _highlightedController => FindObjectOfType<HighlightingController>();
-    private MouseSelection _mouseSelection => FindObjectOfType<MouseSelection>();
-    private UnitDescription _unitDescription => GetComponent<UnitDescription>();
+    private HexGrid _hexGrid;
+    private SelectionController _selectionController;
+    private HighlightingController _highlightedController;
+    private MouseSelection _mouseSelection;
+    private UnitDescription _unitDescription;
+
+    private void Awake()
+    {
+        InitComponentLinks();
+    }
 
     private void OnEnable()
     {
@@ -25,7 +30,7 @@ public class UnitActions : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
         {
             Attack();
         }
@@ -52,5 +57,15 @@ public class UnitActions : MonoBehaviour
     private void UpdateActionsCountOnTurnChanged()
     {
         remainingActionsCount = _unitDescription.ActionsPerTurn;
+    }
+
+
+    private void InitComponentLinks()
+    {
+        _hexGrid = FindObjectOfType<HexGrid>();
+        _selectionController = FindObjectOfType<SelectionController>();
+        _highlightedController = FindObjectOfType<HighlightingController>();
+        _mouseSelection = FindObjectOfType<MouseSelection>();
+        _unitDescription = GetComponent<UnitDescription>();
     }
 }

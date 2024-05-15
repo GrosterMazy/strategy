@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sawmill : Building
-{
-    
+public class Barracks : FirstFactionProductionBuildingDescription
+{ 
 }
-
