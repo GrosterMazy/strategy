@@ -27,7 +27,7 @@ public class FighterUnit : UnitDescription
     private void ItemReferenceReturner() {  
         if (_itemToReturnReference != null && _gridWithObjects[_itemToReturnReference.LocalCoords.x, _itemToReturnReference.LocalCoords.y] == null) { _itemToReturnReference.GoneAway(); } }
     
-    private void Start() { InitComponents(); }
+    private void Awake() { InitComponents(); }
 
     private void Update() { _gridWithObjects = _placementManager.gridWithObjectsInformation; } // нужен экшен изменения gridwoi для полной оптимизации
 
