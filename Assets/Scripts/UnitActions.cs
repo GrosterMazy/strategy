@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitActions : MonoBehaviour
 {
-    public int remainingActionsCount;
+    [NonSerialized] public int remainingActionsCount;
     private HexGrid _hexGrid;
     private SelectionController _selectionController;
     private HighlightingController _highlightedController;

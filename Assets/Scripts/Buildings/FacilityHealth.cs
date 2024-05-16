@@ -9,6 +9,19 @@ public class FacilityHealth : Health
     public float HealthPerRepairment;
     private FacilityDescription _facilityDescription;
 
+    new void Awake()
+    {
+        base.Awake();
+        InitComponentLinks();
+    }
+    private void OnEnable()
+    {
+        TurnManager.onTurnChanged += TransformationHealthOnTurnChanged;
+    }
+    private void OnDisable()
+    {
+        TurnManager.onTurnChanged -= TransformationHealthOnTurnChanged;
+    }
     new void Start()
     {
         base.Start();
@@ -39,5 +52,6 @@ public class FacilityHealth : Health
     {
         _facilityDescription = GetComponent<FacilityDescription>();
         _maxHealth = _facilityDescription.MaxHealth;
+        damageReductionPercent = _facilityDescription.DamageReductionPercent;
     }
 }

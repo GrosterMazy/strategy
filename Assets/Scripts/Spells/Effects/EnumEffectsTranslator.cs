@@ -7,7 +7,6 @@ public class EnumEffectsTranslator : MonoBehaviour
 {
     public enum EffetsEnum // При добавлении нового эффекта, кроме создания его скрипта, также нужно будет прописать его инициализацию в InitEffectTranslator()
     {
-        Burning = 0,
         Burning_1 = 4,
         Burning_2 = 5,
         Burning_3 = 6, // Макс индекс 6
@@ -24,7 +23,6 @@ public class EnumEffectsTranslator : MonoBehaviour
     }
     public void InitEffectTranslator()
     {
-        EffectTranslator[0] = typeof(Burning);
         EffectTranslator[1] = typeof(Wet);
         EffectTranslator[2] = typeof(Poisoned);
         EffectTranslator[3] = typeof(WorkerSpawner);

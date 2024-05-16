@@ -30,12 +30,18 @@ public class Caster : MonoBehaviour
     private void OnEnable()
     {
         MouseSelection.onSelectionChanged += CastPreparedSpell;
+        MouseSelection.onSelectionClick += CastPreparedSpell;
+        MouseSelection.onClickOutside += ResetPreparedSpell;
         MouseSelection.onHighlightChanged += OnHighlightedChanged;
+        MouseSelection.onSelectionHighlighted += OnHighlightedChanged;
     }
     private void OnDisable()
     {
         MouseSelection.onSelectionChanged -= CastPreparedSpell;
+        MouseSelection.onSelectionClick -= CastPreparedSpell;
+        MouseSelection.onClickOutside -= ResetPreparedSpell;
         MouseSelection.onHighlightChanged += OnHighlightedChanged;
+        MouseSelection.onSelectionHighlighted -= OnHighlightedChanged;
     }
 
     private void OnHighlightedChanged(Transform highlighted)
@@ -82,7 +88,16 @@ public class Caster : MonoBehaviour
         {
             CastSpell(_preparedSpell, _hexGrid.InLocalCoords(selected.position), _spellCaster);
             PaintCells(targetShapeCells, Color.red);
+            _preparedSpell = null;
+            _spellCaster = null;
         }
+        if (_preparedSpell == null || _spellCaster == null)
+        {
+            ResetPreparedSpell();
+        }
+    }
+    private void ResetPreparedSpell()
+    {
         _preparedSpell = null;
         _spellCaster = null;
     }

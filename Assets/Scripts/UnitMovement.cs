@@ -14,7 +14,7 @@ public class UnitMovement : MonoBehaviour
     private ObjectOnGrid _objectOnGrid;
     private PlacementManager _placementManager;
     private int _maxSpeed;
-    public int spentSpeed = 0;
+    [NonSerialized] public int spentSpeed = 0;
     private Transform _highlighted;
     private MouseSelection _mouseSelection;
     private HexGrid _hexGrid;

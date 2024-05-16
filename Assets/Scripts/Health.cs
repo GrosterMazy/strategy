@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
 {
     public Action death;
     public float currentHealth;
-    public float damageReductionPercent;
+    [NonSerialized] public float damageReductionPercent;
     protected float _maxHealth;
     protected PlacementManager _placementManager;
     protected ObjectOnGrid _objectOnGrid;
