@@ -67,7 +67,7 @@ public class WorkerUnit : UnitDescription
                 FacilityDescription _buildingToRepair = _smthOnCell.GetComponent<FacilityDescription>();
                 if (_buildingToRepair == null) { return; }
                 FacilityHealth _healthOfBuildingToRepair = _buildingToRepair.GetComponent<FacilityHealth>();
-                if (_healthOfBuildingToRepair.СurrentHealth < _buildingToRepair.MaxHealth && TeamAffiliation == _buildingToRepair.TeamAffiliation && _unitActions.remainingActionsCount > 0 && IsNeededBuildingNear(_buildingToRepair)) {
+                if (_healthOfBuildingToRepair.currentHealth < _buildingToRepair.MaxHealth && TeamAffiliation == _buildingToRepair.TeamAffiliation && _unitActions.remainingActionsCount > 0 && IsNeededBuildingNear(_buildingToRepair)) {
                     _unitActions.remainingActionsCount -= 1;
                     _healthOfBuildingToRepair.Repairment(); } } } }
 
