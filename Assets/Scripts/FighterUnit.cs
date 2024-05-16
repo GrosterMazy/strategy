@@ -31,6 +31,6 @@ public class FighterUnit : UnitDescription
 
     private void Update() { _gridWithObjects = _placementManager.gridWithObjectsInformation; } // нужен экшен изменения gridwoi для полной оптимизации
 
-    private void OnEnable() { _unitMovement.WantToMoveOnCell += ItemToReturnReferenceUpdater; _unitMovement.MovedToCell += ItemReferenceReturner; _unitHealth.death += ItemReferenceReturner; }
-    private void OnDisable() { _unitMovement.WantToMoveOnCell -= ItemToReturnReferenceUpdater; _unitMovement.MovedToCell -= ItemReferenceReturner; _unitHealth.death -= ItemReferenceReturner; }
+    private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += ItemToReturnReferenceUpdater; _unitHealth.death += ItemReferenceReturner; }
+    private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= ItemToReturnReferenceUpdater; _unitHealth.death -= ItemReferenceReturner; }
 }
