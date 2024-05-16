@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
-  ActionsToFinalizeBuilding: 3
+  ActionsToFinalizeBuilding: 1
   TeamAffiliation: 0
   Armor: 3
   IsSelected: 0
@@ -60,6 +60,9 @@ MonoBehaviour:
   MaxHealth: 10
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1
+  _highlighted: {fileID: 0}
+  _placementManager: {fileID: 0}
+  _hexGrid: {fileID: 0}
   WorkerInsideMe: {fileID: 0}
   FoodConsumption: 0
   OreConsumption: 0
@@ -104,7 +107,6 @@ MonoBehaviour:
   ProcessedMaterialName: Wood
   RawMaterialProcessingPerTurn: 1
   ProcessedMaterialProductionPerTurn: 1
-  WeightOfOneProcessedMaterial: 1
 --- !u!135 &5594296397185718185
 SphereCollider:
   m_ObjectHideFlags: 0

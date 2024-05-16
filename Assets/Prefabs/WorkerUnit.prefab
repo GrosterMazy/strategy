@@ -128,22 +128,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d989d4ea3aa6f7745b29b2d9f9861da6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalCoords: {x: 50, y: 50}
+  LocalCoords: {x: 4, y: 5}
   ArmorEfficiencyTable: []
   IsSelected: 0
   IsHighlighted: 0
-  ActionsPerTurn: 0
+  ActionsPerTurn: 1
   Armor: 0
-  TeamAffiliation: 0
+  TeamAffiliation: 1
   MovementSpeed: 3
   AttackRange: 0
-  Health: 0
+  Health: 40
   AttackDamage: 0
   FoodConsumption: 0
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
+  RangedLoadDistance: 1000
   miningModifier: 0
-  WeightCapacityMax: 0
+  WeightCapacityMax: 10
 --- !u!114 &1003853098
 MonoBehaviour:
   m_ObjectHideFlags: 0

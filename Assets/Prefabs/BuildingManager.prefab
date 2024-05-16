@@ -49,3 +49,4 @@ MonoBehaviour:
   Foundry: {fileID: 1912249941856750919, guid: f3003bea982268a4fba0b9c190d502ef, type: 3}
   Barracks: {fileID: 8738308260022013270, guid: ddec3b30bf8a5a043897a04d7283623e,
     type: 3}
+  Farm: {fileID: 1207924086863225570, guid: 6061478f17f30cf478aa448f4f0d2225, type: 3}

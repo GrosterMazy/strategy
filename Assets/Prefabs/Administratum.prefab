@@ -220,15 +220,18 @@ MonoBehaviour:
   MaxHealth: 50
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1
+  _highlighted: {fileID: 0}
+  _placementManager: {fileID: 0}
+  _hexGrid: {fileID: 0}
   WorkerInsideMe: {fileID: 0}
   FoodConsumption: 0
   OreConsumption: 0
   WoodConsumption: 0
   LightConsumption: 0
-  OverallLight: 7
-  OverallOre: 7
-  OverallWood: 7
-  OverallFood: 7
+  InitialLight: 8
+  InitialOre: 8
+  InitialWood: 8
+  InitialFood: 8
 --- !u!114 &9086735682775507510
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ using System.Linq;
 
 public class FacilityDescription : ObjectOnGrid
 {
+    public Dictionary<string, int> Storage = new Dictionary<string, int>();
     public Action OnEnteredWorker;
     public List<float> ArmorEfficiencyTable;
     public int ActionsToFinalizeBuilding;
@@ -19,10 +20,11 @@ public class FacilityDescription : ObjectOnGrid
     public float ArmorUnitEfficiencyMaxAmount;  // Значение максимальной эффективности брони(т.е. на сколько % будет снижен урон за первую единицу брони)
     public float ArmorEfficiencyDecreasementPerUnit; // То, насколько будет снижаться эффективность каждой последующей единицы брони(в %)
     [NonSerialized] public float DamageReductionPercent;
-    public Transform _highlighted => FindObjectOfType<MouseSelection>().highlighted;
-    public PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
-    public HexGrid _hexGrid => FindObjectOfType<HexGrid>();
+    public Transform _highlighted;
+    public PlacementManager _placementManager;
+    public HexGrid _hexGrid;
     public GameObject WorkerInsideMe;
+    private MouseSelection _mouseSelection;
 
     public void ArmorCounter() {
         if (ArmorEfficiencyDecreasementPerUnit <= 0) { throw new Exception("Убывающая полезность брони не может быть равна или меньше 0"); }
@@ -38,7 +40,7 @@ public class FacilityDescription : ObjectOnGrid
         Armor = Mathf.Clamp(Armor, 0, ArmorEfficiencyTable.Count - 1);
         DamageReductionPercent = ArmorEfficiencyTable[Armor]; }
 
-    public void ThrowAwayWorker() { 
+    private void ThrowAwayWorker() { 
         if (_highlighted == null) { return; }
         Vector2Int _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
         if (IsSelected && WorkerOnSite && _placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null && Input.GetKeyDown(KeyCode.T) && IsSelectedDestinationNearby(_highlightedInLocalCoords)) {
@@ -48,9 +50,11 @@ public class FacilityDescription : ObjectOnGrid
 
     public bool IsSelectedDestinationNearby(Vector2Int _selectedCell) => _hexGrid.Neighbours(transform.position).Contains(_selectedCell);
 
-    private void Start() {
+    private void InitComponents() { _placementManager = FindObjectOfType<PlacementManager>(); _hexGrid = FindObjectOfType<HexGrid>(); _mouseSelection = FindObjectOfType<MouseSelection>(); }
+
+    private void Start() { InitComponents();
         ArmorCounter(); }
 
-    private void Update() {
+    private void Update() { _highlighted = _mouseSelection.highlighted; // нужен экшен смены хайлайтеда (для полной оптимизации, но в целом и так норм)
         ThrowAwayWorker(); }
 }

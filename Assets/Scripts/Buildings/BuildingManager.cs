@@ -5,15 +5,18 @@ using System.Linq;
 
 public class BuildingManager : MonoBehaviour
 {
-    private int CurrentTeamNumber => FindObjectOfType<TurnManager>().currentTeam;
-    private Transform _highlighted => FindObjectOfType<MouseSelection>().highlighted;
-    private PlacementManager _placementManager => FindObjectOfType<PlacementManager>();
-    private HexGrid _hexGrid => FindObjectOfType<HexGrid>();
+    private TurnManager _turnManager;
+    private MouseSelection _mouseSelection;
+    private int CurrentTeamNumber;
+    private Transform _highlighted;
+    private PlacementManager _placementManager;
+    private HexGrid _hexGrid;
     private Dictionary<int, Administratum> _teamsAdministratumsReferences = new Dictionary<int, Administratum>();
     [SerializeField] private Administratum Administratum;
     [SerializeField] private FirstFactionProductionBuildingDescription Sawmill;
     [SerializeField] private FirstFactionProductionBuildingDescription Foundry;
     [SerializeField] private FirstFactionProductionBuildingDescription Barracks;
+    [SerializeField] private FirstFactionProductionBuildingDescription Farm;
 
     private void BuildBuildingsUpdate() {
                 if (_highlighted == null) { return; }
@@ -30,9 +33,10 @@ public class BuildingManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Alpha2)) { _buildingToBuild = Sawmill; }
                 else if (Input.GetKeyDown(KeyCode.Alpha3)) { _buildingToBuild = Foundry; }
                 else if (Input.GetKeyDown(KeyCode.Alpha4)) { _buildingToBuild = Barracks; }
+                else if (Input.GetKeyDown(KeyCode.Alpha5)) { _buildingToBuild = Farm; }
                 else return;
-                if (_currentAdministratum.OverallLight >= _buildingToBuild.LightBuildingFoundationCost && _currentAdministratum.OverallOre >= _buildingToBuild.OreBuildingFoundationCost &&
-                        _currentAdministratum.OverallWood >= _buildingToBuild.WoodBuildingFoundationCost && _currentAdministratum.OverallFood >= _buildingToBuild.FoodBuildingFoundationCost) {
+                if (_currentAdministratum.Storage["Light"] >= _buildingToBuild.LightBuildingFoundationCost && _currentAdministratum.Storage["Ore"] >= _buildingToBuild.OreBuildingFoundationCost &&
+                        _currentAdministratum.Storage["Wood"] >= _buildingToBuild.WoodBuildingFoundationCost && _currentAdministratum.Storage["Food"] >= _buildingToBuild.FoodBuildingFoundationCost) {
                     var _building = Instantiate(_buildingToBuild, _highlighted.parent.transform.position, Quaternion.identity);
                     _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _building);
                     _building.TeamAffiliation = CurrentTeamNumber;
@@ -45,7 +49,12 @@ public class BuildingManager : MonoBehaviour
             if (_neighbour != null) {
                 WorkerUnit _worker = _neighbour.GetComponent<WorkerUnit>();
                 if (_worker != null && _worker.TeamAffiliation == CurrentTeamNumber) return true; } } return false; }
+
+    private void InitComponents() {_placementManager = FindObjectOfType<PlacementManager>(); _hexGrid = FindObjectOfType<HexGrid>(); _turnManager = FindObjectOfType<TurnManager>(); _mouseSelection = FindObjectOfType<MouseSelection>(); }
     
-    private void Update() {
+    private void Start() { InitComponents(); }
+
+    private void Update() { _highlighted = _mouseSelection.highlighted; // нужен экшен смены хайлайтеда
+        CurrentTeamNumber = _turnManager.currentTeam; // нужен экшен смены команды (для полной оптимизации, но и так в целом норм)
         BuildBuildingsUpdate();}
 }
