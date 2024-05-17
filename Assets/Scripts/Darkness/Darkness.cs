@@ -10,6 +10,10 @@ public class Darkness : ObjectOnGrid
     {
         TurnManager.onTurnChanged += OnTrurnChanged;
     }
+    private void OnDisable()
+    {
+        TurnManager.onTurnChanged -= OnTrurnChanged;
+    }
     private void OnTriggerStay(Collider other) // Проверка есть ли что-либо в этой тьме
     {
         _objectInDarkness = other.gameObject;
