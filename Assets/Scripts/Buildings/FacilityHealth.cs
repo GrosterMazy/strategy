@@ -33,7 +33,7 @@ public class FacilityHealth : Health
     {
         _wasDamagedInThisTurn = false;
     }
-    new private void IsDead()
+    override protected void IsDead()
     {
         if (currentHealth <= 0)
         {

@@ -5,7 +5,6 @@ using System;
 
 public class UnitHealth : Health
 {
-    public static Action anyUnitDie;
     public float regenerationPercent; // Процент от макс здоровья, который будет восстанавливаться, когда юнит стоит и ничего не делает и не получает урон
     private UnitDescription _unitDescription;
     private UnitMovement _unitMovement;
@@ -46,7 +45,7 @@ public class UnitHealth : Health
         currentHealth = Mathf.Clamp(currentHealth + _maxHealth * regenerationPercent / 100, 0, _maxHealth);
     }
 
-    new private void IsDead()
+    override protected void IsDead()
     {
         if (currentHealth <= 0)
         {
@@ -57,7 +56,7 @@ public class UnitHealth : Health
     {
         _placementManager.gridWithObjectsInformation[_unitDescription.LocalCoords.x, _unitDescription.LocalCoords.y] = null;
         death?.Invoke();
-        anyUnitDie?.Invoke();
+        EventBus.anyUnitDie?.Invoke();
         Destroy(gameObject);
     }
 

@@ -23,12 +23,12 @@ public class HighlightingController : MonoBehaviour
     private void OnEnable()
     {
         MouseSelection.onHighlightChanged += OnHighlightedChanged;
-        UnitHealth.anyUnitDie += OnAnyUnitDeath;
+        EventBus.anyUnitDie += OnAnyUnitDeath;
     }
     private void OnDisable()
     {
         MouseSelection.onHighlightChanged -= OnHighlightedChanged;
-        UnitHealth.anyUnitDie -= OnAnyUnitDeath;
+        EventBus.anyUnitDie -= OnAnyUnitDeath;
     }
 
 
