@@ -63,7 +63,7 @@ public class Health : MonoBehaviour
     {
         currentHealth = Mathf.Clamp(currentHealth + (_maxHealth - currentHealth) * percent / 100, 0, _maxHealth);
     }
-    protected void IsDead()
+    virtual protected void IsDead()
     {
         if (currentHealth <= 0)
         {
@@ -72,7 +72,6 @@ public class Health : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 
     private void InitComponentLinks()
     {

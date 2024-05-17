@@ -1,16 +1,16 @@
-﻿public class WorkerSpawner : Spawner
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+public class WorkerSpawner : Spawner
 {
+    new private void Awake()
+    {
+        base.Awake();
+    }
     new private void Start()
     {
         base.Start();
-        foreach(WorkerUnit worker in FindObjectsOfType<WorkerUnit>())
-        {
-            if (worker.CompareTag("Standard"))
-            {
-                objToSpawn = worker;
-                break;
-            }
-        }
+        objToSpawn = Resources.Load<ObjectOnGrid>("WorkerUnit");
         SpawnObject();
         Destroy(this);
     }

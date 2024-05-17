@@ -24,12 +24,12 @@ public class SelectionController : MonoBehaviour
     private void OnEnable()
     {
         MouseSelection.onSelectionChanged += OnSelectionChanged;
-        UnitHealth.anyUnitDie += OnAnyUnitDeath;
+        EventBus.anyUnitDie += OnAnyUnitDeath;
     }
     private void OnDisable()
     {
         MouseSelection.onSelectionChanged -= OnSelectionChanged;
-        UnitHealth.anyUnitDie -= OnAnyUnitDeath;
+        EventBus.anyUnitDie -= OnAnyUnitDeath;
     }
 
     private void OnSelectionChanged(Transform selected)

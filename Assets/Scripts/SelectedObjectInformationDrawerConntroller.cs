@@ -9,11 +9,19 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
 {
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Health;
+    public TextMeshProUGUI Armour;
+    public TextMeshProUGUI DmgReduction;
+    public TextMeshProUGUI Actions;
+    public TextMeshProUGUI Steps;
+    public TextMeshProUGUI AttackDmg;
+    public TextMeshProUGUI AttackRange;
+    public TextMeshProUGUI FoodConsumption;
     public GameObject spellButtonPrefab;
     public GameObject background;
 
     private List<GameObject> _spellButtons = new List<GameObject>();
     private float _backgroundWidth;
+    private float _backgroundHeight;
     private Vector3 space = new Vector3(70, 0, 0);
     private SelectionController _selectionController;
     private Caster _caster;
@@ -59,14 +67,28 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
         {
             Name.SetText(_selectionController.selectedFacility.name);
             Health.SetText("Health: " + _selectionController.selectedFacility.GetComponent<FacilityHealth>().currentHealth.ToString() + " / " + _selectionController.selectedFacility.MaxHealth.ToString());
+            Armour.SetText("Armour" + _selectionController.selectedFacility.Armor);
+            DmgReduction.SetText("Dmg reduction" + _selectionController.selectedFacility.DamageReductionPercent + "%");
+            AttackDmg.SetText("Food consumption: " + _selectionController.selectedFacility.FoodConsumption);
+            AttackRange.SetText("Ore consumption" + _selectionController.selectedFacility.OreConsumption);
+            FoodConsumption.SetText("Wood consumption" + _selectionController.selectedFacility.WoodConsumption);
+            Actions.SetText("Light consumption" + _selectionController.selectedFacility.LightConsumption);
+            Steps.SetText("");
         }
         else if (_selectionController.isAnyUnitSelected)
         {
             Name.SetText(_selectionController.selectedUnit.name);
             Health.SetText("Health: " + _selectionController.selectedUnit.GetComponent<UnitHealth>().currentHealth.ToString() + " / " + _selectionController.selectedUnit.Health.ToString());
+            Armour.SetText("Armour: " + _selectionController.selectedUnit.Armor + ", ");
+            DmgReduction.SetText("Dmg reduction: " + _selectionController.selectedUnit.DamageReductionPercent + "%");
+            Actions.SetText("Actions: " + _selectionController.selectedUnit.GetComponent<UnitActions>().remainingActionsCount + " / " + _selectionController.selectedUnit.ActionsPerTurn);
+            Steps.SetText("Steps: " + (_selectionController.selectedUnit.MovementSpeed - _selectionController.selectedUnit.GetComponent<UnitMovement>().spentSpeed) + " / " + _selectionController.selectedUnit.MovementSpeed);
+            AttackDmg.SetText("Attack dmg: " + _selectionController.selectedUnit.AttackDamage);
+            AttackRange.SetText("Attack range: " + _selectionController.selectedUnit.AttackRange);
+            FoodConsumption.SetText("Food consumption: " + _selectionController.selectedUnit.FoodConsumption);
             if (_caster != null)
             {
-                Vector3 offset = new Vector3(-_backgroundWidth / 2 + 45, 0, 0);
+                Vector3 offset = new Vector3(-_backgroundWidth / 2 + 45, -_backgroundHeight / 2 + 45, 0);
                 foreach (SpellsDescription spell in _caster.SpellsList)
                 {
                     if (spell.IsOnButton)
@@ -91,5 +113,6 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
     {
         _selectionController = FindObjectOfType<SelectionController>();
         _backgroundWidth = background.GetComponent<RectTransform>().rect.width;
+        _backgroundHeight = background.GetComponent<RectTransform>().rect.height;
     }
 }
