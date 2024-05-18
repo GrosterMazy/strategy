@@ -10,6 +10,7 @@ public class EnumEffectsTranslator : MonoBehaviour
         Burning_1 = 4,
         Burning_2 = 5,
         Burning_3 = 6, // Макс индекс 6
+        Lighting_3 = 0,
         Poisoned = 2,
         Wet = 1,
         WorkerSpawner = 3
@@ -23,6 +24,7 @@ public class EnumEffectsTranslator : MonoBehaviour
     }
     public void InitEffectTranslator()
     {
+        EffectTranslator[0] = typeof(Lighting_3);
         EffectTranslator[1] = typeof(Wet);
         EffectTranslator[2] = typeof(Poisoned);
         EffectTranslator[3] = typeof(WorkerSpawner);
@@ -48,7 +50,7 @@ Poisoned - то же, что и Burning
 Spawner - на клеточке с эффектом в момент наложения и в начале каждого хода, пока действует эффект,
 если там ничего нет, появляется объект, живущий определённое кол-во ходов и принадлежащий определённой команде
 
-
+Lighting - LightTransporter с эффектом становится источником света
 
 
 */

@@ -179,6 +179,7 @@ public class HexGrid : MonoBehaviour {
         _snowMats= Resources.LoadAll<Material>("Materials/Nature/Snow");
 
         // Base
+        _turnManager = FindObjectOfType<TurnManager>();
         this._hexagonPrefabRenderer = this.hexagonPrefab.transform.GetChild(0).GetComponent<Renderer>();
         this.pivots = new GameObject[this.size.x, this.size.y];
         this.hexCells = new HexCell[this.size.x, this.size.y];
