@@ -5,6 +5,7 @@ public class LightTransporter : MonoBehaviour {
     public LightTransporter Source;
     public int LightForce;
     public int LightDecrease;
+    public int LightDuration;
 
     [NonSerialized] public HexCell cell;
     [NonSerialized] public HexGrid grid;
@@ -13,6 +14,15 @@ public class LightTransporter : MonoBehaviour {
 
     private int _oldLightForce;
     private int _oldLightDecrease;
+
+    private void OnEnable()
+    {
+        TurnManager.onTurnChanged += OnTurnChanged;
+    }
+    private void OnDisable()
+    {
+        TurnManager.onTurnChanged -= OnTurnChanged;
+    }
 
     private void Start() {
         foreach(Vector2Int Coords in grid.Neighbours(transform.position))
@@ -50,11 +60,21 @@ public class LightTransporter : MonoBehaviour {
             OnLightForceChange?.Invoke(this, NewLightForce - NewSource.LightDecrease);
         }
     }
-    public void SetLight(int NewLightRate, int NewDecrease) {
+    public void SetLight(int NewLightRate, int NewDecrease=1, int Duration=9999) {
         Source = null;
+        LightDuration = Duration;
         LightForce = NewLightRate;
         LightDecrease = NewDecrease;
         cell.LightRate = (turnManager.isDay ? DarknessMainVariables.LightForce : 0) + NewLightRate;
         OnLightForceChange?.Invoke(this, NewLightRate);
+    }
+
+    private void OnTurnChanged()
+    {
+        LightDuration -= 1;
+        if (LightDuration <= 0)
+        {
+            SetLight(0, 0);
+        }
     }
 }
