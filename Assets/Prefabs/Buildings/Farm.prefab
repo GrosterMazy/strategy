@@ -194,6 +194,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RawMaterialName: Seed
-  ProcessedMaterialName: Weed
+  ProcessedMaterialName: Food
   RawMaterialProcessingPerTurn: 1
   ProcessedMaterialProductionPerTurn: 1

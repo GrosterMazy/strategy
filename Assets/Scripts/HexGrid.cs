@@ -83,7 +83,7 @@ public class HexGrid : MonoBehaviour {
     [SerializeField] private Noise mountainsErosion; // делает пики гор более острыми
     [SerializeField] private float mountainsErosionSlopeInfluence;
 
-    [SerializeField] private Color mountainsColor;
+    // [SerializeField] private Color mountainsColor; // не используется
     [SerializeField, Range(0f, 1f)] private float mountainsLevel; // выше этого значения клетки будут краситься как горы 
 
     [Header("HeightMap/Highlands")]
@@ -124,34 +124,50 @@ public class HexGrid : MonoBehaviour {
     [SerializeField, Range(0f, 1f)] private float dryLevel;
     // [SerializeField, Range(0f, 1f)] private float veryDryLevel; // сейчас не используется
 
-    [SerializeField] private ObjectOnGrid treePrefab;
-    [SerializeField] private ObjectOnGrid woodPrefab;
+    [SerializeField] private ToughResources treePrefab;
+    [SerializeField] private CollectableItem woodPrefab;
 
-    [SerializeField] private Color desertColor;
+    [SerializeField] private ToughResources orePrefab; // появляются на возвышенностях
+    [SerializeField, Range(0f, 1f)] private float oreLevel; // уровень, выше которого начинает появляться руда
+    [SerializeField, Range(0f, 1f)] private float oreFrequency;
 
-    [SerializeField] private Color jungleColor;
-    [SerializeField, Range(0f, 1f)] private float jungleTreeAmount = 0.9f;
-    [SerializeField, Range(0f, 1f)] private float jungleWoodAmount = 0.01f;
+    // [SerializeField] private Color desertColor; // не используется
 
-    [SerializeField] private Color steppeColor;
-    [SerializeField, Range(0f, 1f)] private float steppeWoodAmount = 0.01f;
+    // [SerializeField] private Color jungleColor; // не используется
+    [SerializeField, Range(0f, 1f)] private float jungleTreeFrequency = 0.9f;
+    [SerializeField, Range(0f, 1f)] private float jungleWoodFrequency = 0.01f;
+    [SerializeField] private int jungleMinWoodAmount = 1;
+    [SerializeField] private int jungleMaxWoodAmount = 5;
 
-    [SerializeField] private Color plainsColor;
-    [SerializeField, Range(0f, 1f)] private float plainsTreeAmount = 0.01f;
-    [SerializeField, Range(0f, 1f)] private float plainsWoodAmount = 0.01f;
+    // [SerializeField] private Color steppeColor; // не используется
+    [SerializeField, Range(0f, 1f)] private float steppeWoodFrequency = 0.01f;
+    [SerializeField] private int steppeMinWoodAmount = 1;
+    [SerializeField] private int steppeMaxWoodAmount = 5;
 
-    [SerializeField] private Color forestColor;
-    [SerializeField, Range(0f, 1f)] private float forestTreeAmount = 0.9f;
-    [SerializeField, Range(0f, 1f)] private float forestWoodAmount = 0.01f;
+    // [SerializeField] private Color plainsColor; // не используется
+    [SerializeField, Range(0f, 1f)] private float plainsTreeFrequency = 0.01f;
+    [SerializeField, Range(0f, 1f)] private float plainsWoodFrequency = 0.01f;
+    [SerializeField] private int plainsMinWoodAmount = 1;
+    [SerializeField] private int plainsMaxWoodAmount = 5;
 
-    [SerializeField] private Color taigaColor;
-    [SerializeField, Range(0f, 1f)] private float taigaTreeAmount = 1f;
-    [SerializeField, Range(0f, 1f)] private float taigaWoodAmount = 0f;
+    // [SerializeField] private Color forestColor; // не используется
+    [SerializeField, Range(0f, 1f)] private float forestTreeFrequency = 0.9f;
+    [SerializeField, Range(0f, 1f)] private float forestWoodFrequency = 0.01f;
+    [SerializeField] private int forestMinWoodAmount = 1;
+    [SerializeField] private int forestMaxWoodAmount = 5;
 
-    [SerializeField] private Color tundraColor;
-    [SerializeField, Range(0f, 1f)] private float tundraWoodAmount = 0.05f;
+    // [SerializeField] private Color taigaColor; // не используется
+    [SerializeField, Range(0f, 1f)] private float taigaTreeFrequency = 1f;
+    [SerializeField, Range(0f, 1f)] private float taigaWoodFrequency = 0f;
+    [SerializeField] private int taigaMinWoodAmount = 1;
+    [SerializeField] private int taigaMaxWoodAmount = 5;
 
-    [SerializeField] private Color eternalSnowColor;
+    // [SerializeField] private Color tundraColor; // не используется
+    [SerializeField, Range(0f, 1f)] private float tundraWoodFrequency = 0.05f;
+    [SerializeField] private int tundraMinWoodAmount = 1;
+    [SerializeField] private int tundraMaxWoodAmount = 5;
+
+    // [SerializeField] private Color eternalSnowColor; // не используется
 
     private Material[] _plainsMats;
     private Material[] _forestMats;
@@ -166,7 +182,6 @@ public class HexGrid : MonoBehaviour {
     private TurnManager _turnManager;
 
     private void Awake() {
-
         //подгрузка материалов
         _plainsMats = Resources.LoadAll<Material>("Materials/Nature/Plains");
         _forestMats = Resources.LoadAll<Material>("Materials/Nature/Forest");
@@ -179,7 +194,7 @@ public class HexGrid : MonoBehaviour {
         _snowMats= Resources.LoadAll<Material>("Materials/Nature/Snow");
 
         // Base
-        _turnManager = FindObjectOfType<TurnManager>();
+        this._turnManager = FindObjectOfType<TurnManager>();
         this._hexagonPrefabRenderer = this.hexagonPrefab.transform.GetChild(0).GetComponent<Renderer>();
         this.pivots = new GameObject[this.size.x, this.size.y];
         this.hexCells = new HexCell[this.size.x, this.size.y];
@@ -400,6 +415,7 @@ public class HexGrid : MonoBehaviour {
         Renderer hexCellRenderer;
         LightTransporter lightTransporter;
         int waterHeight = Mathf.RoundToInt(Mathf.Lerp(0, this.numberOfHeights-1, this.waterCoastLevel));
+        bool filled;
 
         for (int x = 0; x < this.size.x; x++)
             for (int y = 0; y < this.size.y; y++) {
@@ -448,8 +464,8 @@ public class HexGrid : MonoBehaviour {
                 pivot = Instantiate(
                     this.hexagonPrefab,
                     this.InUnityCoords(pos, (this.showHeightOnCells ?
-                        // клетки ниже уровня воды затапливаются водой
-                        ((heightNormalized < this.waterCoastLevel) ? waterHeight : height)
+                        // ((heightNormalized < this.waterCoastLevel) ? waterHeight : height) // клетки ниже уровня воды затапливаются водой
+                        height // рельефное дно
                         : 0)),
                     this.hexagonPrefab.transform.rotation,
                     this.transform
@@ -485,6 +501,8 @@ public class HexGrid : MonoBehaviour {
                 // берём Renderer
                 hexCellRenderer = hexCell.GetComponent<Renderer>();
 
+                filled = false;
+
                 // красим воду
                 if (heightNormalized < this.waterCoastLevel) {
                     if (heightNormalized < this.deepWaterLevel) hexCellRenderer.material.color = this.deepWaterColor;
@@ -492,108 +510,132 @@ public class HexGrid : MonoBehaviour {
                     // TODO: rivers
                     else hexCellRenderer.material.color = this.waterCoastColor;
                     hexCell.isWater = true;
+
+                    // добавляем клетку на карту
+                    this.pivots[x, y] = pivot;
+                    this.hexCells[x, y] = hexCell;
+                    this.hexCellRenderers[x, y] = hexCellRenderer;
+
+                    continue;
                 }
+
                 // красим горы
-                else if (heightNormalized > this.mountainsLevel) {
+                if (heightNormalized > this.mountainsLevel) {
                     hexCellRenderer.material = _mountainsMats[UnityEngine.Random.Range(0, _mountainsMats.Length)];
                     hexCell.isMountain = true;
                 }
-                // красим землю по биому и спавним растительность
-                else switch (hexCell.biome) {
+
+                // спавним руду
+                if (heightNormalized > this.oreLevel && UnityEngine.Random.value < this.oreFrequency) {
+                    this.PlaceToughResource(this.orePrefab, pivot, pos);
+                    filled = true;
+                }
+
+                if (hexCell.isMountain) {
+                    // добавляем клетку на карту
+                    this.pivots[x, y] = pivot;
+                    this.hexCells[x, y] = hexCell;
+                    this.hexCellRenderers[x, y] = hexCellRenderer;
+
+                    continue;
+                }
+                
+                // красим землю по биому и спавним растительность на карте
+                switch (hexCell.biome) {
                     case Biome.EternalSnow:
-                            hexCellRenderer.material = _snowMats[UnityEngine.Random.Range(0, _snowMats.Length)];
-                            break;
+                        hexCellRenderer.material = _snowMats[UnityEngine.Random.Range(0, _snowMats.Length)];
+                        break;
                     case Biome.Tundra:
                         hexCellRenderer.material = _tundraMats[UnityEngine.Random.Range(0, _tundraMats.Length)];
-                        if (UnityEngine.Random.value < this.tundraWoodAmount)
-                            Instantiate(
+                        if (UnityEngine.Random.value < this.tundraWoodFrequency && !filled) {
+                            this.PlaceItem(
                                 this.woodPrefab,
-                                pivot.transform.position,
-                                this.woodPrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
+                                pivot,
+                                pos,
+                                UnityEngine.Random.Range(this.tundraMinWoodAmount, this.tundraMaxWoodAmount+1)
+                            );
+                            filled = true;
+                        }
                         break;
                     case Biome.Taiga:
                         hexCellRenderer.material = _taigaMats[UnityEngine.Random.Range(0, _taigaMats.Length)];
-                        if (UnityEngine.Random.value < this.taigaTreeAmount)
-                            Instantiate(
-                                this.treePrefab,
-                                pivot.transform.position,
-                                this.treePrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
-                        else if (UnityEngine.Random.value < this.taigaWoodAmount)
-                            Instantiate(
+                        if (UnityEngine.Random.value < this.taigaTreeFrequency && !filled) {
+                            PlaceToughResource(this.treePrefab, pivot, pos);
+                            filled = true;
+                        }
+                        else if (UnityEngine.Random.value < this.taigaWoodFrequency && !filled) {
+                            this.PlaceItem(
                                 this.woodPrefab,
-                                pivot.transform.position,
-                                this.woodPrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
+                                pivot,
+                                pos,
+                                UnityEngine.Random.Range(this.taigaMinWoodAmount, this.taigaMaxWoodAmount+1)
+                            );
+                            filled = true;
+                        }
                         break;
                     case Biome.Forest:
-                            hexCellRenderer.material = _forestMats[UnityEngine.Random.Range(0, _forestMats.Length)];
-                            if (UnityEngine.Random.value < this.forestTreeAmount)
-                            Instantiate(
-                                this.treePrefab,
-                                pivot.transform.position,
-                                this.treePrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
-                        else if (UnityEngine.Random.value < this.forestWoodAmount)
-                            Instantiate(
+                        hexCellRenderer.material = _forestMats[UnityEngine.Random.Range(0, _forestMats.Length)];
+                        if (UnityEngine.Random.value < this.forestTreeFrequency && !filled) {
+                            PlaceToughResource(this.treePrefab, pivot, pos);
+                            filled = true;
+                        }
+                        else if (UnityEngine.Random.value < this.forestWoodFrequency && !filled) {
+                            this.PlaceItem(
                                 this.woodPrefab,
-                                pivot.transform.position,
-                                this.woodPrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
+                                pivot,
+                                pos,
+                                UnityEngine.Random.Range(this.forestMinWoodAmount, this.forestMaxWoodAmount+1)
+                            );
+                            filled = true;
+                        }
                         break;
                     case Biome.Plains:
                         hexCellRenderer.material = _plainsMats[UnityEngine.Random.Range(0, _plainsMats.Length)];
-                            if (UnityEngine.Random.value < this.plainsTreeAmount)
-                            Instantiate(
-                                this.treePrefab,
-                                pivot.transform.position,
-                                this.treePrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
-                        else if (UnityEngine.Random.value < this.plainsWoodAmount)
-                            Instantiate(
+                        if (UnityEngine.Random.value < this.plainsTreeFrequency && !filled) {
+                            PlaceToughResource(this.treePrefab, pivot, pos);
+                            filled = true;
+                        }
+                        else if (UnityEngine.Random.value < this.plainsWoodFrequency && !filled) {
+                            this.PlaceItem(
                                 this.woodPrefab,
-                                pivot.transform.position,
-                                this.woodPrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
+                                pivot,
+                                pos,
+                                UnityEngine.Random.Range(this.plainsMinWoodAmount, this.plainsMaxWoodAmount+1)
+                            );
+                            filled = true;
+                        }
                         break;
                     case Biome.Steppe:
-                            hexCellRenderer.material = _steppeMats[UnityEngine.Random.Range(0, _steppeMats.Length)];
-                            if (UnityEngine.Random.value < this.steppeWoodAmount)
-                            Instantiate(
+                        hexCellRenderer.material = _steppeMats[UnityEngine.Random.Range(0, _steppeMats.Length)];
+                        if (UnityEngine.Random.value < this.steppeWoodFrequency && !filled) {
+                            this.PlaceItem(
                                 this.woodPrefab,
-                                pivot.transform.position,
-                                this.woodPrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
+                                pivot,
+                                pos,
+                                UnityEngine.Random.Range(this.steppeMinWoodAmount, this.steppeMaxWoodAmount+1)
+                            );
+                            filled = true;
+                        }
                         break;
                     case Biome.Jungle:
                         hexCellRenderer.material = _jungleMats[UnityEngine.Random.Range(0, _jungleMats.Length)];
-                        if (UnityEngine.Random.value < this.jungleTreeAmount)
-                            Instantiate(
-                                this.treePrefab,
-                                pivot.transform.position,
-                                this.treePrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
-                        else if (UnityEngine.Random.value < this.jungleWoodAmount)
-                            Instantiate(
+                        if (UnityEngine.Random.value < this.jungleTreeFrequency && !filled) {
+                            PlaceToughResource(this.treePrefab, pivot, pos);
+                            filled = true;
+                        }
+                        else if (UnityEngine.Random.value < this.jungleWoodFrequency && !filled) {
+                            this.PlaceItem(
                                 this.woodPrefab,
-                                pivot.transform.position,
-                                this.woodPrefab.transform.rotation,
-                                this.transform
-                            ).LocalCoords = pos;
+                                pivot,
+                                pos,
+                                UnityEngine.Random.Range(this.jungleMinWoodAmount, this.jungleMaxWoodAmount+1)
+                            );
+                            filled = true;
+                        }
                         break;
                     case Biome.Desert:
-                            hexCellRenderer.material = _desertMats[UnityEngine.Random.Range(0, _desertMats.Length)];
-                            break;
+                        hexCellRenderer.material = _desertMats[UnityEngine.Random.Range(0, _desertMats.Length)];
+                        break;
                 }
 
                 // добавляем клетку на карту
@@ -601,6 +643,25 @@ public class HexGrid : MonoBehaviour {
                 this.hexCells[x, y] = hexCell;
                 this.hexCellRenderers[x, y] = hexCellRenderer;
             }
+    }
+    private void PlaceToughResource(ToughResources prefab, GameObject pivot, Vector2Int pos) {
+        ToughResources toughResource = Instantiate(
+            prefab,
+            pivot.transform.position,
+            prefab.transform.rotation,
+            this.transform
+        );
+        toughResource.LocalCoords = pos;
+    }
+    private void PlaceItem(CollectableItem prefab, GameObject pivot, Vector2Int pos, int amount=1) {
+        CollectableItem item = Instantiate(
+            prefab,
+            pivot.transform.position,
+            prefab.transform.rotation,
+            this.transform
+        );
+        item.LocalCoords = pos;
+        item.NumberOfItems = amount;
     }
 
     private Biome BiomeOn(Vector2Int pos, float heightNormalized = -1f/*брать у клетки*/) {
@@ -619,11 +680,11 @@ public class HexGrid : MonoBehaviour {
         float temperature = this.temperature.ValueAt(pos.x, pos.y);
         float wetness = this.wetness.ValueAt(pos.x, pos.y);
 
-        if (temperature <= this.veryColdLevel) return Biome.EternalSnow;
+        if (temperature < this.veryColdLevel) return Biome.EternalSnow;
         if (temperature < this.coldLevel) return (wetness < this.dryLevel) ? Biome.Tundra : Biome.Taiga;
         if (temperature < this.normalTemperatureLevel) return (wetness < this.wetLevel) ? Biome.Plains : Biome.Forest;
         if (temperature < this.hotLevel) return (wetness < this.normalWetnessLevel) ? Biome.Steppe : Biome.Jungle;
-        if (temperature < this.veryHotLevel) return Biome.Desert;
+        if (temperature <= this.veryHotLevel) return Biome.Desert;
 
         throw new System.Exception("невозможно вычислить биом для координат "+pos.ToString()+".");
     }

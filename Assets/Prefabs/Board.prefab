@@ -181,7 +181,6 @@ MonoBehaviour:
     randomSeed: 1
     seed: {x: 0, y: 0}
   mountainsErosionSlopeInfluence: 0.17
-  mountainsColor: {r: 0.6509434, g: 0.4125339, b: 0.29169634, a: 0}
   mountainsLevel: 0.5
   highlandsHeightInfluence: 1.9
   numberOfHighlandsPlates: {x: 15, y: 15}
@@ -221,24 +220,32 @@ MonoBehaviour:
     type: 3}
   woodPrefab: {fileID: 6959064768657503403, guid: 823bf43d0c27e6845bea529cb28befad,
     type: 3}
-  desertColor: {r: 1, g: 0.93343675, b: 0.2235294, a: 0}
-  jungleColor: {r: 0.35298377, g: 0.8679245, b: 0, a: 0}
-  jungleTreeAmount: 0.9
-  jungleWoodAmount: 0.1
-  steppeColor: {r: 0.90588236, g: 0.69063944, b: 0.27843142, a: 0}
-  steppeWoodAmount: 0.01
-  plainsColor: {r: 0.54509807, g: 0.93333334, b: 0.24705882, a: 0}
-  plainsTreeAmount: 0.01
-  plainsWoodAmount: 0.01
-  forestColor: {r: 0.26847884, g: 0.5660378, b: 0.040049836, a: 0}
-  forestTreeAmount: 0.9
-  forestWoodAmount: 0.1
-  taigaColor: {r: 0.16862746, g: 0.4392157, b: 0.15294118, a: 0}
-  taigaTreeAmount: 1
-  taigaWoodAmount: 0
-  tundraColor: {r: 0.39607528, g: 0.6509434, b: 0.34082413, a: 0}
-  tundraWoodAmount: 0.1
-  eternalSnowColor: {r: 1, g: 1, b: 1, a: 0}
+  orePrefab: {fileID: 257417216236116601, guid: ea4325bd93c276f42bf9c1aeae3dace6,
+    type: 3}
+  oreLevel: 0.4
+  oreFrequency: 0.1
+  jungleTreeFrequency: 0.9
+  jungleWoodFrequency: 0.01
+  jungleMinWoodAmount: 1
+  jungleMaxWoodAmount: 5
+  steppeWoodFrequency: 0.01
+  steppeMinWoodAmount: 1
+  steppeMaxWoodAmount: 5
+  plainsTreeFrequency: 0.01
+  plainsWoodFrequency: 0.01
+  plainsMinWoodAmount: 1
+  plainsMaxWoodAmount: 5
+  forestTreeFrequency: 0.9
+  forestWoodFrequency: 0.01
+  forestMinWoodAmount: 1
+  forestMaxWoodAmount: 5
+  taigaTreeFrequency: 1
+  taigaWoodFrequency: 0
+  taigaMinWoodAmount: 1
+  taigaMaxWoodAmount: 5
+  tundraWoodFrequency: 0.05
+  tundraMinWoodAmount: 1
+  tundraMaxWoodAmount: 5
 --- !u!114 &5444204479381042865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,3 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca73f31a0c873340bf0de442a4d78ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDistanceBetweenFractions: 1
+  maxDistanceBetweenFractions: -1
+  minDistanceFromBorders: 3
+  fractionMainBuildingPrefabs: []
