@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 public class Spawner : EffectsDescription
 {
-    protected ObjectOnGrid objToSpawn;          //
+    protected ObjectOnGrid objToSpawn;          // Пока не работает
     protected int objLifeTime;                  // Указать в наследнике
-    protected int objTeamAffiliation;           //
 
+    protected List<ObjectOnGrid> spawnedObjects = new List<ObjectOnGrid>();
     protected HexCell hexCell;
     protected PlacementManager placementManager;
     protected void Awake()
@@ -28,11 +29,13 @@ public class Spawner : EffectsDescription
 
     protected void SpawnObject()
     {
+        spawnedObjects.Clear();
         if (placementManager.gridWithObjectsInformation[hexCell.localPos.x, hexCell.localPos.y] == null)
         {
-            placementManager.gridWithObjectsInformation[hexCell.localPos.x, hexCell.localPos.y] = objToSpawn;
             ObjectOnGrid spawnedObj = Instantiate<ObjectOnGrid>(objToSpawn, transform.parent.position, Quaternion.identity);
+            placementManager.UpdateGrid(hexCell.localPos, hexCell.localPos, spawnedObj);
             spawnedObj.LocalCoords = hexCell.localPos;
+            spawnedObjects.Add(spawnedObj);
         }
     }
 

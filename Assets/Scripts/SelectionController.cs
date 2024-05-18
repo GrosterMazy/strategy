@@ -71,6 +71,7 @@ public class SelectionController : MonoBehaviour
             }
         }
         isAnyUnitSelected = false;
+        selectedUnit = null;
         if (_selectedBeforeUnit != null) _selectedBeforeUnit.IsSelected = false;
     }
 
@@ -94,6 +95,7 @@ public class SelectionController : MonoBehaviour
             }
         }
         isAnyFirstFactionFacilitySelected = false;
+        selectedFacility = null;
         if (_selectedBeforeFacility != null) _selectedBeforeFacility.IsSelected = false;
     }
 

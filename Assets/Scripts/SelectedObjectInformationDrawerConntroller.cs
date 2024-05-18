@@ -63,17 +63,24 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
 
     private void DrawInformationPanel()
     {
+        Name.SetText("");
+        Health.SetText("");
+        Armour.SetText("");
+        Actions.SetText("");
+        Steps.SetText("");
+        AttackDmg.SetText("");
+        AttackRange.SetText("");
+        FoodConsumption.SetText("");
         if (_selectionController.isAnyFirstFactionFacilitySelected)
         {
             Name.SetText(_selectionController.selectedFacility.name);
             Health.SetText("Health: " + _selectionController.selectedFacility.GetComponent<FacilityHealth>().currentHealth.ToString() + " / " + _selectionController.selectedFacility.MaxHealth.ToString());
-            Armour.SetText("Armour" + _selectionController.selectedFacility.Armor);
-            DmgReduction.SetText("Dmg reduction" + _selectionController.selectedFacility.DamageReductionPercent + "%");
+            Armour.SetText("Armour: " + _selectionController.selectedFacility.Armor + ", ");
+            DmgReduction.SetText("Dmg reduction: " + _selectionController.selectedFacility.DamageReductionPercent + "%");
+            Actions.SetText("Light consumption: " + _selectionController.selectedFacility.LightConsumption);
+            Steps.SetText("Wood consumption: " + _selectionController.selectedFacility.WoodConsumption);
             AttackDmg.SetText("Food consumption: " + _selectionController.selectedFacility.FoodConsumption);
-            AttackRange.SetText("Ore consumption" + _selectionController.selectedFacility.OreConsumption);
-            FoodConsumption.SetText("Wood consumption" + _selectionController.selectedFacility.WoodConsumption);
-            Actions.SetText("Light consumption" + _selectionController.selectedFacility.LightConsumption);
-            Steps.SetText("");
+            AttackRange.SetText("Ore consumption: " + _selectionController.selectedFacility.OreConsumption);
         }
         else if (_selectionController.isAnyUnitSelected)
         {

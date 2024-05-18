@@ -12,6 +12,10 @@ public class WorkerSpawner : Spawner
         base.Start();
         objToSpawn = Resources.Load<ObjectOnGrid>("WorkerUnit");
         SpawnObject();
+        foreach (ObjectOnGrid spawnedWorker in spawnedObjects)
+        {
+        //    spawnedWorker.GetComponent<UnitDescription>().TeamAffiliation =  // Надо реализовать присваивание команды
+        }
         Destroy(this);
     }
 }
