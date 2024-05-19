@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f22ee923022da4b99daf57a5dcac23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalCoords: {x: 50, y: 50}
+  LocalCoords: {x: 0, y: 0}
   Name: Tree
-  actionsToGetPiece: 2
-  actionsToBreak: 5
-  piece: 2
-  awardForBreak: 5
+  actionsToGetPiece: 1
+  actionsToBreak: 3
+  piece: 1
+  awardForBreak: 2
 --- !u!1 &8298091960738037793
 GameObject:
   m_ObjectHideFlags: 0

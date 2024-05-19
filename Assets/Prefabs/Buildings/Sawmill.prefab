@@ -50,32 +50,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
-  ActionsToFinalizeBuilding: 1
-  TeamAffiliation: 0
-  Armor: 3
+  ActionsToFinalizeBuilding: 3
+  TeamAffiliation: 1
+  Armor: 2
   IsSelected: 0
   IsHighlighted: 0
   WorkerOnSite: 0
-  MaxHealth: 10
+  MaxHealth: 100
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1
   _highlighted: {fileID: 0}
   _placementManager: {fileID: 0}
   _hexGrid: {fileID: 0}
   WorkerInsideMe: {fileID: 0}
-  FoodConsumption: 0
-  OreConsumption: 0
+  FoodConsumption: 1
+  SteelConsumption: 0
   WoodConsumption: 0
   LightConsumption: 0
   Administratum: {fileID: 0}
-  LightBuildingFoundationCost: 3
-  FoodBuildingFoundationCost: 3
-  OreBuildingFoundationCost: 3
-  WoodBuildingFoundationCost: 3
-  LightConstructionCost: 1
+  LightBuildingFoundationCost: 0
+  FoodBuildingFoundationCost: 2
+  SteelBuildingFoundationCost: 0
+  WoodBuildingFoundationCost: 4
+  LightConstructionCost: 0
   FoodConstructionCost: 1
-  OreConstructionCost: 1
-  WoodConstructionCost: 1
+  SteelConstructionCost: 0
+  WoodConstructionCost: 0
 --- !u!114 &6494127415992848402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,8 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40048bc7074e19a408615c13365478a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
-  HealthPerRepairment: 2
+  currentHealth: 0
+  HealthPerRepairment: 10
 --- !u!114 &635932026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,8 +104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RawMaterialName: Tree
   ProcessedMaterialName: Wood
-  RawMaterialProcessingPerTurn: 1
-  ProcessedMaterialProductionPerTurn: 1
+  RawMaterialProcessingPerTurn: 3
+  ProcessedMaterialProductionPerTurn: 3
 --- !u!135 &5594296397185718185
 SphereCollider:
   m_ObjectHideFlags: 0

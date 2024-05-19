@@ -144,7 +144,7 @@ MonoBehaviour:
   hexagonPrefab: {fileID: 5665832294305024598, guid: d128650f6653d614197c2cbe50459ea9,
     type: 3}
   size: {x: 100, y: 100}
-  spacing: 0.05
+  spacing: 0
   heightMappingDownshift: 0
   numberOfHeights: 75
   showHeightOnCells: 1
@@ -224,28 +224,28 @@ MonoBehaviour:
     type: 3}
   oreLevel: 0.4
   oreFrequency: 0.1
-  jungleTreeFrequency: 0.9
+  jungleTreeFrequency: 0.6
   jungleWoodFrequency: 0.01
   jungleMinWoodAmount: 1
-  jungleMaxWoodAmount: 5
+  jungleMaxWoodAmount: 3
   steppeWoodFrequency: 0.01
   steppeMinWoodAmount: 1
-  steppeMaxWoodAmount: 5
+  steppeMaxWoodAmount: 3
   plainsTreeFrequency: 0.01
   plainsWoodFrequency: 0.01
   plainsMinWoodAmount: 1
-  plainsMaxWoodAmount: 5
-  forestTreeFrequency: 0.9
+  plainsMaxWoodAmount: 3
+  forestTreeFrequency: 0.6
   forestWoodFrequency: 0.01
   forestMinWoodAmount: 1
-  forestMaxWoodAmount: 5
-  taigaTreeFrequency: 1
-  taigaWoodFrequency: 0
+  forestMaxWoodAmount: 3
+  taigaTreeFrequency: 0.6
+  taigaWoodFrequency: 0.1
   taigaMinWoodAmount: 1
-  taigaMaxWoodAmount: 5
+  taigaMaxWoodAmount: 3
   tundraWoodFrequency: 0.05
   tundraMinWoodAmount: 1
-  tundraMaxWoodAmount: 5
+  tundraMaxWoodAmount: 3
 --- !u!114 &5444204479381042865
 MonoBehaviour:
   m_ObjectHideFlags: 0

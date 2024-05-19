@@ -5,7 +5,7 @@ using UnityEngine;
 public class FirstFactionFacilities : FacilityDescription
 {
     public int FoodConsumption;
-    public int OreConsumption;
+    public int SteelConsumption;
     public int WoodConsumption;
     public int LightConsumption;
 }

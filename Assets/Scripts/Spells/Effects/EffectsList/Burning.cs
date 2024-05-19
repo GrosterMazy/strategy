@@ -1,7 +1,7 @@
 ﻿public class Burning : EffectsDescription
 {
     private Health _health;
-    protected float _damage = 10;
+    protected float _damage;
     private void OnEnable()
     {
         TurnManager.onTurnChanged += BurnDamage;

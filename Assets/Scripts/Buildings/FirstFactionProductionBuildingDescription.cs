@@ -10,26 +10,26 @@ public class FirstFactionProductionBuildingDescription : FirstFactionFacilities
 
     public int LightBuildingFoundationCost;
     public int FoodBuildingFoundationCost;
-    public int OreBuildingFoundationCost;
+    public int SteelBuildingFoundationCost;
     public int WoodBuildingFoundationCost;
 
     public int LightConstructionCost;
     public int FoodConstructionCost;
-    public int OreConstructionCost;
+    public int SteelConstructionCost;
     public int WoodConstructionCost;
 
     public void ResourcesConsumption() { 
         if (WorkerOnSite) { 
-            Administratum.WasteResources(LightConsumption, OreConsumption, WoodConsumption, FoodConsumption); } }
+            Administratum.WasteResources(LightConsumption, SteelConsumption, WoodConsumption, FoodConsumption); } }
 
     public void BuildingExpenses(string _typeOfExpense) {
-        int _lightExpense; int _oreExpense; int _woodExpense; int _foodExpense;
+        int _lightExpense; int _steelExpense; int _woodExpense; int _foodExpense;
         if (_typeOfExpense == "Foundation") {
-            _lightExpense = LightBuildingFoundationCost; _oreExpense = OreBuildingFoundationCost; _woodExpense = WoodBuildingFoundationCost; _foodExpense = FoodBuildingFoundationCost; }     
+            _lightExpense = LightBuildingFoundationCost; _steelExpense = SteelBuildingFoundationCost; _woodExpense = WoodBuildingFoundationCost; _foodExpense = FoodBuildingFoundationCost; }     
         else if (_typeOfExpense == "Construction") {
-            _lightExpense = LightConstructionCost; _oreExpense = OreConstructionCost; _woodExpense = WoodConstructionCost; _foodExpense = FoodConstructionCost; }
+            _lightExpense = LightConstructionCost; _steelExpense = SteelConstructionCost; _woodExpense = WoodConstructionCost; _foodExpense = FoodConstructionCost; }
         else { throw new Exception("Unknown expense type"); }
-        Administratum.WasteResources(_lightExpense, _oreExpense, _woodExpense, _foodExpense); }
+        Administratum.WasteResources(_lightExpense, _steelExpense, _woodExpense, _foodExpense); }
 
     private void OnEnable() { TurnManager.onTurnChanged += ResourcesConsumption; }
     private void OnDisable() { TurnManager.onTurnChanged -= ResourcesConsumption; }

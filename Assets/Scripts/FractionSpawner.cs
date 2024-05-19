@@ -106,6 +106,7 @@ public class FractionSpawner : MonoBehaviour {
             );
             mainBuilding.LocalCoords = this._buildingCoords[i];
             this._placementManager.UpdateGrid(this._buildingCoords[i], this._buildingCoords[i], mainBuilding);
+            // спавним 2 рабочих
         }
     }
 }

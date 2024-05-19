@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6387221082814792167
+--- !u!1 &5341002239188256354
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6387221082814792161}
-  - component: {fileID: 6387221082814792164}
-  - component: {fileID: 6387221082814792165}
-  - component: {fileID: 6387221082814792166}
-  - component: {fileID: 5238033596870829485}
-  - component: {fileID: 4107134960570834832}
-  - component: {fileID: 6397675707329890186}
-  - component: {fileID: 5177831250729846171}
+  - component: {fileID: 5341002239188256356}
+  - component: {fileID: 5341002239188256353}
+  - component: {fileID: 5341002239188256352}
+  - component: {fileID: 5341002239188256355}
+  - component: {fileID: 6489055166302659112}
+  - component: {fileID: 3045422885834823701}
+  - component: {fileID: 5365448166481412111}
+  - component: {fileID: 6154063956475724318}
   m_Layer: 0
-  m_Name: Warlock
+  m_Name: FightingMageUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6387221082814792161
+--- !u!4 &5341002239188256356
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387221082814792167}
+  m_GameObject: {fileID: 5341002239188256354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4225748096363156237}
+  - {fileID: 2889099877087466632}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6387221082814792164
+--- !u!114 &5341002239188256353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387221082814792167}
+  m_GameObject: {fileID: 5341002239188256354}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c37da588eef761a42afa655c2164d650, type: 3}
@@ -52,338 +52,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updatingHelpProperty: 0
   SpellsList:
-  - Name: FireBall
+  - Name: DeathLine
     Description: 
     Target_Header_: 
+    OnCaster: 1
     OnEnemyUnits: 1
     OnTeammateUnits: 1
     OnEnemyBuildings: 1
     OnTeammateBuildings: 1
-    OnGround: 1
-    Target_EndHeader_: 
-    Shape_Header_: 
-    ExcludeCaster: 0
-    IsCircle: 1
-    IsLine: 0
-    IsTriangle: 0
-    IsStar: 0
-    IsThreeLinesForward: 0
-    Shape_EndHeader_: 
-    Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
-    SpendDarkness: 0
-    IsOnButton: 1
-    Conditions_EndHeader_: 
-    Ranges_Header_: 
-    CastRange: 5
-    CircleRange: 2
-    LineRange: 0
-    StarRange: 0
-    ThreeLineRange: 0
-    Ranges_EndHeader_: 
-    Damage_Header_: 
-    DamageCount: 10
-    PercentageDamageOfMaxTargetHealth: 10
-    PercentageDamageOfCurrentTargetHealth: 0
-    PercentageDamageOfMissingTargetHealth: 0
-    PercentageDamageOfMaxCasterHealth: 0
-    PercentageDamageOfCurrentCasterHealth: 0
-    PercentageDamageOfMissingCasterHealth: 0
-    ArmourPenetration: 0
-    Damage_EndHeader_: 
-    Heal_Header_: 
-    HealCount: 0
-    PercentageHealOfMaxTargetHealth: 0
-    PercentageHealOfCurrentTargetHealth: 0
-    PercentageHealOfMissingTargetHealth: 0
-    PercentageHealOfMaxCasterHealth: 0
-    PercentageHealOfCurrentCasterHealth: 0
-    PercentageHealOfMissingCasterHealth: 0
-    Heal_EndHeader_: 
-    EffectsListSize_Header_: 
-    Effects_DrawAnyway_: 0500000006000000
-    EffectsList_EndHeader_: 
-  - Name: FireLine
-    Description: 
-    Target_Header_: 
-    OnEnemyUnits: 1
-    OnTeammateUnits: 1
-    OnEnemyBuildings: 1
-    OnTeammateBuildings: 1
-    OnGround: 1
-    Target_EndHeader_: 
-    Shape_Header_: 
-    ExcludeCaster: 0
-    IsCircle: 0
-    IsLine: 1
-    IsTriangle: 0
-    IsStar: 0
-    IsThreeLinesForward: 0
-    Shape_EndHeader_: 
-    Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
-    SpendDarkness: 0
-    IsOnButton: 1
-    Conditions_EndHeader_: 
-    Ranges_Header_: 
-    CastRange: 0
-    CircleRange: 0
-    LineRange: 10
-    StarRange: 0
-    ThreeLineRange: 0
-    Ranges_EndHeader_: 
-    Damage_Header_: 
-    DamageCount: 0
-    PercentageDamageOfMaxTargetHealth: 0
-    PercentageDamageOfCurrentTargetHealth: 0
-    PercentageDamageOfMissingTargetHealth: 0
-    PercentageDamageOfMaxCasterHealth: 0
-    PercentageDamageOfCurrentCasterHealth: 0
-    PercentageDamageOfMissingCasterHealth: 0
-    ArmourPenetration: 0
-    Damage_EndHeader_: 
-    Heal_Header_: 
-    HealCount: 0
-    PercentageHealOfMaxTargetHealth: 0
-    PercentageHealOfCurrentTargetHealth: 0
-    PercentageHealOfMissingTargetHealth: 0
-    PercentageHealOfMaxCasterHealth: 0
-    PercentageHealOfCurrentCasterHealth: 0
-    PercentageHealOfMissingCasterHealth: 0
-    Heal_EndHeader_: 
-    EffectsListSize_Header_: 
-    Effects_DrawAnyway_: 0100000002000000
-    EffectsList_EndHeader_: 
-  - Name: HEAL
-    Description: 
-    Target_Header_: 
-    OnEnemyUnits: 1
-    OnTeammateUnits: 1
-    OnEnemyBuildings: 1
-    OnTeammateBuildings: 1
-    OnGround: 1
-    Target_EndHeader_: 
-    Shape_Header_: 
-    ExcludeCaster: 0
-    IsCircle: 0
-    IsLine: 0
-    IsTriangle: 0
-    IsStar: 0
-    IsThreeLinesForward: 0
-    Shape_EndHeader_: 
-    Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
-    SpendDarkness: 0
-    IsOnButton: 1
-    Conditions_EndHeader_: 
-    Ranges_Header_: 
-    CastRange: 0
-    CircleRange: 0
-    LineRange: 0
-    StarRange: 0
-    ThreeLineRange: 0
-    Ranges_EndHeader_: 
-    Damage_Header_: 
-    DamageCount: 0
-    PercentageDamageOfMaxTargetHealth: 0
-    PercentageDamageOfCurrentTargetHealth: 0
-    PercentageDamageOfMissingTargetHealth: 0
-    PercentageDamageOfMaxCasterHealth: 0
-    PercentageDamageOfCurrentCasterHealth: 0
-    PercentageDamageOfMissingCasterHealth: 0
-    ArmourPenetration: 0
-    Damage_EndHeader_: 
-    Heal_Header_: 
-    HealCount: 0
-    PercentageHealOfMaxTargetHealth: 0
-    PercentageHealOfCurrentTargetHealth: 0
-    PercentageHealOfMissingTargetHealth: 50
-    PercentageHealOfMaxCasterHealth: 0
-    PercentageHealOfCurrentCasterHealth: 0
-    PercentageHealOfMissingCasterHealth: 0
-    Heal_EndHeader_: 
-    EffectsListSize_Header_: 
-    Effects_DrawAnyway_: 
-    EffectsList_EndHeader_: 
-  - Name: ThreeLines
-    Description: 
-    Target_Header_: 
-    OnEnemyUnits: 0
-    OnTeammateUnits: 0
-    OnEnemyBuildings: 0
-    OnTeammateBuildings: 0
     OnGround: 0
     Target_EndHeader_: 
     Shape_Header_: 
     ExcludeCaster: 0
     IsCircle: 0
-    IsLine: 0
+    IsLine: 1
     IsTriangle: 0
     IsStar: 0
-    IsThreeLinesForward: 1
-    Shape_EndHeader_: 
-    Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
-    SpendDarkness: 0
-    IsOnButton: 1
-    Conditions_EndHeader_: 
-    Ranges_Header_: 
-    CastRange: 0
-    CircleRange: 0
-    LineRange: 0
-    StarRange: 0
-    ThreeLineRange: 5
-    Ranges_EndHeader_: 
-    Damage_Header_: 
-    DamageCount: 0
-    PercentageDamageOfMaxTargetHealth: 0
-    PercentageDamageOfCurrentTargetHealth: 0
-    PercentageDamageOfMissingTargetHealth: 0
-    PercentageDamageOfMaxCasterHealth: 0
-    PercentageDamageOfCurrentCasterHealth: 0
-    PercentageDamageOfMissingCasterHealth: 0
-    ArmourPenetration: 0
-    Damage_EndHeader_: 
-    Heal_Header_: 
-    HealCount: 0
-    PercentageHealOfMaxTargetHealth: 0
-    PercentageHealOfCurrentTargetHealth: 0
-    PercentageHealOfMissingTargetHealth: 0
-    PercentageHealOfMaxCasterHealth: 0
-    PercentageHealOfCurrentCasterHealth: 0
-    PercentageHealOfMissingCasterHealth: 0
-    Heal_EndHeader_: 
-    EffectsListSize_Header_: 
-    Effects_DrawAnyway_: 
-    EffectsList_EndHeader_: 
-  - Name: STAR
-    Description: 
-    Target_Header_: 
-    OnEnemyUnits: 1
-    OnTeammateUnits: 1
-    OnEnemyBuildings: 0
-    OnTeammateBuildings: 0
-    OnGround: 0
-    Target_EndHeader_: 
-    Shape_Header_: 
-    ExcludeCaster: 0
-    IsCircle: 0
-    IsLine: 0
-    IsTriangle: 0
-    IsStar: 1
     IsThreeLinesForward: 0
     Shape_EndHeader_: 
     Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
-    SpendDarkness: 0
-    IsOnButton: 1
-    Conditions_EndHeader_: 
-    Ranges_Header_: 
-    CastRange: 3
-    CircleRange: 0
-    LineRange: 0
-    StarRange: 5
-    ThreeLineRange: 0
-    Ranges_EndHeader_: 
-    Damage_Header_: 
-    DamageCount: 15
-    PercentageDamageOfMaxTargetHealth: 0
-    PercentageDamageOfCurrentTargetHealth: 0
-    PercentageDamageOfMissingTargetHealth: 0
-    PercentageDamageOfMaxCasterHealth: 0
-    PercentageDamageOfCurrentCasterHealth: 0
-    PercentageDamageOfMissingCasterHealth: 0
-    ArmourPenetration: 1
-    Damage_EndHeader_: 
-    Heal_Header_: 
-    HealCount: 0
-    PercentageHealOfMaxTargetHealth: 0
-    PercentageHealOfCurrentTargetHealth: 0
-    PercentageHealOfMissingTargetHealth: 0
-    PercentageHealOfMaxCasterHealth: 0
-    PercentageHealOfCurrentCasterHealth: 0
-    PercentageHealOfMissingCasterHealth: 0
-    Heal_EndHeader_: 
-    EffectsListSize_Header_: 
-    Effects_DrawAnyway_: 
-    EffectsList_EndHeader_: 
-  - Name: AllShapes
-    Description: 
-    Target_Header_: 
-    OnEnemyUnits: 1
-    OnTeammateUnits: 1
-    OnEnemyBuildings: 1
-    OnTeammateBuildings: 1
-    OnGround: 1
-    Target_EndHeader_: 
-    Shape_Header_: 
-    ExcludeCaster: 0
-    IsCircle: 1
-    IsLine: 1
-    IsTriangle: 0
-    IsStar: 1
-    IsThreeLinesForward: 1
-    Shape_EndHeader_: 
-    Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
-    SpendDarkness: 0
-    IsOnButton: 1
-    Conditions_EndHeader_: 
-    Ranges_Header_: 
-    CastRange: 0
-    CircleRange: 2
-    LineRange: 15
-    StarRange: 5
-    ThreeLineRange: 10
-    Ranges_EndHeader_: 
-    Damage_Header_: 
-    DamageCount: 40
-    PercentageDamageOfMaxTargetHealth: 0
-    PercentageDamageOfCurrentTargetHealth: 0
-    PercentageDamageOfMissingTargetHealth: 0
-    PercentageDamageOfMaxCasterHealth: 0
-    PercentageDamageOfCurrentCasterHealth: 0
-    PercentageDamageOfMissingCasterHealth: 0
-    ArmourPenetration: 0
-    Damage_EndHeader_: 
-    Heal_Header_: 
-    HealCount: 0
-    PercentageHealOfMaxTargetHealth: 0
-    PercentageHealOfCurrentTargetHealth: 0
-    PercentageHealOfMissingTargetHealth: 0
-    PercentageHealOfMaxCasterHealth: 0
-    PercentageHealOfCurrentCasterHealth: 0
-    PercentageHealOfMissingCasterHealth: 0
-    Heal_EndHeader_: 
-    EffectsListSize_Header_: 
-    Effects_DrawAnyway_: 
-    EffectsList_EndHeader_: 
-  - Name: Line+ThreeLines
-    Description: 
-    Target_Header_: 
-    OnEnemyUnits: 1
-    OnTeammateUnits: 1
-    OnEnemyBuildings: 1
-    OnTeammateBuildings: 1
-    OnGround: 1
-    Target_EndHeader_: 
-    Shape_Header_: 
-    ExcludeCaster: 0
-    IsCircle: 0
-    IsLine: 1
-    IsTriangle: 0
-    IsStar: 0
-    IsThreeLinesForward: 1
-    Shape_EndHeader_: 
-    Conditions_Header_: 
-    MinRemainingActions: 0
-    SpendActions: 0
+    MinRemainingActions: 1
+    SpendActions: 1
     SpendDarkness: 0
     IsOnButton: 1
     Conditions_EndHeader_: 
@@ -392,7 +81,113 @@ MonoBehaviour:
     CircleRange: 0
     LineRange: 5
     StarRange: 0
-    ThreeLineRange: 2
+    ThreeLineRange: 0
+    Ranges_EndHeader_: 
+    Damage_Header_: 
+    DamageCount: 0
+    PercentageDamageOfMaxTargetHealth: 0
+    PercentageDamageOfCurrentTargetHealth: 0
+    PercentageDamageOfMissingTargetHealth: 0
+    PercentageDamageOfMaxCasterHealth: 0
+    PercentageDamageOfCurrentCasterHealth: 50
+    PercentageDamageOfMissingCasterHealth: 0
+    ArmourPenetration: 0
+    Damage_EndHeader_: 
+    Heal_Header_: 
+    HealCount: 0
+    PercentageHealOfMaxTargetHealth: 0
+    PercentageHealOfCurrentTargetHealth: 0
+    PercentageHealOfMissingTargetHealth: 0
+    PercentageHealOfMaxCasterHealth: 0
+    PercentageHealOfCurrentCasterHealth: 0
+    PercentageHealOfMissingCasterHealth: 0
+    Heal_EndHeader_: 
+    EffectsListSize_Header_: 
+    Effects_DrawAnyway_: 
+    EffectsList_EndHeader_: 
+  - Name: 'Word of power: Death'
+    Description: 
+    Target_Header_: 
+    OnCaster: 0
+    OnEnemyUnits: 1
+    OnTeammateUnits: 1
+    OnEnemyBuildings: 0
+    OnTeammateBuildings: 0
+    OnGround: 0
+    Target_EndHeader_: 
+    Shape_Header_: 
+    ExcludeCaster: 1
+    IsCircle: 1
+    IsLine: 0
+    IsTriangle: 0
+    IsStar: 0
+    IsThreeLinesForward: 1
+    Shape_EndHeader_: 
+    Conditions_Header_: 
+    MinRemainingActions: 5
+    SpendActions: 5
+    SpendDarkness: 0
+    IsOnButton: 1
+    Conditions_EndHeader_: 
+    Ranges_Header_: 
+    CastRange: 0
+    CircleRange: 1
+    LineRange: 0
+    StarRange: 0
+    ThreeLineRange: 0
+    Ranges_EndHeader_: 
+    Damage_Header_: 
+    DamageCount: 0
+    PercentageDamageOfMaxTargetHealth: 0
+    PercentageDamageOfCurrentTargetHealth: 0
+    PercentageDamageOfMissingTargetHealth: 0
+    PercentageDamageOfMaxCasterHealth: 0
+    PercentageDamageOfCurrentCasterHealth: 0
+    PercentageDamageOfMissingCasterHealth: 75
+    ArmourPenetration: 0
+    Damage_EndHeader_: 
+    Heal_Header_: 
+    HealCount: 0
+    PercentageHealOfMaxTargetHealth: 0
+    PercentageHealOfCurrentTargetHealth: 0
+    PercentageHealOfMissingTargetHealth: 0
+    PercentageHealOfMaxCasterHealth: 0
+    PercentageHealOfCurrentCasterHealth: 0
+    PercentageHealOfMissingCasterHealth: 0
+    Heal_EndHeader_: 
+    EffectsListSize_Header_: 
+    Effects_DrawAnyway_: 04000000
+    EffectsList_EndHeader_: 
+  - Name: Burn
+    Description: 
+    Target_Header_: 
+    OnCaster: 0
+    OnEnemyUnits: 0
+    OnTeammateUnits: 0
+    OnEnemyBuildings: 0
+    OnTeammateBuildings: 0
+    OnGround: 0
+    Target_EndHeader_: 
+    Shape_Header_: 
+    ExcludeCaster: 0
+    IsCircle: 1
+    IsLine: 0
+    IsTriangle: 0
+    IsStar: 0
+    IsThreeLinesForward: 0
+    Shape_EndHeader_: 
+    Conditions_Header_: 
+    MinRemainingActions: 2
+    SpendActions: 2
+    SpendDarkness: 0
+    IsOnButton: 1
+    Conditions_EndHeader_: 
+    Ranges_Header_: 
+    CastRange: 3
+    CircleRange: 0
+    LineRange: 0
+    StarRange: 0
+    ThreeLineRange: 0
     Ranges_EndHeader_: 
     Damage_Header_: 
     DamageCount: 0
@@ -414,92 +209,92 @@ MonoBehaviour:
     PercentageHealOfMissingCasterHealth: 0
     Heal_EndHeader_: 
     EffectsListSize_Header_: 
-    Effects_DrawAnyway_: 0000000000000000
+    Effects_DrawAnyway_: 05000000
     EffectsList_EndHeader_: 
---- !u!114 &6387221082814792165
+--- !u!114 &5341002239188256352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387221082814792167}
+  m_GameObject: {fileID: 5341002239188256354}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6abb2cfec706c843a943add33da6c53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalCoords: {x: 48, y: 48}
+  LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
   IsSelected: 0
   IsHighlighted: 0
-  ActionsPerTurn: 3
-  Armor: 5
+  ActionsPerTurn: 5
+  Armor: 0
   TeamAffiliation: 1
-  MovementSpeed: 40
-  AttackRange: 2
-  Health: 80
-  AttackDamage: 3
-  FoodConsumption: 0
+  MovementSpeed: 2
+  AttackRange: 1
+  Health: 130
+  AttackDamage: 1
+  FoodConsumption: 3
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
---- !u!114 &6387221082814792166
+--- !u!114 &5341002239188256355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387221082814792167}
+  m_GameObject: {fileID: 5341002239188256354}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c57437c77df970c4fb986c4ddc26639d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5238033596870829485
+--- !u!114 &6489055166302659112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387221082814792167}
+  m_GameObject: {fileID: 5341002239188256354}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e8f3e023edfcbe419bb00bdb73089ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  regenerationPercent: 0
---- !u!114 &4107134960570834832
+  regenerationPercent: 10
+--- !u!114 &3045422885834823701
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387221082814792167}
+  m_GameObject: {fileID: 5341002239188256354}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eba2ee8d0c1178e42b1d9d5ed2250864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &6397675707329890186
+--- !u!135 &5365448166481412111
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387221082814792167}
+  m_GameObject: {fileID: 5341002239188256354}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 1, z: 0}
---- !u!54 &5177831250729846171
+--- !u!54 &6154063956475724318
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387221082814792167}
+  m_GameObject: {fileID: 5341002239188256354}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -509,7 +304,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &7347518451684457554
+--- !u!1 &8596065041909398487
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -517,9 +312,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4225748096363156237}
-  - component: {fileID: 6333657440756226869}
-  - component: {fileID: 4380937073849164532}
+  - component: {fileID: 2889099877087466632}
+  - component: {fileID: 4997114752978574512}
+  - component: {fileID: 3346400509055493489}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -527,35 +322,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4225748096363156237
+--- !u!4 &2889099877087466632
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7347518451684457554}
+  m_GameObject: {fileID: 8596065041909398487}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6387221082814792161}
+  m_Father: {fileID: 5341002239188256356}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6333657440756226869
+--- !u!33 &4997114752978574512
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7347518451684457554}
+  m_GameObject: {fileID: 8596065041909398487}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4380937073849164532
+--- !u!23 &3346400509055493489
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7347518451684457554}
+  m_GameObject: {fileID: 8596065041909398487}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1

@@ -1,7 +1,7 @@
 ﻿public class Poisoned : EffectsDescription
 {
     private Health _health;
-    private float _damage = 15;
+    private float _damage = 5;
     private void OnEnable()
     {
         TurnManager.onTurnChanged += PoisonDamage;
@@ -12,7 +12,7 @@
     }
     private void Start()
     {
-        remainingLifeTime = 1;
+        remainingLifeTime = 10;
         if (TryGetComponent<Health>(out Health health))
         {
             _health = health;

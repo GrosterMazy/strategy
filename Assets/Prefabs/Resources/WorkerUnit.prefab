@@ -133,7 +133,7 @@ MonoBehaviour:
   IsSelected: 0
   IsHighlighted: 0
   ActionsPerTurn: 1
-  Armor: 0
+  Armor: 1
   TeamAffiliation: 1
   MovementSpeed: 3
   AttackRange: 0
@@ -157,7 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57437c77df970c4fb986c4ddc26639d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spentSpeed: 0
 --- !u!114 &788805558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,8 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8f3e023edfcbe419bb00bdb73089ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  regenerationPercent: 0
   currentHealth: 0
+  regenerationPercent: 0
 --- !u!114 &8932080938984351767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba2ee8d0c1178e42b1d9d5ed2250864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  remainingActionsCount: 0
 --- !u!54 &2562180130533850943
 Rigidbody:
   m_ObjectHideFlags: 0

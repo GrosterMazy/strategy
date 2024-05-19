@@ -54,7 +54,7 @@ public class WorkerUnit : UnitDescription
                 if (_buildingOnMyWay.ActionsToFinalizeBuilding == 0) { 
                     _buildingOnMyWay.WorkerOnSite = true; _placementManager.UpdateGrid(LocalCoords, LocalCoords, null); _buildingOnMyWay.WorkerInsideMe = gameObject; _buildingOnMyWay.OnEnteredWorker?.Invoke(); gameObject.SetActive(false); }
                 else if (_productionBuildingOnMyWay != null) { 
-                    if (_productionBuildingOnMyWay.Administratum.Storage["Light"] >= _productionBuildingOnMyWay.LightConstructionCost && _productionBuildingOnMyWay.Administratum.Storage["Ore"] >= _productionBuildingOnMyWay.OreConstructionCost &&
+                    if (_productionBuildingOnMyWay.Administratum.Storage["Light"] >= _productionBuildingOnMyWay.LightConstructionCost && _productionBuildingOnMyWay.Administratum.Storage["Steel"] >= _productionBuildingOnMyWay.SteelConstructionCost &&
                         _productionBuildingOnMyWay.Administratum.Storage["Wood"] >= _productionBuildingOnMyWay.WoodConstructionCost && _productionBuildingOnMyWay.Administratum.Storage["Food"] >= _productionBuildingOnMyWay.FoodConstructionCost) {
                         _productionBuildingOnMyWay.ActionsToFinalizeBuilding -= 1; _productionBuildingOnMyWay.BuildingExpenses("Construction"); _unitActions.remainingActionsCount -= 1; } } } }
         if (_buildingOnMyWay == null) return true;
@@ -128,4 +128,8 @@ public class WorkerUnit : UnitDescription
         _unitMovement.WantToMoveOnCell += CollectItem; TurnManager.onTurnChanged += IsIADarknessTarget; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; }
     private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; _unitHealth.death -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= GetToughResource;
         _unitMovement.WantToMoveOnCell -= CollectItem; TurnManager.onTurnChanged -= IsIADarknessTarget; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; }
+    
+    private void OnDestroy() {
+        ItemReferenceReturner();
+    }
 }

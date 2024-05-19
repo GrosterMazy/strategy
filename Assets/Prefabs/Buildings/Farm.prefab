@@ -141,31 +141,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
   ArmorEfficiencyTable: []
-  ActionsToFinalizeBuilding: 3
-  TeamAffiliation: 0
-  Armor: 0
+  ActionsToFinalizeBuilding: 2
+  TeamAffiliation: 1
+  Armor: 1
   IsSelected: 0
   IsHighlighted: 0
   WorkerOnSite: 0
-  MaxHealth: 15
+  MaxHealth: 75
   ArmorUnitEfficiencyMaxAmount: 10
   ArmorEfficiencyDecreasementPerUnit: 1
   _highlighted: {fileID: 0}
   _placementManager: {fileID: 0}
   _hexGrid: {fileID: 0}
   WorkerInsideMe: {fileID: 0}
-  FoodConsumption: 0
-  OreConsumption: 0
+  FoodConsumption: 1
+  SteelConsumption: 0
   WoodConsumption: 0
   LightConsumption: 0
   Administratum: {fileID: 0}
-  LightBuildingFoundationCost: 1
-  FoodBuildingFoundationCost: 1
-  OreBuildingFoundationCost: 1
-  WoodBuildingFoundationCost: 1
-  LightConstructionCost: 1
-  FoodConstructionCost: 1
-  OreConstructionCost: 1
+  LightBuildingFoundationCost: 0
+  FoodBuildingFoundationCost: 0
+  SteelBuildingFoundationCost: 0
+  WoodBuildingFoundationCost: 5
+  LightConstructionCost: 0
+  FoodConstructionCost: 0
+  SteelConstructionCost: 0
   WoodConstructionCost: 1
 --- !u!114 &-638985771860010778
 MonoBehaviour:
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  HealthPerRepairment: 0
+  HealthPerRepairment: 10
 --- !u!114 &20115452634573019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,5 +195,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RawMaterialName: Seed
   ProcessedMaterialName: Food
-  RawMaterialProcessingPerTurn: 1
-  ProcessedMaterialProductionPerTurn: 1
+  RawMaterialProcessingPerTurn: 0
+  ProcessedMaterialProductionPerTurn: 3

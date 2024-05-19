@@ -50,10 +50,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocalCoords: {x: 50, y: 50}
   Name: Ore
-  actionsToGetPiece: 2
-  actionsToBreak: 5
-  piece: 2
-  awardForBreak: 5
+  actionsToGetPiece: 3
+  actionsToBreak: 7
+  piece: 1
+  awardForBreak: 2
 --- !u!1 &7846415733399095710
 GameObject:
   m_ObjectHideFlags: 0

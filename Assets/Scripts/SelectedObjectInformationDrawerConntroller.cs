@@ -80,7 +80,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
             Actions.SetText("Light consumption: " + _selectionController.selectedFacility.LightConsumption);
             Steps.SetText("Wood consumption: " + _selectionController.selectedFacility.WoodConsumption);
             AttackDmg.SetText("Food consumption: " + _selectionController.selectedFacility.FoodConsumption);
-            AttackRange.SetText("Ore consumption: " + _selectionController.selectedFacility.OreConsumption);
+            AttackRange.SetText("Steel consumption: " + _selectionController.selectedFacility.SteelConsumption);
         }
         else if (_selectionController.isAnyUnitSelected)
         {

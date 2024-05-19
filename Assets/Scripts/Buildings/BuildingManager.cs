@@ -35,7 +35,7 @@ public class BuildingManager : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Alpha4)) { _buildingToBuild = Barracks; }
                 else if (Input.GetKeyDown(KeyCode.Alpha5)) { _buildingToBuild = Farm; }
                 else return;
-                if (_currentAdministratum.Storage["Light"] >= _buildingToBuild.LightBuildingFoundationCost && _currentAdministratum.Storage["Ore"] >= _buildingToBuild.OreBuildingFoundationCost &&
+                if (_currentAdministratum.Storage["Light"] >= _buildingToBuild.LightBuildingFoundationCost && _currentAdministratum.Storage["Steel"] >= _buildingToBuild.SteelBuildingFoundationCost &&
                         _currentAdministratum.Storage["Wood"] >= _buildingToBuild.WoodBuildingFoundationCost && _currentAdministratum.Storage["Food"] >= _buildingToBuild.FoodBuildingFoundationCost) {
                     var _building = Instantiate(_buildingToBuild, _highlighted.parent.transform.position, Quaternion.identity);
                     _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _building);
