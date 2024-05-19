@@ -11,6 +11,7 @@ using System;
     
     public string Target_Header_;
 
+    public bool OnCaster;
     public bool OnEnemyUnits;
     public bool OnTeammateUnits;
     public bool OnEnemyBuildings;

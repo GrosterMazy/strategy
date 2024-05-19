@@ -293,6 +293,8 @@ public class Caster : MonoBehaviour
 
     private void ChooseTargetUnits(SpellsDescription spell, Vector2Int potentialTarget, UnitDescription caster)
     {
+        if (spell.OnCaster == true) { targetUnits.Add(caster); }
+
         if (_placementManager.gridWithObjectsInformation[potentialTarget.x, potentialTarget.y] != null
             && _placementManager.gridWithObjectsInformation[potentialTarget.x, potentialTarget.y].TryGetComponent<UnitDescription>(out UnitDescription unitTarget))
         {
