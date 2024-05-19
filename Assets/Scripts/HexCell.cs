@@ -13,6 +13,7 @@ public class HexCell : MonoBehaviour
     [NonSerialized] public Biome biome;
     [NonSerialized] public bool isMountain = false;
     [NonSerialized] public bool isWater = false;
+    [NonSerialized] public bool InDarkness = false;
     
     private void Start()
     {
@@ -40,11 +41,11 @@ public class HexCell : MonoBehaviour
     {
         if (LightRate <= DarknessMainVariables.CriticalLightRate && _darknessInstance.activeSelf==false)
         {
-            _darknessInstance.SetActive(true);
+            _darknessInstance.SetActive(true); InDarkness = true;
         }
         else if (_darknessInstance != null && LightRate > DarknessMainVariables.CriticalLightRate)
         {
-            _darknessInstance.SetActive(false);
+            _darknessInstance.SetActive(false); InDarkness = false;
         }
     }  
     private void OnLightForceChanged(LightTransporter NewSource, int NewLightForce)

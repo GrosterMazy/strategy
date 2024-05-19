@@ -48,7 +48,7 @@ public class UnitMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && _unitDescription.IsSelected && _maxSpeed - spentSpeed > 0)
+        if (Input.GetMouseButtonDown(1) && _unitDescription.IsSelected && _maxSpeed - spentSpeed > 0 && _unitDescription.TeamAffiliation == _turnManager.currentTeam)
         {
             if(_isHighlightedNeighbour && !_highlightedController.isAnyUnitHighlighted)
             {

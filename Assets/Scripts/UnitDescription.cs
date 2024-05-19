@@ -20,8 +20,7 @@ public class UnitDescription : ObjectOnGrid
     public float ArmorEfficiencyDecreasementPerUnit; // То, насколько будет снижаться эффективность каждой последующей единицы брони(в %)
     [NonSerialized] public float DamageReductionPercent;
 
-    public void ArmorCounter()
-    {
+    public void ArmorCounter() {
         if (ArmorEfficiencyDecreasementPerUnit <= 0) { throw new Exception("Убывающая полезность брони юнита не может быть равна или меньше 0"); }
         var _maxArmorAccordingToPrimaryRules = ArmorUnitEfficiencyMaxAmount / ArmorEfficiencyDecreasementPerUnit;
         if (_maxArmorAccordingToPrimaryRules != Mathf.RoundToInt(_maxArmorAccordingToPrimaryRules)) { _maxArmorAccordingToPrimaryRules = Mathf.RoundToInt(_maxArmorAccordingToPrimaryRules) + 1; }
@@ -33,10 +32,8 @@ public class UnitDescription : ObjectOnGrid
             else ArmorEfficiencyTable.RemoveAt(ArmorEfficiencyTable.Count - 1); }
         if (ArmorEfficiencyTable[ArmorEfficiencyTable.Count - 1] == 100) { ArmorEfficiencyTable = (from _percent in ArmorEfficiencyTable where _percent != 100 select _percent).ToList(); ArmorEfficiencyTable.Add(100); }
         Armor = Mathf.Clamp(Armor, 0, ArmorEfficiencyTable.Count - 1);
-        DamageReductionPercent = ArmorEfficiencyTable[Armor]; 
-    }
+        DamageReductionPercent = ArmorEfficiencyTable[Armor]; }
 
-    private void Start() {
-        ArmorCounter(); }
+    private void Start() { ArmorCounter(); }
 }
    

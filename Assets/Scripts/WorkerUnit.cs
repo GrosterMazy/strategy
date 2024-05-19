@@ -18,12 +18,13 @@ public class WorkerUnit : UnitDescription
     [NonSerialized] public UnitActions _unitActions;
     private FacilityDescription _highlightedFacility;
     private Transform _highlighted;
-    private HexGrid _hexGrid;
     private CollectableItem _itemToCollect = null;
     private CollectableItem _itemToReturnReference = null;
     private WorkerUnit _thisWorkerUnit;
     private MouseSelection _mouseSelection;
     private HighlightingController _highlightingController;
+    private HexGrid _hexGrid;
+    private TargetsInDarkness _targetsInDarkness;
 
     private void TransferSingleResourcesWindow() {
         if (Input.GetKeyDown(KeyCode.G) && IsSelected && _highlightedFacility != null && _highlightedFacility.TeamAffiliation == TeamAffiliation && _hexGrid.Distance(LocalCoords, _highlightedFacility.LocalCoords) <= RangedLoadDistance && // Distance не работает так, как надо
@@ -108,16 +109,23 @@ public class WorkerUnit : UnitDescription
 
     private void ItemReferenceReturner() { // т.к. рабочий, наступая на клетку вымещает собой collectableitem из списка всех предметов на сетке, то если он забрал не все и ушел, нам нужно вернуть collectableitem в список
         if (_itemToReturnReference != null && _placementManager.gridWithObjectsInformation[_itemToReturnReference.LocalCoords.x, _itemToReturnReference.LocalCoords.y] == null) { _itemToReturnReference.GoneAway(); _itemToReturnReference = null; } }
+
+    private void IsIADarknessTarget() { if (_hexGrid.hexCells[LocalCoords.x, LocalCoords.y].InDarkness && !_targetsInDarkness.Targets.Contains(LocalCoords)) { _targetsInDarkness.AddTarget(LocalCoords); }
+                                        else if (!_hexGrid.hexCells[LocalCoords.x, LocalCoords.y].InDarkness && _targetsInDarkness.Targets.Contains(LocalCoords)) { _targetsInDarkness.RemoveTarget(LocalCoords); } }
+
+    private void UpdateMyTargetInDarknessCoords() { _targetsInDarkness.RemoveTarget(LocalCoords); _targetsInDarkness.AddTarget(_hexGrid.InLocalCoords(_highlighted.position)); }
   
     private void InitComponents() { _placementManager = FindObjectOfType<PlacementManager>(); _unitMovement = GetComponent<UnitMovement>(); _unitHealth = GetComponent<UnitHealth>();
-        _unitActions = GetComponent<UnitActions>(); _hexGrid = FindObjectOfType<HexGrid>(); _thisWorkerUnit = GetComponent<WorkerUnit>(); _mouseSelection = FindObjectOfType<MouseSelection>();
-        _highlightingController = FindObjectOfType<HighlightingController>(); }
+        _unitActions = GetComponent<UnitActions>(); _thisWorkerUnit = GetComponent<WorkerUnit>(); _mouseSelection = FindObjectOfType<MouseSelection>();
+        _highlightingController = FindObjectOfType<HighlightingController>(); _hexGrid = FindObjectOfType<HexGrid>(); _targetsInDarkness = FindObjectOfType<TargetsInDarkness>(); }
 
     private void Awake() { _weightCapacityRemaining = WeightCapacityMax; InitComponents(); }
 
     private void Update() { RepairBuilding(); TransferSingleResourcesWindow();
         _highlightedFacility = _highlightingController.highlightedFirstFactionFacility; _highlighted = _mouseSelection.highlighted; } // нужны экшены смены хайлайтеда и хайлайтед фасилити
     
-    private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; _unitHealth.death += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += GetToughResource; _unitMovement.WantToMoveOnCell += CollectItem; }
-    private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; _unitHealth.death -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= GetToughResource; _unitMovement.WantToMoveOnCell -= CollectItem; }
+    private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; _unitHealth.death += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += GetToughResource;
+        _unitMovement.WantToMoveOnCell += CollectItem; TurnManager.onTurnChanged += IsIADarknessTarget; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; }
+    private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; _unitHealth.death -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= GetToughResource;
+        _unitMovement.WantToMoveOnCell -= CollectItem; TurnManager.onTurnChanged -= IsIADarknessTarget; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; }
 }

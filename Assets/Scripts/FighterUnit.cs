@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class FighterUnit : UnitDescription
@@ -9,6 +10,10 @@ public class FighterUnit : UnitDescription
     private UnitMovement _unitMovement;
     private UnitHealth _unitHealth;
     private CollectableItem _itemToReturnReference;
+    private HexGrid _hexGrid;
+    private TargetsInDarkness _targetsInDarkness;
+    private Transform _highlighted;
+    private MouseSelection _mouseSelection;
 
     private bool ItemToReturnReferenceUpdater(Vector2Int _coordsWithItem)
     {
@@ -22,15 +27,23 @@ public class FighterUnit : UnitDescription
         else return true;
     }
 
-    private void InitComponents() { _unitMovement = GetComponent<UnitMovement>(); _unitHealth = GetComponent<UnitHealth>(); _placementManager = FindObjectOfType<PlacementManager>(); }
+    private void InitComponents() { _unitMovement = GetComponent<UnitMovement>(); _unitHealth = GetComponent<UnitHealth>(); _placementManager = FindObjectOfType<PlacementManager>(); _hexGrid = FindObjectOfType<HexGrid>();
+        _targetsInDarkness = FindObjectOfType<TargetsInDarkness>(); _mouseSelection = FindObjectOfType<MouseSelection>(); }
 
     private void ItemReferenceReturner() {  
         if (_itemToReturnReference != null && _gridWithObjects[_itemToReturnReference.LocalCoords.x, _itemToReturnReference.LocalCoords.y] == null) { _itemToReturnReference.GoneAway(); } }
-    
+
+    private void IsIADarknessTarget() { if (_hexGrid.hexCells[LocalCoords.x, LocalCoords.y].InDarkness && !_targetsInDarkness.Targets.Contains(LocalCoords)) { _targetsInDarkness.AddTarget(LocalCoords); }
+                                        else if (!_hexGrid.hexCells[LocalCoords.x, LocalCoords.y].InDarkness && _targetsInDarkness.Targets.Contains(LocalCoords)) { _targetsInDarkness.RemoveTarget(LocalCoords); } }
+
+    private void UpdateMyTargetInDarknessCoords() { _targetsInDarkness.RemoveTarget(LocalCoords); _targetsInDarkness.AddTarget(_hexGrid.InLocalCoords(_highlighted.position)); }
+
     private void Awake() { InitComponents(); }
 
-    private void Update() { _gridWithObjects = _placementManager.gridWithObjectsInformation; } // нужен экшен изменения gridwoi для полной оптимизации
+    private void Update() { _gridWithObjects = _placementManager.gridWithObjectsInformation; _highlighted = _mouseSelection.highlighted; } // нужен экшен изменения gridwoi для полной оптимизации
 
-    private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += ItemToReturnReferenceUpdater; _unitHealth.death += ItemReferenceReturner; }
-    private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= ItemToReturnReferenceUpdater; _unitHealth.death -= ItemReferenceReturner; }
+    private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += ItemToReturnReferenceUpdater; _unitHealth.death += ItemReferenceReturner;
+        TurnManager.onTurnChanged += IsIADarknessTarget; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; }
+    private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= ItemToReturnReferenceUpdater; _unitHealth.death -= ItemReferenceReturner;
+        TurnManager.onTurnChanged -= IsIADarknessTarget; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; }
 }
