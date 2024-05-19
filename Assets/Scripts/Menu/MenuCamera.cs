@@ -33,13 +33,4 @@
             transform.position += -new Vector3(0, 0, 10 / speed * Time.fixedDeltaTime * Input.GetAxis("Mouse Y"));
             }
         }
-        
-        private void Update()
-        {
-
-          /*  float tiltAngle = Input.GetAxis("Horizontal") * 15f;
-            Quaternion targetRotation = Quaternion.Euler(0, tiltAngle, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, speed * Time.deltaTime);*/
-
-        }
     }
