@@ -39,23 +39,57 @@ public class DarknessUnitAI : UnitDescription {
 
         if (mindist == 1_000_000) return;
 
+        if (this._placementManager.gridWithObjectsInformation[target.x, target.y] != null
+                && this._hexGrid.Distance(this.LocalCoords, target) <= this.AttackRange) {
+            
+            int remainingActions = this.ActionsPerTurn;
+            while (remainingActions > 0) {
+                UnitHealth unitHealth = this._placementManager.gridWithObjectsInformation[target.x, target.y]
+                    .GetComponent<UnitHealth>();
+                if (unitHealth != null) {
+                    unitHealth.ApplyDamage(this.AttackDamage);
+                }
+
+                FacilityHealth facilityHealth = this._placementManager.gridWithObjectsInformation[target.x, target.y]
+                    .GetComponent<FacilityHealth>();
+                if (facilityHealth != null) {
+                    facilityHealth.ApplyDamage(this.AttackDamage);
+                }
+
+                EventBus.anyUnitSpendAction?.Invoke();
+                remainingActions--;
+            }
+
+            return;
+        }
+
         // выбираем клетку, на которую нам сходить
         Vector2Int newpos = this.LocalCoords;
-        Vector2Int delta = target - newpos;
-        Vector2Int absDelta = new Vector2Int(Mathf.Abs(delta.x), Mathf.Abs(delta.y));
 
-        if (newpos.y % 2 == 0) {
-            if (delta.y != 0 && absDelta.y >= absDelta.x) {
+        int remainingSpeed = this.MovementSpeed;
+        while (remainingSpeed > 0) {
+            Vector2Int delta = target - newpos;
+            Vector2Int absDelta = new Vector2Int(Mathf.Abs(delta.x), Mathf.Abs(delta.y));
+
+            if (newpos.y % 2 == 0) {
+                if (delta.y != 0) {
+                    newpos.y += Mathf.Clamp(delta.y, -1, 1);
+                    if (delta.x < 0) newpos.x--;// skip
+                }
+                else newpos.x += Mathf.Clamp(delta.x, -1, 1);
+            }
+            else if (delta.y != 0) {
                 newpos.y += Mathf.Clamp(delta.y, -1, 1);
-                if (delta.x < 0) newpos.x--;// skip
+                if (delta.x > 0) newpos.x++;// skip
             }
             else newpos.x += Mathf.Clamp(delta.x, -1, 1);
+
+            remainingSpeed--;
+
+            if (this._placementManager.gridWithObjectsInformation[target.x, target.y] != null
+                    && this._hexGrid.Distance(newpos, target) <= this.AttackRange)
+                break;
         }
-        else if (delta.y != 0 && absDelta.y >= absDelta.x) {
-            newpos.y += Mathf.Clamp(delta.y, -1, 1);
-            if (delta.x > 0) newpos.x++;// skip
-        }
-        else newpos.x += Mathf.Clamp(delta.x, -1, 1);
 
         bool found = false;
         // если будущей нашей позиции есть что-то
@@ -78,30 +112,12 @@ public class DarknessUnitAI : UnitDescription {
             this._underMe = this._placementManager.gridWithObjectsInformation[newpos.x, newpos.y];
 
         // двигаемся
-        this._placementManager.UpdateGrid(this.LocalCoords, newpos, this);
+        this._placementManager.gridWithObjectsInformation[newpos.x, newpos.y] = this;
         this.LocalCoords = newpos;
         this.transform.position = this._hexGrid.InUnityCoords(this.LocalCoords);
 
         // убираем цель, если её достигли
         if (this.LocalCoords == target)
             this._targetsInDarkness.RemoveTarget(target);
-
-        // aтакуем
-        foreach (Vector2Int neighbour in this._hexGrid.Neighbours(this.LocalCoords))
-            if (this._placementManager.gridWithObjectsInformation[neighbour.x, neighbour.y] != null) { 
-                UnitHealth unitHealth = this._placementManager.gridWithObjectsInformation[neighbour.x, neighbour.y]
-                    .GetComponent<UnitHealth>();
-                if (unitHealth != null) {
-                    unitHealth.ApplyDamage(this.AttackDamage);
-                    break;
-                }
-
-                FacilityHealth facilityHealth = this._placementManager.gridWithObjectsInformation[neighbour.x, neighbour.y]
-                    .GetComponent<FacilityHealth>();
-                if (facilityHealth != null) {
-                    facilityHealth.ApplyDamage(this.AttackDamage);
-                    break;
-                }
-            }
     }
 }
