@@ -8,5 +8,6 @@ public class MapCenterObject : ObjectOnGrid
     void Start()
     {
         LocalCoords = new Vector2Int(Grid.size.x / 2, Grid.size.y / 2);
+        transform.position = Grid.InUnityCoords(LocalCoords);
     }
 }

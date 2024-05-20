@@ -39,7 +39,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6279438571830579400}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300056, guid: e6f8c6b4cd0c5d24fbefebd224edfdb5, type: 3}
 --- !u!23 &1017419927625191022
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f92e6d0555fc24d41b669f6935bfacf0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,6 +134,7 @@ MonoBehaviour:
   - Name: Light
     Description: 
     Target_Header_: 
+    OnCaster: 0
     OnEnemyUnits: 0
     OnTeammateUnits: 0
     OnEnemyBuildings: 0
@@ -186,6 +187,7 @@ MonoBehaviour:
   - Name: SuspiciousHeal
     Description: Do not try this... ever...
     Target_Header_: 
+    OnCaster: 0
     OnEnemyUnits: 0
     OnTeammateUnits: 1
     OnEnemyBuildings: 1
@@ -238,6 +240,7 @@ MonoBehaviour:
   - Name: BigLight
     Description: 
     Target_Header_: 
+    OnCaster: 0
     OnEnemyUnits: 0
     OnTeammateUnits: 0
     OnEnemyBuildings: 0

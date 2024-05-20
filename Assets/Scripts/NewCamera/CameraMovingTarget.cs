@@ -22,17 +22,18 @@ public class CameraMovingTarget : MonoBehaviour
     private void FixedUpdate()
     {
        // _transform.position = Vector3.Lerp(_transform.position, MapCenter.position, Time.fixedDeltaTime * speed) + Vector3.up / 4;
-
+       // Передвижение //
         if (Input.GetMouseButton(1))
         {
-            _currentX += -speed * Time.fixedDeltaTime * Input.GetAxis("Mouse X");
-            _currentZ += -speed * Time.fixedDeltaTime * Input.GetAxis("Mouse Y");
+           _currentX = Mathf.Clamp(_currentX + -speed * Time.fixedDeltaTime * Input.GetAxis("Mouse X"),-MapCenter.position.x, MapCenter.position.x * 2);
+           _currentZ = Mathf.Clamp(_currentZ + - speed * Time.fixedDeltaTime * Input.GetAxis("Mouse Y"), -MapCenter.position.z, MapCenter.position.z * 2);
         }
         else if (Input.GetAxis("Horizontal")!=0 || Input.GetAxis("Vertical") != 0)
         {
-            _currentX += speed * Time.fixedDeltaTime * Input.GetAxis("Horizontal") ;
-            _currentZ += speed * Time.fixedDeltaTime * Input.GetAxis("Vertical") ;
+            _currentX = Mathf.Clamp(_currentX + speed * Time.fixedDeltaTime * Input.GetAxis("Horizontal"), -MapCenter.position.x, MapCenter.position.x * 2);
+            _currentZ = Mathf.Clamp(_currentZ + speed * Time.fixedDeltaTime * Input.GetAxis("Vertical"), -MapCenter.position.z, MapCenter.position.z * 2);
         }
+        // Зум //
         if(Input.GetAxis("Mouse ScrollWheel") !=0) _currentZoom = Mathf.Clamp(_currentZoom - zoomSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse ScrollWheel")*50, minZoom, maxZoom);
         if (Input.GetKey(KeyCode.E)) _currentZoom = Mathf.Clamp(_currentZoom - zoomSpeed * Time.fixedDeltaTime * 1, minZoom, maxZoom);
         if (Input.GetKey(KeyCode.Q)) _currentZoom = Mathf.Clamp(_currentZoom - zoomSpeed * Time.fixedDeltaTime *- 1, minZoom, maxZoom);
