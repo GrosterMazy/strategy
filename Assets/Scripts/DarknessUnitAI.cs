@@ -39,19 +39,24 @@ public class DarknessUnitAI : UnitDescription {
 
         if (mindist == 1_000_000) return;
 
-        if (this._placementManager.gridWithObjectsInformation[target.x, target.y] != null
+        UnitHealth unitHealth = null;
+        FacilityHealth facilityHealth = null;
+        if (this._placementManager.gridWithObjectsInformation[target.x, target.y] != null) {
+            unitHealth = this._placementManager.gridWithObjectsInformation[target.x, target.y]
+                .GetComponent<UnitHealth>();
+            facilityHealth = this._placementManager.gridWithObjectsInformation[target.x, target.y]
+                .GetComponent<FacilityHealth>();
+        }
+
+        if ((facilityHealth != null || unitHealth != null)
                 && this._hexGrid.Distance(this.LocalCoords, target) <= this.AttackRange) {
-            
             int remainingActions = this.ActionsPerTurn;
             while (remainingActions > 0) {
-                UnitHealth unitHealth = this._placementManager.gridWithObjectsInformation[target.x, target.y]
-                    .GetComponent<UnitHealth>();
+                
                 if (unitHealth != null) {
                     unitHealth.ApplyDamage(this.AttackDamage);
                 }
-
-                FacilityHealth facilityHealth = this._placementManager.gridWithObjectsInformation[target.x, target.y]
-                    .GetComponent<FacilityHealth>();
+                    
                 if (facilityHealth != null) {
                     facilityHealth.ApplyDamage(this.AttackDamage);
                 }
@@ -59,7 +64,6 @@ public class DarknessUnitAI : UnitDescription {
                 EventBus.anyUnitSpendAction?.Invoke();
                 remainingActions--;
             }
-
             return;
         }
 
@@ -86,10 +90,12 @@ public class DarknessUnitAI : UnitDescription {
 
             remainingSpeed--;
 
-            if (this._placementManager.gridWithObjectsInformation[target.x, target.y] != null
-                    && this._hexGrid.Distance(newpos, target) <= this.AttackRange)
+            if ((facilityHealth != null || unitHealth != null)
+                    && this._hexGrid.Distance(this.LocalCoords, target) <= this.AttackRange) 
                 break;
         }
+
+        // Debug.Log(("from", this.LocalCoords, "to", newpos));
 
         bool found = false;
         // если будущей нашей позиции есть что-то
@@ -104,12 +110,13 @@ public class DarknessUnitAI : UnitDescription {
         }
 
         // возвращаем то, что было под нами
-        if (newpos != this.LocalCoords && this._underMe != null)
+        if (newpos != this.LocalCoords)
             this._placementManager.gridWithObjectsInformation[this.LocalCoords.x, this.LocalCoords.y] = this._underMe;
         
         // сохраняем то, на что собираемся наступить 
         if (found)
             this._underMe = this._placementManager.gridWithObjectsInformation[newpos.x, newpos.y];
+        else this._underMe = null;
 
         // двигаемся
         this._placementManager.gridWithObjectsInformation[newpos.x, newpos.y] = this;
