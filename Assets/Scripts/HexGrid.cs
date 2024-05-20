@@ -238,6 +238,13 @@ public class HexGrid : MonoBehaviour {
         this.GenerateMountainsMap();
         this.GenerateHighlandsMap();
         this.GenerateMap();
+
+        // Vector2Int pos, zero = new Vector2Int(0, 0);
+        // for (int x = 0; x < this.size.x; x++)
+        //     for (int y = 0; y < this.size.y; y++) {
+        //         pos = new Vector2Int(x, y);
+        //         this.UpdateHeight(pos, 0);
+        //     }
     }
 
     private void GenerateMountainsMap() {
@@ -689,6 +696,28 @@ public class HexGrid : MonoBehaviour {
         throw new System.Exception("невозможно вычислить биом для координат "+pos.ToString()+".");
     }
 
+    // public void UpdateHeight(Vector2Int pos, int newHeight) {
+    //     HexCell hexCell = this.hexCells[pos.x, pos.y];
+
+    //     hexCell.transform.position = this.InUnityCoords(
+    //         pos,
+    //         (this.showHeightOnCells ? newHeight : 0)
+    //     );
+
+    //     // раширяем клету и двигаем её центр (можно убрать эту часть и клетки будут просто подниматься по оси у)
+    //     hexCell.transform.localScale = new Vector3(
+    //         hexCell.transform.localScale.x,
+    //         hexCell.transform.localScale.y,
+    //         this.hexagonPrefab.transform.localScale.z
+    //             + hexCell.transform.position.y / (this._hexagonPrefabRenderer.bounds.size.y / this.hexagonPrefab.transform.localScale.z)
+    //     );
+    //     hexCell.transform.localPosition = new Vector3(
+    //         hexCell.transform.localPosition.x,
+    //         -hexCell.transform.position.y/2,
+    //         hexCell.transform.localPosition.z
+    //     );
+    // }
+
     public bool InBoundsOfMap(Vector2Int pos) => pos.x >= 0 && pos.x < this.size.x && pos.y >= 0 && pos.y < this.size.y;
 
     public Vector3 InUnityCoords(Vector2Int pos, int height = -1/*брать "y" у pivot'a клетки*/) {
@@ -765,10 +794,9 @@ public class HexGrid : MonoBehaviour {
 
             if (start.y % 2 == 0) {
                 if (delta.y != 0) {
-                    if (delta.y > 0) start.y++;
-                    else start.y--;
-
+                    start.y += Mathf.Clamp(delta.y, -1, 1);
                     if (delta.x < 0) start.x--;// skip
+                    
                     dist++;
                     continue;
                 }
@@ -777,10 +805,9 @@ public class HexGrid : MonoBehaviour {
             }
 
             if (delta.y != 0) {
-                if (delta.y > 0) start.y++;
-                else start.y--;
-
+                start.y += Mathf.Clamp(delta.y, -1, 1);
                 if (delta.x > 0) start.x++;// skip
+
                 dist++;
                 continue;
             }
