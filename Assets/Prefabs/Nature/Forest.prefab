@@ -49,7 +49,7 @@ MonoBehaviour:
   actionsToGetPiece: 1
   actionsToBreak: 3
   piece: 1
-  awardForBreak: 2
+  awardForBreak: 1
 --- !u!1 &8298091960738037793
 GameObject:
   m_ObjectHideFlags: 0

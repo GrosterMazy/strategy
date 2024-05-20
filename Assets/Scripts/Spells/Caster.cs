@@ -122,7 +122,7 @@ public class Caster : MonoBehaviour
         targetFacilities.Clear();
         ChooseCellsInShape(spell, targetPosition, _hexGrid.InLocalCoords(caster.transform.position));
         if (spell.ExcludeCaster) targetShapeCells.Remove(_hexGrid.InLocalCoords(caster.transform.position));
-
+        if (spell.OnCaster == true) { targetUnits.Add(caster); }
         foreach (Vector2Int potentialTarget in targetShapeCells)
         {
             ChooseTargetUnits(spell, potentialTarget, caster);
@@ -293,8 +293,6 @@ public class Caster : MonoBehaviour
 
     private void ChooseTargetUnits(SpellsDescription spell, Vector2Int potentialTarget, UnitDescription caster)
     {
-        if (spell.OnCaster == true) { targetUnits.Add(caster); }
-
         if (_placementManager.gridWithObjectsInformation[potentialTarget.x, potentialTarget.y] != null
             && _placementManager.gridWithObjectsInformation[potentialTarget.x, potentialTarget.y].TryGetComponent<UnitDescription>(out UnitDescription unitTarget))
         {
@@ -347,7 +345,7 @@ public class Caster : MonoBehaviour
             if (spell.PercentageDamageOfMaxCasterHealth != 0) unitHealth.ApplyDamageIgnoringArmour(caster.Health * spell.PercentageDamageOfMaxCasterHealth / 100);
             if (spell.PercentageDamageOfCurrentCasterHealth != 0) unitHealth.ApplyDamageIgnoringArmour(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageDamageOfMaxCasterHealth / 100);
             if (spell.PercentageDamageOfMissingCasterHealth != 0) unitHealth.ApplyDamageIgnoringArmour((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageDamageOfMaxCasterHealth / 100);
-            if (unit.ArmorEfficiencyTable.Count > 0) unitHealth.damageReductionPercent = unit.ArmorEfficiencyTable[unit.Armor];
+            if (unit.ArmorEfficiencyTable.Count > 0) unitHealth.damageReductionPercent = unit.ArmorEfficiencyTable[Mathf.Clamp(unit.Armor, 0, unit.ArmorEfficiencyTable.Count - 1)];
         }
 
         foreach (FacilityDescription facility in facilities)
@@ -364,7 +362,7 @@ public class Caster : MonoBehaviour
             if (spell.PercentageDamageOfMaxCasterHealth != 0) facilityHealth.ApplyDamageIgnoringArmour(caster.Health * spell.PercentageDamageOfMaxCasterHealth / 100);
             if (spell.PercentageDamageOfCurrentCasterHealth != 0) facilityHealth.ApplyDamageIgnoringArmour(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageDamageOfMaxCasterHealth / 100);
             if (spell.PercentageDamageOfMissingCasterHealth != 0) facilityHealth.ApplyDamageIgnoringArmour((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageDamageOfMaxCasterHealth / 100);
-            if (facility.ArmorEfficiencyTable.Count > 0) facilityHealth.damageReductionPercent = facility.ArmorEfficiencyTable[facility.Armor];
+            if (facility.ArmorEfficiencyTable.Count > 0) facilityHealth.damageReductionPercent = facility.ArmorEfficiencyTable[Mathf.Clamp(facility.Armor, 0, facility.ArmorEfficiencyTable.Count - 1)];
         }
     }
 
@@ -398,7 +396,7 @@ public class Caster : MonoBehaviour
     {
         if (spell.SpendActions != 0)
         {
-            caster.GetComponent<UnitActions>().remainingActionsCount -= spell.SpendActions;
+            caster.GetComponent<UnitActions>().SpendAction(spell.SpendActions);
         }
     }
 

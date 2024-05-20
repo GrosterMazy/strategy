@@ -8,7 +8,8 @@ public class ToughResources : ObjectOnGrid // Ресурсы, которые н�
     public string Name;
     [NonSerialized] public float WeightOfOneItem;
     public float actionsToGetPiece; // Стандартное Кол-во действий, которые должен потратить рабочий, чтобы получить некоторое кол-во ресурса
-    public float actionsToBreak; // Кол-во действий, которые должен потратить рабочий, чтобы срубить дерево, или чтобы рудник истощился и тд
+    public float actionsToBreak;// Кол-во действий, которые должен потратить рабочий, чтобы срубить дерево, или чтобы рудник истощился и тд
+    [NonSerialized] public float remainingActionsToBreak; // Кол-во действий, которые осталось потратить рабочему, чтобы срубить дерево, или чтобы рудник истощился и тд
     public int piece;
     public int awardForBreak;
     private PlacementManager _placementManager;
@@ -21,11 +22,12 @@ public class ToughResources : ObjectOnGrid // Ресурсы, которые н�
 
     private void Start()
     {
+        remainingActionsToBreak = actionsToBreak;
         _remainingActionsToGetPiece = actionsToGetPiece;
     }
     private void Update()
     {
-        if (actionsToBreak <= 0)
+        if (remainingActionsToBreak <= 0)
         {
             _placementManager.gridWithObjectsInformation[LocalCoords.x, LocalCoords.y] = null;
             Destroy(gameObject);
@@ -35,14 +37,14 @@ public class ToughResources : ObjectOnGrid // Ресурсы, которые н�
     {
         int countOfPiece = 0;
         _remainingActionsToGetPiece -= workerActions;
-        while (_remainingActionsToGetPiece < 0)
+        while (_remainingActionsToGetPiece <= 0)
         {
             _remainingActionsToGetPiece += actionsToGetPiece;
-            if ((countOfPiece + 1) * actionsToGetPiece > actionsToBreak) break;
+            if (countOfPiece * actionsToGetPiece > remainingActionsToBreak) break;
             countOfPiece++;
         }
-        actionsToBreak -= workerActions;
-        if (actionsToBreak <= 0)
+        remainingActionsToBreak -= workerActions;
+        if (remainingActionsToBreak <= 0)
         {
             return awardForBreak + countOfPiece * piece;
         }

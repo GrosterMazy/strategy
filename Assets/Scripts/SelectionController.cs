@@ -8,8 +8,12 @@ public class SelectionController : MonoBehaviour
     public Action<Transform> onSelectedInformationChanged;
     public UnitDescription selectedUnit;
     public FirstFactionFacilities selectedFacility;
+    public ToughResources selectedToughResource;
+    public CollectableItem selectedCollectableItem;
     public bool isAnyUnitSelected;
     public bool isAnyFirstFactionFacilitySelected;
+    public bool isAnyToughResourceSelected;
+    public bool isAnyCollectableItemSelected;
     private UnitDescription _selectedBeforeUnit;
     private FirstFactionFacilities _selectedBeforeFacility;
     private MouseSelection _mouseSelection;
@@ -44,11 +48,16 @@ public class SelectionController : MonoBehaviour
             selectedFacility = null;
             if (_selectedBeforeFacility != null) _selectedBeforeFacility.IsSelected = false;
 
+            isAnyToughResourceSelected = false;
+            selectedToughResource = null;
+
             onSelectedInformationChanged?.Invoke(selected);
             return;
         }
         IsUnitSelected(selected);
         IsFirstFactionFacilitySelected(selected);
+        IsToughResourceSelected(selected);
+        IsCollectableItemSelected(selected);
         onSelectedInformationChanged?.Invoke(selected);
     }
     private void IsUnitSelected(Transform selected)
@@ -97,6 +106,44 @@ public class SelectionController : MonoBehaviour
         isAnyFirstFactionFacilitySelected = false;
         selectedFacility = null;
         if (_selectedBeforeFacility != null) _selectedBeforeFacility.IsSelected = false;
+    }
+    private void IsToughResourceSelected(Transform selected)
+    {
+        if (selected != null)
+        {
+            ObjectOnGrid _selectedObject = _placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(selected.position).x, _hexGrid.InLocalCoords(selected.position).y];
+
+            if (_selectedObject != null) // Если на выделенной клетке стоит что-то
+            {
+                selectedToughResource = _selectedObject.GetComponent<ToughResources>();
+                if (selectedToughResource != null) // Если на выделенной клетке стоит добываемый ресурс
+                {
+                    isAnyToughResourceSelected = true;
+                    return;
+                }
+            }
+        }
+        isAnyToughResourceSelected = false;
+        selectedToughResource = null;
+    }
+    private void IsCollectableItemSelected(Transform selected)
+    {
+        if (selected != null)
+        {
+            ObjectOnGrid _selectedObject = _placementManager.gridWithObjectsInformation[_hexGrid.InLocalCoords(selected.position).x, _hexGrid.InLocalCoords(selected.position).y];
+
+            if (_selectedObject != null) // Если на выделенной клетке стоит что-то
+            {
+                selectedCollectableItem = _selectedObject.GetComponent<CollectableItem>();
+                if (selectedCollectableItem != null) // Если на выделенной клетке стоит подбираемый ресурс
+                {
+                    isAnyCollectableItemSelected = true;
+                    return;
+                }
+            }
+        }
+        isAnyCollectableItemSelected = false;
+        selectedCollectableItem = null;
     }
 
     private void OnAnyUnitDeath()

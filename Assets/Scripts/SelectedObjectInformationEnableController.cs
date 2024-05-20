@@ -17,19 +17,27 @@ public class SelectedObjectInformationEnableController : MonoBehaviour
     private void OnEnable()
     {
         _selectionController.onSelectedInformationChanged += SelectedObjectInformationSetActive;
+        EventBus.anyUnitSpendAction += OnAnyUnitSpendAction;
     }
 
     private void OnDisable()
     {
         _selectionController.onSelectedInformationChanged -= SelectedObjectInformationSetActive;
+        EventBus.anyUnitSpendAction += OnAnyUnitSpendAction;
     }
     public void SelectedObjectInformationSetActive(Transform selected)
     {
         _selectedObjectInformation.SetActive(false);
-        if (_selectionController.isAnyUnitSelected || _selectionController.isAnyFirstFactionFacilitySelected)
+        if (_selectionController.isAnyUnitSelected || _selectionController.isAnyFirstFactionFacilitySelected
+            || _selectionController.isAnyCollectableItemSelected || _selectionController.isAnyToughResourceSelected)
         {
             _selectedObjectInformation.SetActive(true);
         }
+    }
+
+    private void OnAnyUnitSpendAction()
+    {
+        SelectedObjectInformationSetActive(transform);
     }
 
     private void InitComponentLinks()

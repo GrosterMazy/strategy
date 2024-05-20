@@ -37,6 +37,12 @@ public class UnitActions : MonoBehaviour
         }
     }
 
+    public void SpendAction(int count)
+    {
+        remainingActionsCount -= count;
+        EventBus.anyUnitSpendAction?.Invoke();
+    }
+
     private void Attack()
     {
         if (_mouseSelection.highlighted == null || !_unitDescription.IsSelected 
@@ -46,12 +52,12 @@ public class UnitActions : MonoBehaviour
         if (_highlightedController.isAnyUnitHighlighted && _highlightedController.highlightedUnit.TeamAffiliation != _unitDescription.TeamAffiliation)
         {
             _highlightedController.highlightedUnit.GetComponent<UnitHealth>().ApplyDamage(_unitDescription.AttackDamage); // Атакуем вражеского юнита
-            remainingActionsCount -= 1;
+            SpendAction(1);
         }
         else if (_highlightedController.isAnyFirstFactionFacilityHighlighted && _highlightedController.highlightedFirstFactionFacility.TeamAffiliation != _unitDescription.TeamAffiliation)
         {
             _highlightedController.highlightedFirstFactionFacility.GetComponent<FacilityHealth>().ApplyDamage(_unitDescription.AttackDamage); // Атакуем вражеское здание первой фракции
-            remainingActionsCount -= 1;
+            SpendAction(1);
         }
     }
 

@@ -9,6 +9,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
 {
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Health;
+    public TextMeshProUGUI Regeneration;
     public TextMeshProUGUI Armour;
     public TextMeshProUGUI DmgReduction;
     public TextMeshProUGUI Actions;
@@ -16,6 +17,9 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
     public TextMeshProUGUI AttackDmg;
     public TextMeshProUGUI AttackRange;
     public TextMeshProUGUI FoodConsumption;
+    public TextMeshProUGUI Fullness;
+    public TextMeshProUGUI MiningModifier;
+    public TextMeshProUGUI Inventory;
     public GameObject spellButtonPrefab;
     public GameObject background;
 
@@ -65,34 +69,60 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
     {
         Name.SetText("");
         Health.SetText("");
+        Regeneration.SetText("");
         Armour.SetText("");
+        DmgReduction.SetText("");
         Actions.SetText("");
         Steps.SetText("");
         AttackDmg.SetText("");
         AttackRange.SetText("");
         FoodConsumption.SetText("");
+        Fullness.SetText("");
+        MiningModifier.SetText("");
+        Inventory.SetText("");
         if (_selectionController.isAnyFirstFactionFacilitySelected)
         {
             Name.SetText(_selectionController.selectedFacility.name);
-            Health.SetText("Health: " + _selectionController.selectedFacility.GetComponent<FacilityHealth>().currentHealth.ToString() + " / " + _selectionController.selectedFacility.MaxHealth.ToString());
-            Armour.SetText("Armour: " + _selectionController.selectedFacility.Armor + ", ");
+            FacilityHealth facilityHealth = _selectionController.selectedFacility.GetComponent<FacilityHealth>();
+            Health.SetText("Health: " + facilityHealth.currentHealth.ToString() + " / " + _selectionController.selectedFacility.MaxHealth.ToString());
+            Regeneration.SetText("Repairment " + facilityHealth.HealthPerRepairment);
+            Armour.SetText("Armour: " + _selectionController.selectedFacility.Armor);
             DmgReduction.SetText("Dmg reduction: " + _selectionController.selectedFacility.DamageReductionPercent + "%");
             Actions.SetText("Light consumption: " + _selectionController.selectedFacility.LightConsumption);
             Steps.SetText("Wood consumption: " + _selectionController.selectedFacility.WoodConsumption);
             AttackDmg.SetText("Food consumption: " + _selectionController.selectedFacility.FoodConsumption);
             AttackRange.SetText("Steel consumption: " + _selectionController.selectedFacility.SteelConsumption);
+            string InventoryStr = "";
+            foreach (string key in _selectionController.selectedFacility.Storage.Keys)
+            {
+                InventoryStr += key + ": " + _selectionController.selectedFacility.Storage[key] + "; ";
+            }
+            FoodConsumption.SetText("Inventory: " + "\n" + "      " + InventoryStr);
         }
         else if (_selectionController.isAnyUnitSelected)
         {
             Name.SetText(_selectionController.selectedUnit.name);
-            Health.SetText("Health: " + _selectionController.selectedUnit.GetComponent<UnitHealth>().currentHealth.ToString() + " / " + _selectionController.selectedUnit.Health.ToString());
-            Armour.SetText("Armour: " + _selectionController.selectedUnit.Armor + ", ");
+            UnitHealth unitHealth = _selectionController.selectedUnit.GetComponent<UnitHealth>();
+            Health.SetText("Health: " + unitHealth.currentHealth.ToString() + " / " + _selectionController.selectedUnit.Health.ToString());
+            Regeneration.SetText("Regeneration " + unitHealth.regenerationPercent + " %");
+            Armour.SetText("Armour: " + _selectionController.selectedUnit.Armor);
             DmgReduction.SetText("Dmg reduction: " + _selectionController.selectedUnit.DamageReductionPercent + "%");
             Actions.SetText("Actions: " + _selectionController.selectedUnit.GetComponent<UnitActions>().remainingActionsCount + " / " + _selectionController.selectedUnit.ActionsPerTurn);
             Steps.SetText("Steps: " + (_selectionController.selectedUnit.MovementSpeed - _selectionController.selectedUnit.GetComponent<UnitMovement>().spentSpeed) + " / " + _selectionController.selectedUnit.MovementSpeed);
             AttackDmg.SetText("Attack dmg: " + _selectionController.selectedUnit.AttackDamage);
             AttackRange.SetText("Attack range: " + _selectionController.selectedUnit.AttackRange);
             FoodConsumption.SetText("Food consumption: " + _selectionController.selectedUnit.FoodConsumption);
+            if (_selectionController.selectedUnit.TryGetComponent<WorkerUnit>(out WorkerUnit unit)) 
+            {
+                Fullness.SetText("Fullness: " + (unit.WeightCapacityMax - unit._weightCapacityRemaining) + " / " + unit.WeightCapacityMax);
+                MiningModifier.SetText("Mining modifier: " + unit.miningModifier);
+                string InventoryStr = "";
+                foreach (string key in unit.Inventory.Keys)
+                {
+                    InventoryStr += key + ": " + unit.Inventory[key] + "; ";
+                }
+                Inventory.SetText("Inventory: " + "\n" + "      " + InventoryStr);
+            }
             if (_caster != null)
             {
                 Vector3 offset = new Vector3(-_backgroundWidth / 2 + 45, -_backgroundHeight / 2 + 45, 0);
@@ -111,6 +141,15 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
                     }
                 }
             }
+        }
+        else if (_selectionController.isAnyToughResourceSelected)
+        {
+            Name.SetText(_selectionController.selectedToughResource.name);
+            Health.SetText("Durability: " + _selectionController.selectedToughResource.remainingActionsToBreak);
+        }
+        else if (_selectionController.isAnyCollectableItemSelected)
+        {
+            Name.SetText(_selectionController.selectedCollectableItem.name);
         }
     }
 

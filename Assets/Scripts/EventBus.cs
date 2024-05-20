@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class EventBus : MonoBehaviour
+public static class EventBus
 {
     public static Action anyUnitDie;
+    public static Action anyUnitSpendAction;
 }

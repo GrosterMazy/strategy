@@ -11,7 +11,7 @@ public class WorkerUnit : UnitDescription
     public float miningModifier;
     public Dictionary<string, int> Inventory = new Dictionary<string, int>();
     [NonSerialized] public float _weightCapacityRemaining;
-    [SerializeField] private float WeightCapacityMax;
+    public float WeightCapacityMax;
     private PlacementManager _placementManager;
     private UnitMovement _unitMovement;
     private UnitHealth _unitHealth;
@@ -56,7 +56,7 @@ public class WorkerUnit : UnitDescription
                 else if (_productionBuildingOnMyWay != null) { 
                     if (_productionBuildingOnMyWay.Administratum.Storage["Light"] >= _productionBuildingOnMyWay.LightConstructionCost && _productionBuildingOnMyWay.Administratum.Storage["Steel"] >= _productionBuildingOnMyWay.SteelConstructionCost &&
                         _productionBuildingOnMyWay.Administratum.Storage["Wood"] >= _productionBuildingOnMyWay.WoodConstructionCost && _productionBuildingOnMyWay.Administratum.Storage["Food"] >= _productionBuildingOnMyWay.FoodConstructionCost) {
-                        _productionBuildingOnMyWay.ActionsToFinalizeBuilding -= 1; _productionBuildingOnMyWay.BuildingExpenses("Construction"); _unitActions.remainingActionsCount -= 1; } } } }
+                        _productionBuildingOnMyWay.ActionsToFinalizeBuilding -= 1; _productionBuildingOnMyWay.BuildingExpenses("Construction"); _unitActions.SpendAction(1); } } } }
         if (_buildingOnMyWay == null) return true;
         return false; }
 
@@ -69,7 +69,7 @@ public class WorkerUnit : UnitDescription
                 if (_buildingToRepair == null) { return; }
                 FacilityHealth _healthOfBuildingToRepair = _buildingToRepair.GetComponent<FacilityHealth>();
                 if (_healthOfBuildingToRepair.currentHealth < _buildingToRepair.MaxHealth && TeamAffiliation == _buildingToRepair.TeamAffiliation && _unitActions.remainingActionsCount > 0 && IsNeededBuildingNear(_buildingToRepair)) {
-                    _unitActions.remainingActionsCount -= 1;
+                    _unitActions.SpendAction(1);
                     _healthOfBuildingToRepair.Repairment(); } } } }
 
     private bool IsNeededBuildingNear(FacilityDescription _buildingToCheck) {
@@ -89,7 +89,7 @@ public class WorkerUnit : UnitDescription
             if (_toughResourcesOnGrid != null && _unitActions.remainingActionsCount > 0)
             {
                 CollectToughItem(_toughResourcesOnGrid, _toughResourcesOnGrid.ApplyDamage(miningModifier));
-                _unitActions.remainingActionsCount -= 1;
+                _unitActions.SpendAction(1);
             }
             return false;
         }
