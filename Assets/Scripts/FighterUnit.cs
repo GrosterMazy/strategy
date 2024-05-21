@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FighterUnit : UnitDescription
 {
+    [SerializeField] private int _maxHeightToStep;
     private PlacementManager _placementManager;
     private ObjectOnGrid[,] _gridWithObjects;
     private UnitMovement _unitMovement;
@@ -24,7 +25,7 @@ public class FighterUnit : UnitDescription
             if (_itemToReturnReference != null) return true;
             else return false;
         }
-        else return true;
+        else return NatureProhibitionInMove(_coordsWithItem);
     }
 
     private void InitComponents() { _unitMovement = GetComponent<UnitMovement>(); _unitHealth = GetComponent<UnitHealth>(); _placementManager = FindObjectOfType<PlacementManager>(); _hexGrid = FindObjectOfType<HexGrid>();
@@ -35,6 +36,8 @@ public class FighterUnit : UnitDescription
 
     private void IsIADarknessTarget() { if (_hexGrid.hexCells[LocalCoords.x, LocalCoords.y].InDarkness && !_targetsInDarkness.Targets.Contains(LocalCoords)) { _targetsInDarkness.AddTarget(LocalCoords); }
                                         else if (!_hexGrid.hexCells[LocalCoords.x, LocalCoords.y].InDarkness && _targetsInDarkness.Targets.Contains(LocalCoords)) { _targetsInDarkness.RemoveTarget(LocalCoords); } }
+
+    private bool NatureProhibitionInMove(Vector2Int _cell) { return _hexGrid.hexCells[_cell.x, _cell.y].isWater || Mathf.Abs(_hexGrid.hexCells[_cell.x, _cell.y].height - _hexGrid.hexCells[LocalCoords.x, LocalCoords.y].height) > _maxHeightToStep ? false : true; }
 
     private void UpdateMyTargetInDarknessCoords() { _targetsInDarkness.RemoveTarget(LocalCoords); _targetsInDarkness.AddTarget(_hexGrid.InLocalCoords(_highlighted.position)); }
 

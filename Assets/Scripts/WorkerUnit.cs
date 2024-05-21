@@ -8,6 +8,7 @@ public class WorkerUnit : UnitDescription
 {
     public static Action<WorkerUnit, FacilityDescription> WantToOpenSingleTransferWindow;
     public int RangedLoadDistance = 1;
+    [SerializeField] private int _maxHeightToStep;
     public float miningModifier;
     public Dictionary<string, int> Inventory = new Dictionary<string, int>();
     [NonSerialized] public float _weightCapacityRemaining;
@@ -39,7 +40,7 @@ public class WorkerUnit : UnitDescription
                 if (!Inventory.ContainsKey(_itemToCollect.Name)) { Inventory.Add(_itemToCollect.Name, _canTakeItems); }
                 else if (Inventory.ContainsKey(_itemToCollect.Name)) { Inventory[_itemToCollect.Name] += _canTakeItems; }
                 _itemToCollect.Taken(_canTakeItems); _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem; } }
-        if (_itemToCollect != null || _objectOnMyWay == null) return true;
+        if (_itemToCollect != null || _objectOnMyWay == null) return NatureProhibitionInMove(_CellToReceiveItem);
         else return false;
     }
 
@@ -57,8 +58,7 @@ public class WorkerUnit : UnitDescription
                     if (_productionBuildingOnMyWay.Administratum.Storage["Light"] >= _productionBuildingOnMyWay.LightConstructionCost && _productionBuildingOnMyWay.Administratum.Storage["Steel"] >= _productionBuildingOnMyWay.SteelConstructionCost &&
                         _productionBuildingOnMyWay.Administratum.Storage["Wood"] >= _productionBuildingOnMyWay.WoodConstructionCost && _productionBuildingOnMyWay.Administratum.Storage["Food"] >= _productionBuildingOnMyWay.FoodConstructionCost) {
                         _productionBuildingOnMyWay.ActionsToFinalizeBuilding -= 1; _productionBuildingOnMyWay.BuildingExpenses("Construction"); _unitActions.SpendAction(1); } } } }
-        if (_buildingOnMyWay == null) return true;
-        return false; }
+        if (_buildingOnMyWay == null) return NatureProhibitionInMove(_cellToEnter); else return false; }
 
     private void RepairBuilding() { 
         if (Input.GetKeyDown(KeyCode.R) && IsSelected && _highlighted != null) {
@@ -93,7 +93,7 @@ public class WorkerUnit : UnitDescription
             }
             return false;
         }
-        return true;
+        return NatureProhibitionInMove(_cellToMove);
     }
     private void CollectToughItem(ToughResources _itemToCollect, int countOfResorces)
     {
@@ -106,6 +106,8 @@ public class WorkerUnit : UnitDescription
             _weightCapacityRemaining -= _canTakeItems * _itemToCollect.WeightOfOneItem;
         }
     }
+
+    private bool NatureProhibitionInMove(Vector2Int _cell) { return _hexGrid.hexCells[_cell.x, _cell.y].isWater || Mathf.Abs(_hexGrid.hexCells[_cell.x, _cell.y].height - _hexGrid.hexCells[LocalCoords.x, LocalCoords.y].height) > _maxHeightToStep ? false : true; }
 
     private void ItemReferenceReturner() { // т.к. рабочий, наступая на клетку вымещает собой collectableitem из списка всех предметов на сетке, то если он забрал не все и ушел, нам нужно вернуть collectableitem в список
         if (_itemToReturnReference != null && _placementManager.gridWithObjectsInformation[_itemToReturnReference.LocalCoords.x, _itemToReturnReference.LocalCoords.y] == null) { _itemToReturnReference.GoneAway(); _itemToReturnReference = null; } }
