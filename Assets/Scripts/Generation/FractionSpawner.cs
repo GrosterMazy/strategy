@@ -15,6 +15,7 @@ public class FractionSpawner : MonoBehaviour {
 
     private HexGrid _hexGrid;
     private PlacementManager _placementManager;
+    private BuildingManager _buildingManager;
 
     private void OnEnable() =>
         PlacementManager.onGridCreated += OnGridCreated;
@@ -25,6 +26,7 @@ public class FractionSpawner : MonoBehaviour {
     private void OnGridCreated() {
         this._hexGrid = FindObjectOfType<HexGrid>();
         this._placementManager = FindObjectOfType<PlacementManager>();
+        this._buildingManager = FindObjectOfType<BuildingManager>();
 
         // проверка, что maxDistanceBetweenFractions и maxDistanceBetweenFractions меньше максимального расстояния между двумя точками на hexGrid
         int maxDist = this._hexGrid.Distance(new Vector2Int(0, 0), new Vector2Int(this._hexGrid.size.x-1, this._hexGrid.size.y-1));
@@ -143,6 +145,7 @@ public class FractionSpawner : MonoBehaviour {
             );
             mainBuilding.LocalCoords = this._buildingCoords[i];
             this._placementManager.UpdateGrid(this._buildingCoords[i], this._buildingCoords[i], mainBuilding);
+            this._buildingManager.TeamsAdministratumsReferencesp[i+1] = mainBuilding;
 
             foreach (Vector2Int unitPos in this._unitAroundCoords[i]) {
                 unitAround = Instantiate(

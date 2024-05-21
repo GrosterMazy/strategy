@@ -11,7 +11,7 @@ public class BuildingManager : MonoBehaviour
     private Transform _highlighted;
     private PlacementManager _placementManager;
     private HexGrid _hexGrid;
-    private Dictionary<int, Administratum> _teamsAdministratumsReferences = new Dictionary<int, Administratum>();
+    public Dictionary<int, Administratum> TeamsAdministratumsReferences = new Dictionary<int, Administratum>();
     [SerializeField] private Administratum Administratum;
     [SerializeField] private FirstFactionProductionBuildingDescription Sawmill;
     [SerializeField] private FirstFactionProductionBuildingDescription Foundry;
@@ -22,13 +22,13 @@ public class BuildingManager : MonoBehaviour
                 if (_highlighted == null) { return; }
         var _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
         if (_placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null) {
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !_teamsAdministratumsReferences.ContainsKey(CurrentTeamNumber)) {
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !TeamsAdministratumsReferences.ContainsKey(CurrentTeamNumber)) {
                 var _administratum = Instantiate(Administratum, _highlighted.parent.transform.position, Quaternion.identity);
                 _administratum.TeamAffiliation = CurrentTeamNumber;
-                _teamsAdministratumsReferences.Add(CurrentTeamNumber, _administratum);
+                TeamsAdministratumsReferences.Add(CurrentTeamNumber, _administratum);
                 _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _administratum); }
-            if (_teamsAdministratumsReferences.ContainsKey(CurrentTeamNumber) && IsAllyWorkerNearby(_highlightedInLocalCoords)) {
-                var _currentAdministratum = _teamsAdministratumsReferences[CurrentTeamNumber];
+            if (TeamsAdministratumsReferences.ContainsKey(CurrentTeamNumber) && IsAllyWorkerNearby(_highlightedInLocalCoords)) {
+                var _currentAdministratum = TeamsAdministratumsReferences[CurrentTeamNumber];
                 FirstFactionProductionBuildingDescription _buildingToBuild;
                 if (Input.GetKeyDown(KeyCode.Alpha2)) { _buildingToBuild = Sawmill; }
                 else if (Input.GetKeyDown(KeyCode.Alpha3)) { _buildingToBuild = Foundry; }
@@ -40,7 +40,7 @@ public class BuildingManager : MonoBehaviour
                     var _building = Instantiate(_buildingToBuild, _highlighted.parent.transform.position, Quaternion.identity);
                     _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _building);
                     _building.TeamAffiliation = CurrentTeamNumber;
-                    _building.Administratum = _teamsAdministratumsReferences[_building.TeamAffiliation];
+                    _building.Administratum = TeamsAdministratumsReferences[_building.TeamAffiliation];
                     _building.BuildingExpenses("Foundation"); } } } }
 
     private bool IsAllyWorkerNearby(Vector2Int _cell) {
