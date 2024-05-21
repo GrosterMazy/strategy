@@ -189,7 +189,7 @@ Material:
     - _DistortParams: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Extinction: {r: 4.5, g: 75, b: 300, a: 1}
-    - _Foam: {r: -1, g: 2.68, b: 0, a: 0}
+    - _Foam: {r: -0.27, g: 2.68, b: 0, a: 0}
     - _FoamWaveParams: {r: 0, g: 0.24918434, b: 3.3395782, a: 1}
     - _Fresnel_ST: {r: 1, g: 1, b: 0, a: 0}
     - _GAmplitude: {r: 0, g: 0, b: 0, a: 0}
