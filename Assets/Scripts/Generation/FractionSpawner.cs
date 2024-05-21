@@ -145,7 +145,9 @@ public class FractionSpawner : MonoBehaviour {
             );
             mainBuilding.LocalCoords = this._buildingCoords[i];
             this._placementManager.UpdateGrid(this._buildingCoords[i], this._buildingCoords[i], mainBuilding);
-            this._buildingManager.TeamsAdministratumsReferencesp[i+1] = mainBuilding;
+            Administratum administratum = mainBuilding.GetComponent<Administratum>();
+            if (administratum != null)
+                this._buildingManager.TeamsAdministratumsReferences[i+1] = administratum;
 
             foreach (Vector2Int unitPos in this._unitAroundCoords[i]) {
                 unitAround = Instantiate(
