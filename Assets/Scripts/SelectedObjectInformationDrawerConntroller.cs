@@ -23,6 +23,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
     public GameObject spellButtonPrefab;
     public GameObject background;
 
+    private TurnManager _turnManager;
     private List<GameObject> _spellButtons = new List<GameObject>();
     private float _backgroundWidth;
     private float _backgroundHeight;
@@ -36,12 +37,16 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
     }
     private void OnEnable()
     {
+        TurnManager.onTurnChanged += SetTextColor;
+        SetTextColor();
         SelectCaster();
         DrawInformationPanel();
     }
 
     private void OnDisable()
     {
+        TurnManager.onTurnChanged -= SetTextColor;
+        SetTextColor();
         foreach (GameObject spellButton in _spellButtons)
         {
             Destroy(spellButton);
@@ -153,10 +158,45 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
         }
     }
 
-
+    private void SetTextColor()
+    {
+        if (_turnManager.isDay)
+        {
+            Name.color = Color.black;
+            Health.color = Color.black;
+            Regeneration.color = Color.black;
+            Armour.color = Color.black;
+            DmgReduction.color = Color.black;
+            Actions.color = Color.black;
+            Steps.color = Color.black;
+            AttackDmg.color = Color.black;
+            AttackRange.color = Color.black;
+            FoodConsumption.color = Color.black;
+            Fullness.color = Color.black;
+            MiningModifier.color = Color.black;
+            Inventory.color = Color.black;
+        }
+        else
+        {
+            Name.color = Color.white;
+            Health.color = Color.white;
+            Regeneration.color = Color.white;
+            Armour.color = Color.white;
+            DmgReduction.color = Color.white;
+            Actions.color = Color.white;
+            Steps.color = Color.white;
+            AttackDmg.color = Color.white;
+            AttackRange.color = Color.white;
+            FoodConsumption.color = Color.white;
+            Fullness.color = Color.white;
+            MiningModifier.color = Color.white;
+            Inventory.color = Color.white;
+        }
+    }
 
     private void InitComponentLinks()
     {
+        _turnManager = FindObjectOfType<TurnManager>();
         _selectionController = FindObjectOfType<SelectionController>();
         _backgroundWidth = background.GetComponent<RectTransform>().rect.width;
         _backgroundHeight = background.GetComponent<RectTransform>().rect.height;

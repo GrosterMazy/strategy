@@ -51,6 +51,7 @@ using System;
     public string Damage_Header_;
 
     public float DamageCount;
+
     public float PercentageDamageOfMaxTargetHealth;
     public float PercentageDamageOfCurrentTargetHealth;
     public float PercentageDamageOfMissingTargetHealth;
@@ -58,6 +59,7 @@ using System;
     public float PercentageDamageOfMaxCasterHealth;
     public float PercentageDamageOfCurrentCasterHealth;
     public float PercentageDamageOfMissingCasterHealth;
+
     [Tooltip("Сколько единиц брони игнорирует спелл")]
     public int ArmourPenetration;
     public string Damage_EndHeader_;
@@ -65,6 +67,7 @@ using System;
     public string Heal_Header_;
 
     public float HealCount;
+
     public float PercentageHealOfMaxTargetHealth;
     public float PercentageHealOfCurrentTargetHealth;
     public float PercentageHealOfMissingTargetHealth;

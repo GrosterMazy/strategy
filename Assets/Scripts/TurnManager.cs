@@ -16,6 +16,8 @@ public class TurnManager : MonoBehaviour
     public float remainingTime;
     public int dayDuration;
     public int nightDuration;
+    public int dayDurationChange;
+    public int nightDurationChange;
     public int teamCount;
     public int currentTeam; // Номер команды, которая сейчас ходит
     public Dictionary<int, string> teamsDict = new Dictionary<int, string>(); // Словарь, ключи в котором - это номера команд, а значения - их названия
@@ -24,6 +26,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentTeamText;
     [SerializeField] private TextMeshProUGUI _remainingTimeText;
     [SerializeField] private TextMeshProUGUI _timeOfDayText;
+
+    private int _turnToChangeDayAndNight;
 
     private MouseSelection _mouseSelection;
     private SelectedObjectInformationEnableController _selectedObjectInformationEnableController;
@@ -44,7 +48,7 @@ public class TurnManager : MonoBehaviour
         _remainingTimeText.SetText("Remaining Time: " + Mathf.FloorToInt(remainingTime).ToString());
     }
 
-    private void NextTeam()
+    public void NextTeam()
     {
         currentTeam += 1;
         _currentTeamText.SetText("Current Team: " + teamsDict[currentTeam]);
@@ -59,42 +63,62 @@ public class TurnManager : MonoBehaviour
         currentTeam = 1;
         turn += 1;
         _currentTeamText.SetText("Current Team: " + teamsDict[currentTeam]);
-        _turnText.SetText("Turn: " + (turn +1).ToString());
-        if (turn % (dayDuration + nightDuration + 1) - dayDuration > 0)
+        _turnText.SetText("Turn: " + (turn).ToString());
+        if (turn == _turnToChangeDayAndNight)
         {
             if (isDay)
-                StartNight();
-        }
-        else if (turn % (dayDuration + nightDuration + 1) - dayDuration <= 0)
-        {
-            if (!isDay)
-                StartDay(); 
+            {
+                if (nightDuration + nightDurationChange > 0) StartNight();
+                else nightDuration = 0;
+            }
+            else if (!isDay) 
+            {
+                if (dayDuration + dayDurationChange > 0) StartDay();
+                else dayDuration = 0;
+            }
         }
         onTurnChanged?.Invoke();
         SetChangesInOtherClassesOnTurnChanged();
     }
     private void StartNight()
     {
-        NightStarts?.Invoke();
         isDay = false;
+        nightDuration += nightDurationChange;
         _timeOfDayText.SetText("Night");
+        _turnToChangeDayAndNight = turn + nightDuration;
+
+        _turnText.color = Color.white;
+        _currentTeamText.color = Color.white;
+        _remainingTimeText.color = Color.white;
+        _timeOfDayText.color = Color.white;
+
+        NightStarts?.Invoke();
     }
     private void StartDay()
     {
-        DayStarts?.Invoke();
         isDay = true;
+        dayDuration += dayDurationChange;
         _timeOfDayText.SetText("Day");
+        _turnToChangeDayAndNight = turn + dayDuration;
+
+        _turnText.color = Color.black;
+        _currentTeamText.color = Color.black;
+        _remainingTimeText.color = Color.black;
+        _timeOfDayText.color = Color.black;
+
+        DayStarts?.Invoke();
     }
     private void FirstTurnStart()
     {
-        dayDuration -= 1; // Чтобы рассчёты работали нормально, на самом деле продолжительность дня будет той, которую мы ввели
-        turn = 0; // На экран будем выводить: turn + 1
-        _timeOfDayText.SetText("Day");
+        turn = 1;
         currentTeam = 1;
         TeamsNameInitialization();
         _currentTeamText.SetText("Current Team: " + teamsDict[currentTeam]);
         remainingTime = timeToTurn;
-        _turnText.SetText("Turn: " + (turn + 1).ToString());
+        StartDay();
+        dayDuration -= dayDurationChange;
+        _turnToChangeDayAndNight = turn + dayDuration;
+        _turnText.SetText("Turn: " + (turn).ToString());
     }
     private void TeamsNameInitialization() // В будущем будет какая-нибудь менюшка, в которую игрок будет вводить название своей команды, но пока её нет, будет эта затычка
     {
@@ -107,7 +131,7 @@ public class TurnManager : MonoBehaviour
 
     private void SetChangesInOtherClassesOnTurnChanged()
     {
-        foreach (EffectsDescription effect in FindObjectsOfType<EffectsDescription>())
+        foreach (EffectsDescription effect in FindObjectsOfType<EffectsDescription>()) // Можно потимизировать, создав тут список, в который эффекты будут записывать себя при появлении
         {
             effect.ReduceRemainingLifeTimeOnTurnChanged();
         }
