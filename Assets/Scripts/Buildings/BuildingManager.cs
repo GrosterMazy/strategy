@@ -22,7 +22,7 @@ public class BuildingManager : MonoBehaviour
                 if (_highlighted == null) { return; }
         var _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
         if (_placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null) {
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !TeamsAdministratumsReferences.ContainsKey(CurrentTeamNumber)) {
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !TeamsAdministratumsReferences.ContainsKey(CurrentTeamNumber) && !_hexGrid.hexCells[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y].isWater) {
                 var _administratum = Instantiate(Administratum, _highlighted.parent.transform.position, Quaternion.identity);
                 _administratum.TeamAffiliation = CurrentTeamNumber;
                 TeamsAdministratumsReferences.Add(CurrentTeamNumber, _administratum);
@@ -36,7 +36,7 @@ public class BuildingManager : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Alpha5)) { _buildingToBuild = Farm; }
                 else return;
                 if (_currentAdministratum.Storage["Light"] >= _buildingToBuild.LightBuildingFoundationCost && _currentAdministratum.Storage["Steel"] >= _buildingToBuild.SteelBuildingFoundationCost &&
-                        _currentAdministratum.Storage["Wood"] >= _buildingToBuild.WoodBuildingFoundationCost && _currentAdministratum.Storage["Food"] >= _buildingToBuild.FoodBuildingFoundationCost) {
+                        _currentAdministratum.Storage["Wood"] >= _buildingToBuild.WoodBuildingFoundationCost && _currentAdministratum.Storage["Food"] >= _buildingToBuild.FoodBuildingFoundationCost && !_hexGrid.hexCells[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y].isWater) {
                     var _building = Instantiate(_buildingToBuild, _highlighted.parent.transform.position, Quaternion.identity);
                     _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _building);
                     _building.TeamAffiliation = CurrentTeamNumber;
