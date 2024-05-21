@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class FractionSpawner : MonoBehaviour {
     [SerializeField] private int minDistanceBetweenFractions = 1; // больше 0 и меньше максимального расстояния между двумя точками на hexGrid
@@ -8,8 +9,9 @@ public class FractionSpawner : MonoBehaviour {
 
     [SerializeField] private int minDistanceFromBorders = 3; // больше 0 и меньше половины максимального размера hexGrid
 
-    public ObjectOnGrid[] fractionMainBuildingPrefabs;
+    public FractionSpawnInfo[] fractionPrefabs;
     private List<Vector2Int> _buildingCoords = new List<Vector2Int>();
+    private List<List<Vector2Int>> _unitAroundCoords = new List<List<Vector2Int>>();
 
     private HexGrid _hexGrid;
     private PlacementManager _placementManager;
@@ -34,29 +36,48 @@ public class FractionSpawner : MonoBehaviour {
     }
 
     private void GenerateBuildingCoords() { // TODO: алгоритм, спавнящий фракции в максимально равных условиях с учётом их особенностей
-        if (this.fractionMainBuildingPrefabs.Length == 0) return;
+        if (this.fractionPrefabs.Length == 0) return;
 
-        Vector2Int maxOfMinDistPos = new Vector2Int(0, 0), pos;
+        Vector2Int maxOfMinDistPos = Vector2Int.zero, pos;
         int maxOfMinDist, minDist, dist;
+        Vector2Int[] neighbours;
 
         pos = new Vector2Int(
             UnityEngine.Random.Range(0, this._hexGrid.size.x),
             UnityEngine.Random.Range(0, this._hexGrid.size.y)
         );
 
+        neighbours = Array.FindAll(this._hexGrid.Neighbours(pos), neighbourPos =>
+            this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null                
+        );
+
         while (this._placementManager.gridWithObjectsInformation[pos.x, pos.y] != null
-                || this._hexGrid.hexCells[pos.x, pos.y].isWater || this._hexGrid.hexCells[pos.x, pos.y].isMountain) {
+                || this._hexGrid.hexCells[pos.x, pos.y].isWater || this._hexGrid.hexCells[pos.x, pos.y].isMountain
+                || neighbours.Length < this.fractionPrefabs[0].numberOfObjectsAround) {
             pos = new Vector2Int(
                 UnityEngine.Random.Range(0, this._hexGrid.size.x),
                 UnityEngine.Random.Range(0, this._hexGrid.size.y)
             );
+            neighbours = Array.FindAll(this._hexGrid.Neighbours(pos), neighbourPos =>
+                this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null                
+            );
         }
 
         this._buildingCoords.Add(pos);
+        this._unitAroundCoords.Add(new List<Vector2Int>());
+        int[] exclude = new int[6];
+        int count = 0, ri;
+        while (count < this.fractionPrefabs[0].numberOfObjectsAround) {
+            ri = UnityEngine.Random.Range(0, neighbours.Length);
+            if (Array.Exists(exclude, excluded => ri == excluded)) continue;
+            exclude[count] = ri;
+            this._unitAroundCoords[this._unitAroundCoords.Count-1].Add(neighbours[ri]);
+            count++;
+        }
         
-        if (this.fractionMainBuildingPrefabs.Length == 1) return;
+        if (this.fractionPrefabs.Length == 1) return;
 
-        for (int i = 1; i < this.fractionMainBuildingPrefabs.Length; i++) {
+        for (int i = 1; i < this.fractionPrefabs.Length; i++) {
             maxOfMinDist = -1;
             
             for (int x = this.minDistanceFromBorders; x < this._hexGrid.size.x-this.minDistanceFromBorders; x++)
@@ -88,25 +109,50 @@ public class FractionSpawner : MonoBehaviour {
             
             if (maxOfMinDist == -1) {
                 this._buildingCoords.Clear();
+                this._unitAroundCoords.Clear();
                 this.GenerateBuildingCoords();
                 return;
             }
+
+            neighbours = Array.FindAll(this._hexGrid.Neighbours(maxOfMinDistPos), neighbourPos =>
+                this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null                
+            );
             
             this._buildingCoords.Add(maxOfMinDistPos);
+            this._unitAroundCoords.Add(new List<Vector2Int>());
+            exclude = new int[6];
+            count = 0;
+            while (count < this.fractionPrefabs[i].numberOfObjectsAround) {
+                ri = UnityEngine.Random.Range(0, neighbours.Length);
+                if (Array.Exists(exclude, excluded => ri == excluded)) continue;
+                exclude[count] = ri;
+                this._unitAroundCoords[this._unitAroundCoords.Count-1].Add(neighbours[ri]);
+                count++;
+            }
         }
     }
     private void SpawnBuildings() {
-        ObjectOnGrid mainBuilding;
+        ObjectOnGrid mainBuilding, unitAround;
+        int count;
 
         for (int i = 0; i < this._buildingCoords.Count; i++) {
             mainBuilding = Instantiate(
-                this.fractionMainBuildingPrefabs[i],
+                this.fractionPrefabs[i].mainObject,
                 this._hexGrid.pivots[this._buildingCoords[i].x, this._buildingCoords[i].y].transform.position,
-                this.fractionMainBuildingPrefabs[i].transform.rotation
+                this.fractionPrefabs[i].mainObject.transform.rotation
             );
             mainBuilding.LocalCoords = this._buildingCoords[i];
             this._placementManager.UpdateGrid(this._buildingCoords[i], this._buildingCoords[i], mainBuilding);
-            // спавним 2 рабочих
+
+            foreach (Vector2Int unitPos in this._unitAroundCoords[i]) {
+                unitAround = Instantiate(
+                    this.fractionPrefabs[i].objectAround,
+                    this._hexGrid.pivots[unitPos.x, unitPos.y].transform.position,
+                    this.fractionPrefabs[i].objectAround.transform.rotation
+                );
+                unitAround.LocalCoords = unitPos;
+                this._placementManager.UpdateGrid(unitPos, unitPos, unitAround);
+            }
         }
     }
 }

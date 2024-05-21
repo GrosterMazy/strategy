@@ -307,4 +307,9 @@ MonoBehaviour:
   minDistanceBetweenFractions: 1
   maxDistanceBetweenFractions: -1
   minDistanceFromBorders: 3
-  fractionMainBuildingPrefabs: []
+  fractionPrefabs:
+  - mainObject: {fileID: 4556878165065314100, guid: d7645c79656c2cb4387a0ff4417ade2d,
+      type: 3}
+    objectAround: {fileID: 8176674563649966998, guid: d9125e213f001c64481514b86885cd39,
+      type: 3}
+    numberOfObjectsAround: 2

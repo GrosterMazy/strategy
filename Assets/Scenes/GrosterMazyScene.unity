@@ -365,6 +365,11 @@ PrefabInstance:
       propertyPath: maxZoom
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 7389076026409502088, guid: 6771edb92b6953142bd91f16ab067867,
+        type: 3}
+      propertyPath: MapCenter
+      value: 
+      objectReference: {fileID: 2015862468}
     - target: {fileID: 7389076027536664374, guid: 6771edb92b6953142bd91f16ab067867,
         type: 3}
       propertyPath: m_Name
@@ -1231,6 +1236,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c655cc145e0767e40946b3d6f11855a8, type: 3}
+--- !u!4 &2015862468 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3310295623050975091, guid: cece29dd214f2654e9af690c0e13a6df,
+    type: 3}
+  m_PrefabInstance: {fileID: 7098207393726327973}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2061064177
 PrefabInstance:
   m_ObjectHideFlags: 0
