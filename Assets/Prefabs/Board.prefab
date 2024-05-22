@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 8291205664975074979}
   - component: {fileID: 6370256542029882500}
   - component: {fileID: 5444204479381042865}
+  - component: {fileID: 939625745214860066}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -411,3 +412,34 @@ MonoBehaviour:
     objectAround: {fileID: 8176674563649966998, guid: d9125e213f001c64481514b86885cd39,
       type: 3}
     numberOfObjectsAround: 2
+--- !u!114 &939625745214860066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7325931689074160785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e01d325b30bd91499ddfcc75879975f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobCap: 10
+  darknessUnitPrefab: {fileID: 7121032984406039112, guid: d553f00c8566123428e004916ba958d3,
+    type: 3}
+  turnsToPowerup: 10
+  numberOfPowerups: 3
+  mobCapPowerup: 5
+  maxMobCap: 50
+  unitActionsPowerup: 1
+  maxUnitActions: 3
+  unitArmorPowerup: 1
+  maxUnitArmor: 5
+  unitSpeedPowerup: 1
+  maxUnitSpeed: 3
+  unitAttackRangePowerup: 1
+  maxUnitAttackRange: 2
+  unitHealthPowerup: 5
+  maxUnitHealth: 100
+  unitAttackDamagePowerup: 5
+  maxUnitAttackDamage: 50

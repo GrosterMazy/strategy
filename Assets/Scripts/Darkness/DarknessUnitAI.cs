@@ -7,21 +7,24 @@ public class DarknessUnitAI : UnitDescription {
     private PlacementManager _placementManager;
     private TargetsInDarkness _targetsInDarkness;
     private HexGrid _hexGrid;
+    private DarknessUnitSpawner _darknessUnitSpawner;
 
     private ObjectOnGrid _underMe;
 
-    private void OnEnable() {
+    private void OnEnable() =>
         TurnManager.onTurnChanged += OnTurnChanged;
-    }
-    private void OnDisable() {
+    private void OnDisable() =>
         TurnManager.onTurnChanged -= OnTurnChanged;
-    }
 
     private void Start() {
         this._placementManager = FindObjectOfType<PlacementManager>();
         this._targetsInDarkness = FindObjectOfType<TargetsInDarkness>();
         this._hexGrid = FindObjectOfType<HexGrid>();
+        this._darknessUnitSpawner = FindObjectOfType<DarknessUnitSpawner>();
     }
+
+    private void OnDestroy() =>
+        this._darknessUnitSpawner.mobCapFilled--;
 
     private void OnTurnChanged() {
         // Выбираем ближайшую цель
