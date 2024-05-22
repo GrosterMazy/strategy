@@ -99,8 +99,6 @@ public class DarknessUnitAI : UnitDescription {
                 break;
         }
 
-         Debug.Log(("from", this.LocalCoords, "to", newpos));
-
         bool found = false;
         // если в будущей нашей позиции есть что-то
         if (this._placementManager.gridWithObjectsInformation[newpos.x, newpos.y] != null) {

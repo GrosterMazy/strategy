@@ -70,7 +70,7 @@ MonoBehaviour:
   FoodConsumption: 2
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
-  _maxHeightToStep: 0
+  _maxHeightToStep: 5
 --- !u!114 &4642289863576436128
 MonoBehaviour:
   m_ObjectHideFlags: 0
