@@ -51,7 +51,7 @@ public class UnitActions : MonoBehaviour
 
         if (_highlightedController.isAnyUnitHighlighted && _highlightedController.highlightedUnit.TeamAffiliation != _unitDescription.TeamAffiliation)
         {
-            _highlightedController.highlightedUnit.GetComponent<UnitHealth>().ApplyDamage(_unitDescription.AttackDamage); // Атакуем вражеского юнита
+            _highlightedController.highlightedUnit.GetComponent<Health>().ApplyDamage(_unitDescription.AttackDamage); // Атакуем вражеского юнита
             SpendAction(1);
         }
         else if (_highlightedController.isAnyFirstFactionFacilityHighlighted && _highlightedController.highlightedFirstFactionFacility.TeamAffiliation != _unitDescription.TeamAffiliation)

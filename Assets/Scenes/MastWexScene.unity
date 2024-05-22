@@ -2131,13 +2131,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2694656030504142501, guid: 848e43af215a9f34abdd8833b867bdae,
         type: 3}
-      propertyPath: teamCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694656030504142501, guid: 848e43af215a9f34abdd8833b867bdae,
-        type: 3}
       propertyPath: timeToTurn
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2694656030504142501, guid: 848e43af215a9f34abdd8833b867bdae,
         type: 3}
@@ -2147,22 +2142,7 @@ PrefabInstance:
     - target: {fileID: 2694656030504142501, guid: 848e43af215a9f34abdd8833b867bdae,
         type: 3}
       propertyPath: nightDuration
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694656030504142501, guid: 848e43af215a9f34abdd8833b867bdae,
-        type: 3}
-      propertyPath: dayDurarionChange
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694656030504142501, guid: 848e43af215a9f34abdd8833b867bdae,
-        type: 3}
-      propertyPath: dayDurationChange
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694656030504142501, guid: 848e43af215a9f34abdd8833b867bdae,
-        type: 3}
-      propertyPath: nightDurationChange
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7831433831925700234, guid: 848e43af215a9f34abdd8833b867bdae,
         type: 3}

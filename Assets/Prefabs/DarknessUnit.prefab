@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5997869422801285634}
   - component: {fileID: 5489589189015990291}
   - component: {fileID: 7121032984406039112}
+  - component: {fileID: -8037280443063298069}
   m_Layer: 0
   m_Name: DarknessUnit
   m_TagString: Untagged
@@ -89,6 +90,21 @@ MonoBehaviour:
   FoodConsumption: 0
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
+--- !u!114 &-8037280443063298069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6005090392611746927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033058a157db15240afc8e5d66343411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  regeneration: 5
+  damageOnLight: 20
 --- !u!1 &7926910684266465754
 GameObject:
   m_ObjectHideFlags: 0
