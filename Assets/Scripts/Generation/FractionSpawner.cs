@@ -139,7 +139,6 @@ public class FractionSpawner : MonoBehaviour {
     }
     private void SpawnBuildings() {
         ObjectOnGrid mainBuilding, unitAround;
-        int count;
 
         for (int i = 0; i < this._buildingCoords.Count; i++) {
             mainBuilding = Instantiate(

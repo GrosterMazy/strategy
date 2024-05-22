@@ -11,7 +11,6 @@ public class DarknessUnitHealth : Health
     new private void Awake()
     {
         base.Awake();
-        InitComponentLinks();
     }
     private void OnEnable()
     {
@@ -26,6 +25,7 @@ public class DarknessUnitHealth : Health
     new protected void Start()
     {
         base.Start();
+        InitComponentLinks();
         currentHealth = maxHealth;
     }
 
@@ -36,7 +36,7 @@ public class DarknessUnitHealth : Health
             ApplyHeal(regeneration);
         }
     }
-    private void GetDamageOnLight()
+    public void GetDamageOnLight()
     {
         if (!_hexGrid.hexCells[_objectOnGrid.LocalCoords.x, _objectOnGrid.LocalCoords.y].InDarkness)
         {

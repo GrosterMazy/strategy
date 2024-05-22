@@ -12,7 +12,6 @@ public class FacilityHealth : Health
     new void Awake()
     {
         base.Awake();
-        InitComponentLinks();
     }
     private void OnEnable()
     {
@@ -25,6 +24,7 @@ public class FacilityHealth : Health
     new void Start()
     {
         base.Start();
+        InitComponentLinks();
         currentHealth = maxHealth;
     }
     public void Repairment() {

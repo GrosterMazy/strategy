@@ -11,12 +11,8 @@ public class DarknessUnitAI : UnitDescription {
 
     private ObjectOnGrid _underMe;
 
-    private void OnEnable() =>
-        TurnManager.onTurnChanged += OnTurnChanged;
-    private void OnDisable() =>
-        TurnManager.onTurnChanged -= OnTurnChanged;
-
     private void Awake() {
+        base.Awake();
         this._placementManager = FindObjectOfType<PlacementManager>();
         this._targetsInDarkness = FindObjectOfType<TargetsInDarkness>();
         this._hexGrid = FindObjectOfType<HexGrid>();
@@ -99,14 +95,14 @@ public class DarknessUnitAI : UnitDescription {
             remainingSpeed--;
 
             if ((facilityHealth != null || unitHealth != null)
-                    && this._hexGrid.Distance(this.LocalCoords, target) <= this.AttackRange) 
+                    && this._hexGrid.Distance(newpos, target) <= this.AttackRange) 
                 break;
         }
 
-        // Debug.Log(("from", this.LocalCoords, "to", newpos));
+         Debug.Log(("from", this.LocalCoords, "to", newpos));
 
         bool found = false;
-        // если будущей нашей позиции есть что-то
+        // если в будущей нашей позиции есть что-то
         if (this._placementManager.gridWithObjectsInformation[newpos.x, newpos.y] != null) {
             DarknessUnitAI darknessUnitAI = this._placementManager.gridWithObjectsInformation[newpos.x, newpos.y]
                 .GetComponent<DarknessUnitAI>();

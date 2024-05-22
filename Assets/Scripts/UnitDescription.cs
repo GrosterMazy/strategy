@@ -39,6 +39,6 @@ public class UnitDescription : ObjectOnGrid
         Armor = Mathf.Clamp(Armor, 0, ArmorEfficiencyTable.Count - 1);
         DamageReductionPercent = ArmorEfficiencyTable[Armor]; }
 
-    private void Start() { ArmorCounter(); }
+    virtual protected void Awake() { ArmorCounter(); }
 }
    

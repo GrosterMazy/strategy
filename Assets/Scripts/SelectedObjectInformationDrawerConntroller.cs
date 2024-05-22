@@ -111,7 +111,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
             Health.SetText("Health: " + unitHealth.currentHealth.ToString() + " / " + _selectionController.selectedUnit.Health.ToString());
             Regeneration.SetText("Regeneration " + unitHealth.regenerationPercent + " %");
             Armour.SetText("Armour: " + _selectionController.selectedUnit.Armor);
-            DmgReduction.SetText("Dmg reduction: " + _selectionController.selectedUnit.DamageReductionPercent + "%");
+            DmgReduction.SetText("Dmg reduction: " + unitHealth.damageReductionPercent + "%");
             Actions.SetText("Actions: " + _selectionController.selectedUnit.GetComponent<UnitActions>().remainingActionsCount + " / " + _selectionController.selectedUnit.ActionsPerTurn);
             Steps.SetText("Steps: " + (_selectionController.selectedUnit.MovementSpeed - _selectionController.selectedUnit.GetComponent<UnitMovement>().spentSpeed) + " / " + _selectionController.selectedUnit.MovementSpeed);
             AttackDmg.SetText("Attack dmg: " + _selectionController.selectedUnit.AttackDamage);

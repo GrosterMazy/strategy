@@ -5,6 +5,18 @@ using UnityEngine;
 public class TargetsInDarkness : MonoBehaviour {
     public List<Vector2Int> Targets = new List<Vector2Int>();
 
+    private void OnEnable()
+    {
+        TurnManager.onTurnChanged += ClearTargets;
+    }
+    private void OnDisable()
+    {
+        TurnManager.onTurnChanged -= ClearTargets;
+    }
+    private void ClearTargets()
+    {
+        Targets.Clear();
+    }
     // кликом выставлять цель для юнитов тьмы
     /*
     private HexGrid _hexGrid;
