@@ -12,6 +12,8 @@ public class CameraMovingTarget : MonoBehaviour
 
     [SerializeField] Transform MapCenter;
 
+    [SerializeField] bool UseRotation=false;
+
     private float _currentZoom;
     private float _currentRotation;
     private float _currentX;
@@ -36,13 +38,18 @@ public class CameraMovingTarget : MonoBehaviour
             _currentZ = Mathf.Clamp(_currentZ + MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Vertical"), -MapCenter.position.z, MapCenter.position.z * 2);
         }
         // Зум //
-        if(Input.GetAxis("Mouse ScrollWheel") !=0) _currentZoom = Mathf.Clamp(_currentZoom - ZoomSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse ScrollWheel")*50, MinZoom, MaxZoom);
+        if(Input.GetAxis("Mouse ScrollWheel") !=0) _currentZoom = Mathf.Clamp(_currentZoom - ZoomSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse ScrollWheel")*40, MinZoom, MaxZoom);
+        if (Input.GetKey(KeyCode.E)) _currentZoom = Mathf.Clamp(_currentZoom + ZoomSpeed * Time.fixedDeltaTime, MinZoom, MaxZoom);
+        if (Input.GetKey(KeyCode.Q)) _currentZoom = Mathf.Clamp( _currentZoom - ZoomSpeed * Time.fixedDeltaTime, MinZoom, MaxZoom);
         // Пворот //
-        if (Input.GetMouseButton(0)) _currentRotation += RotationSpeed*Time.fixedDeltaTime*Input.GetAxis("Mouse X");
-        if (Input.GetKey(KeyCode.E)) _currentRotation += RotationSpeed * Time.fixedDeltaTime;
-        if (Input.GetKey(KeyCode.Q)) _currentRotation -= RotationSpeed * Time.fixedDeltaTime;
+        if (UseRotation == true)
+        {
+            if (Input.GetMouseButton(0)) _currentRotation += RotationSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse X");
+            if (Input.GetKey(KeyCode.E)) _currentRotation += RotationSpeed * Time.fixedDeltaTime;
+            if (Input.GetKey(KeyCode.Q)) _currentRotation -= RotationSpeed * Time.fixedDeltaTime;
 
+            transform.rotation = Quaternion.Euler(60, _currentRotation, 0);
+        }
         transform.localPosition = new Vector3 (_currentX, _currentZoom, _currentZ);
-        transform.rotation = Quaternion.Euler(60,_currentRotation,0);
     }
 }
