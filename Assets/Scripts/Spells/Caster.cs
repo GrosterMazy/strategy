@@ -333,7 +333,7 @@ public class Caster : MonoBehaviour
     {
         foreach (UnitDescription unit in units)
         {
-            UnitHealth unitHealth = unit.GetComponent<UnitHealth>();
+            Health unitHealth = unit.GetComponent<Health>();
             if (spell.ArmourPenetration != 0 && unit.ArmorEfficiencyTable.Count > 0)
             {
                 unitHealth.damageReductionPercent = unit.ArmorEfficiencyTable[Mathf.Clamp(unit.Armor - spell.ArmourPenetration, 0, unit.Armor)];
@@ -343,8 +343,8 @@ public class Caster : MonoBehaviour
             if (spell.PercentageDamageOfCurrentTargetHealth != 0) unitHealth.ApplyPercentageDamageOfCurrentHealth(spell.PercentageDamageOfCurrentTargetHealth);
             if (spell.PercentageDamageOfMissingTargetHealth != 0) unitHealth.ApplyPercentageDamageOfMissingHealth(spell.PercentageDamageOfMissingTargetHealth);
             if (spell.PercentageDamageOfMaxCasterHealth != 0) unitHealth.ApplyDamageIgnoringArmour(caster.Health * spell.PercentageDamageOfMaxCasterHealth / 100);
-            if (spell.PercentageDamageOfCurrentCasterHealth != 0) unitHealth.ApplyDamageIgnoringArmour(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageDamageOfMaxCasterHealth / 100);
-            if (spell.PercentageDamageOfMissingCasterHealth != 0) unitHealth.ApplyDamageIgnoringArmour((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageDamageOfMaxCasterHealth / 100);
+            if (spell.PercentageDamageOfCurrentCasterHealth != 0) unitHealth.ApplyDamageIgnoringArmour(caster.GetComponent<Health>().currentHealth * spell.PercentageDamageOfCurrentCasterHealth / 100);
+            if (spell.PercentageDamageOfMissingCasterHealth != 0) unitHealth.ApplyDamageIgnoringArmour((caster.Health - caster.GetComponent<Health>().currentHealth) * spell.PercentageDamageOfMissingCasterHealth / 100);
             if (unit.ArmorEfficiencyTable.Count > 0) unitHealth.damageReductionPercent = unit.ArmorEfficiencyTable[Mathf.Clamp(unit.Armor, 0, unit.ArmorEfficiencyTable.Count - 1)];
         }
 
@@ -360,8 +360,8 @@ public class Caster : MonoBehaviour
             if (spell.PercentageDamageOfCurrentTargetHealth != 0) facilityHealth.ApplyPercentageDamageOfCurrentHealth(spell.PercentageDamageOfCurrentTargetHealth);
             if (spell.PercentageDamageOfMissingTargetHealth != 0) facilityHealth.ApplyPercentageDamageOfMissingHealth(spell.PercentageDamageOfMissingTargetHealth);
             if (spell.PercentageDamageOfMaxCasterHealth != 0) facilityHealth.ApplyDamageIgnoringArmour(caster.Health * spell.PercentageDamageOfMaxCasterHealth / 100);
-            if (spell.PercentageDamageOfCurrentCasterHealth != 0) facilityHealth.ApplyDamageIgnoringArmour(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageDamageOfMaxCasterHealth / 100);
-            if (spell.PercentageDamageOfMissingCasterHealth != 0) facilityHealth.ApplyDamageIgnoringArmour((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageDamageOfMaxCasterHealth / 100);
+            if (spell.PercentageDamageOfCurrentCasterHealth != 0) facilityHealth.ApplyDamageIgnoringArmour(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageDamageOfCurrentCasterHealth / 100);
+            if (spell.PercentageDamageOfMissingCasterHealth != 0) facilityHealth.ApplyDamageIgnoringArmour((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageDamageOfMissingCasterHealth / 100);
             if (facility.ArmorEfficiencyTable.Count > 0) facilityHealth.damageReductionPercent = facility.ArmorEfficiencyTable[Mathf.Clamp(facility.Armor, 0, facility.ArmorEfficiencyTable.Count - 1)];
         }
     }
@@ -370,14 +370,14 @@ public class Caster : MonoBehaviour
     {
         foreach (UnitDescription unit in units)
         {
-            UnitHealth unitHealth = unit.GetComponent<UnitHealth>();
+            Health unitHealth = unit.GetComponent<Health>();
             if (spell.HealCount != 0) unitHealth.ApplyHeal(spell.HealCount);
             if (spell.PercentageHealOfMaxTargetHealth != 0) unitHealth.ApplyPercentageHealOfMaxHealth(spell.PercentageHealOfMaxTargetHealth);
             if (spell.PercentageHealOfCurrentTargetHealth != 0) unitHealth.ApplyPercentageHealOfCurrentHealth(spell.PercentageHealOfCurrentTargetHealth);
             if (spell.PercentageHealOfMissingTargetHealth != 0) unitHealth.ApplyPercentageHealOfMissingHealth(spell.PercentageHealOfMissingTargetHealth);
             if (spell.PercentageHealOfMaxCasterHealth != 0) unitHealth.ApplyHeal(caster.Health * spell.PercentageHealOfMaxCasterHealth / 100);
-            if (spell.PercentageHealOfCurrentCasterHealth != 0) unitHealth.ApplyHeal(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageHealOfCurrentCasterHealth / 100);
-            if (spell.PercentageHealOfMissingCasterHealth != 0) unitHealth.ApplyHeal((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageHealOfMissingCasterHealth / 100);
+            if (spell.PercentageHealOfCurrentCasterHealth != 0) unitHealth.ApplyHeal(caster.GetComponent<Health>().currentHealth * spell.PercentageHealOfCurrentCasterHealth / 100);
+            if (spell.PercentageHealOfMissingCasterHealth != 0) unitHealth.ApplyHeal((caster.Health - caster.GetComponent<Health>().currentHealth) * spell.PercentageHealOfMissingCasterHealth / 100);
         }
         foreach (FacilityDescription facility in facilities)
         {
@@ -387,8 +387,8 @@ public class Caster : MonoBehaviour
             if (spell.PercentageHealOfCurrentTargetHealth != 0) facilityHealth.ApplyPercentageHealOfCurrentHealth(spell.PercentageHealOfCurrentTargetHealth);
             if (spell.PercentageHealOfMissingTargetHealth != 0) facilityHealth.ApplyPercentageHealOfMissingHealth(spell.PercentageHealOfMissingTargetHealth);
             if (spell.PercentageHealOfMaxCasterHealth != 0) facilityHealth.ApplyHeal(caster.Health * spell.PercentageHealOfMaxCasterHealth / 100);
-            if (spell.PercentageHealOfCurrentCasterHealth != 0) facilityHealth.ApplyHeal(caster.GetComponent<UnitHealth>().currentHealth * spell.PercentageHealOfCurrentCasterHealth / 100);
-            if (spell.PercentageHealOfMissingCasterHealth != 0) facilityHealth.ApplyHeal((caster.Health - caster.GetComponent<UnitHealth>().currentHealth) * spell.PercentageHealOfMissingCasterHealth / 100);
+            if (spell.PercentageHealOfCurrentCasterHealth != 0) facilityHealth.ApplyHeal(caster.GetComponent<Health>().currentHealth * spell.PercentageHealOfCurrentCasterHealth / 100);
+            if (spell.PercentageHealOfMissingCasterHealth != 0) facilityHealth.ApplyHeal((caster.Health - caster.GetComponent<Health>().currentHealth) * spell.PercentageHealOfMissingCasterHealth / 100);
         }
     }
 
