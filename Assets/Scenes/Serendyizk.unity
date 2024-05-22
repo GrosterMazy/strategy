@@ -338,6 +338,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d125e220e7efa4740bf1932b44cd2be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &250866143 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5000908786651834620, guid: 8b10a5220ed3dd14d89fbcb7eb4a3176,
+    type: 3}
+  m_PrefabInstance: {fileID: 77367413}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &308033893
 GameObject:
   m_ObjectHideFlags: 0
@@ -2770,6 +2776,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5444204479381042865, guid: cece29dd214f2654e9af690c0e13a6df,
+        type: 3}
+      propertyPath: newCamera
+      value: 
+      objectReference: {fileID: 250866143}
     - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
         type: 3}
       propertyPath: size.x

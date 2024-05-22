@@ -52,6 +52,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
+  TurnsToTrain: 4
+  FoodCost: 12
+  WoodCost: 0
+  SteelCost: 0
+  LightCost: 0
   ArmorEfficiencyTable: []
   IsSelected: 0
   IsHighlighted: 0
@@ -66,7 +71,7 @@ MonoBehaviour:
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
   RangedLoadDistance: 1
-  _maxHeightToStep: 5
+  _maxHeightToStep: 0
   miningModifier: 2
   WeightCapacityMax: 120
 --- !u!114 &3828219514477727201

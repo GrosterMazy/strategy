@@ -52,6 +52,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LocalCoords: {x: 0, y: 0}
+  TurnsToTrain: 4
+  FoodCost: 10
+  WoodCost: 3
+  SteelCost: 2
+  LightCost: 0
   ArmorEfficiencyTable: []
   IsSelected: 0
   IsHighlighted: 0
@@ -65,7 +70,7 @@ MonoBehaviour:
   FoodConsumption: 4
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
-  _maxHeightToStep: 5
+  _maxHeightToStep: 0
 --- !u!114 &3767639617577542941
 MonoBehaviour:
   m_ObjectHideFlags: 0
