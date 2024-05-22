@@ -403,6 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca73f31a0c873340bf0de442a4d78ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newCamera: {fileID: 0}
   minDistanceBetweenFractions: 1
   maxDistanceBetweenFractions: -1
   minDistanceFromBorders: 3
