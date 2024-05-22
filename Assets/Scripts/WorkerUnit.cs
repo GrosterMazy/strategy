@@ -26,6 +26,7 @@ public class WorkerUnit : UnitDescription
     private HighlightingController _highlightingController;
     private HexGrid _hexGrid;
     private TargetsInDarkness _targetsInDarkness;
+    private BuildingManager _buildingManager;
 
     private void TransferSingleResourcesWindow() {
         if (Input.GetKeyDown(KeyCode.G) && IsSelected && _highlightedFacility != null && _highlightedFacility.TeamAffiliation == TeamAffiliation && _hexGrid.Distance(LocalCoords, _highlightedFacility.LocalCoords) <= RangedLoadDistance && // Distance не работает так, как надо
@@ -79,6 +80,8 @@ public class WorkerUnit : UnitDescription
                 FacilityDescription _building = _objectOnCell.GetComponent<FacilityDescription>();
                 if (_building != null && _building == _buildingToCheck) { return true; } } } return false; }
 
+    private void MaintenanceCosts() { _buildingManager.TeamsAdministratumsReferences[TeamAffiliation].WasteResources(0, 0, 0, FoodConsumption); }
+
     private bool GetToughResource(Vector2Int _cellToMove)
     {
         ToughResources _toughResourcesOnGrid = null;
@@ -119,7 +122,7 @@ public class WorkerUnit : UnitDescription
   
     private void InitComponents() { _placementManager = FindObjectOfType<PlacementManager>(); _unitMovement = GetComponent<UnitMovement>(); _unitHealth = GetComponent<UnitHealth>();
         _unitActions = GetComponent<UnitActions>(); _thisWorkerUnit = GetComponent<WorkerUnit>(); _mouseSelection = FindObjectOfType<MouseSelection>();
-        _highlightingController = FindObjectOfType<HighlightingController>(); _hexGrid = FindObjectOfType<HexGrid>(); _targetsInDarkness = FindObjectOfType<TargetsInDarkness>(); }
+        _highlightingController = FindObjectOfType<HighlightingController>(); _hexGrid = FindObjectOfType<HexGrid>(); _targetsInDarkness = FindObjectOfType<TargetsInDarkness>(); _buildingManager = FindObjectOfType<BuildingManager>(); }
 
     private void Awake() { _weightCapacityRemaining = WeightCapacityMax; InitComponents(); }
 
@@ -127,9 +130,9 @@ public class WorkerUnit : UnitDescription
         _highlightedFacility = _highlightingController.highlightedFirstFactionFacility; _highlighted = _mouseSelection.highlighted; } // нужны экшены смены хайлайтеда и хайлайтед фасилити
     
     private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; _unitHealth.death += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += GetToughResource;
-        _unitMovement.WantToMoveOnCell += CollectItem; TurnManager.onTurnChanged += IsIADarknessTarget; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; }
+        _unitMovement.WantToMoveOnCell += CollectItem; TurnManager.onTurnChanged += IsIADarknessTarget; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; TurnManager.onTurnChanged += MaintenanceCosts; }
     private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; _unitHealth.death -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= GetToughResource;
-        _unitMovement.WantToMoveOnCell -= CollectItem; TurnManager.onTurnChanged -= IsIADarknessTarget; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; }
+        _unitMovement.WantToMoveOnCell -= CollectItem; TurnManager.onTurnChanged -= IsIADarknessTarget; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; TurnManager.onTurnChanged -= MaintenanceCosts; }
     
     private void OnDestroy() {
         ItemReferenceReturner();
