@@ -3,7 +3,8 @@
 public class NewCameraControl : MonoBehaviour
 {
     public Transform objectToFollow;
-    [SerializeField] private float Deceleration;
+    [SerializeField] private float MovementDeceleration;
+    [SerializeField] private float RotationDeceleration;
 
     private Transform _transform;
 
@@ -15,6 +16,7 @@ public class NewCameraControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _transform.position = Vector3.Lerp(_transform.position, objectToFollow.position, Time.fixedDeltaTime* Deceleration) + Vector3.up / 4;
+        _transform.position = Vector3.Lerp(_transform.position, objectToFollow.position, Time.fixedDeltaTime* MovementDeceleration) + Vector3.up / 4;
+        _transform.rotation = Quaternion.Lerp(_transform.rotation, objectToFollow.rotation, Time.fixedDeltaTime * RotationDeceleration);
     }
 }

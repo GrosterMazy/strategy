@@ -28,7 +28,7 @@ public class UnitHealth : Health
     {
         base.Start();
         TransformationHealthOnTurnChanged();
-        currentHealth = _maxHealth;
+        currentHealth = maxHealth;
     }
 
     private void TransformationHealthOnTurnChanged()
@@ -42,7 +42,7 @@ public class UnitHealth : Health
     }
     private void DefaultRegenerationPerTurn()
     {
-        currentHealth = Mathf.Clamp(currentHealth + _maxHealth * regenerationPercent / 100, 0, _maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth + maxHealth * regenerationPercent / 100, 0, maxHealth);
     }
 
     override protected void IsDead()
@@ -66,7 +66,7 @@ public class UnitHealth : Health
         _unitDescription = GetComponent<UnitDescription>();
         _unitMovement = GetComponent<UnitMovement>();
         _unitActions = GetComponent<UnitActions>();
-        _maxHealth = _unitDescription.Health;
+        maxHealth = _unitDescription.Health;
         damageReductionPercent = _unitDescription.DamageReductionPercent;
     }
 }

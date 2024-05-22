@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 
 public class FractionSpawner : MonoBehaviour {
+    [SerializeField] private Transform newCamera;
+
     [SerializeField] private int minDistanceBetweenFractions = 1; // больше 0 и меньше максимального расстояния между двумя точками на hexGrid
     [SerializeField] private int maxDistanceBetweenFractions = -1; // больше 0 и меньше максимального расстояния между двумя точками на hexGrid (-1 == нет ограничений)
 
@@ -50,7 +52,8 @@ public class FractionSpawner : MonoBehaviour {
         );
 
         neighbours = Array.FindAll(this._hexGrid.Neighbours(pos), neighbourPos =>
-            this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null                
+            this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null
+            && !this._hexGrid.hexCells[neighbourPos.x, neighbourPos.y].isWater
         );
 
         while (this._placementManager.gridWithObjectsInformation[pos.x, pos.y] != null
@@ -61,7 +64,8 @@ public class FractionSpawner : MonoBehaviour {
                 UnityEngine.Random.Range(0, this._hexGrid.size.y)
             );
             neighbours = Array.FindAll(this._hexGrid.Neighbours(pos), neighbourPos =>
-                this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null                
+                this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null
+                && !this._hexGrid.hexCells[neighbourPos.x, neighbourPos.y].isWater
             );
         }
 
@@ -148,6 +152,12 @@ public class FractionSpawner : MonoBehaviour {
             Administratum administratum = mainBuilding.GetComponent<Administratum>();
             if (administratum != null)
                 this._buildingManager.TeamsAdministratumsReferences[i+1] = administratum;
+
+            this.newCamera.position = new Vector3(
+                mainBuilding.transform.position.x,
+                this.newCamera.position.y,
+                mainBuilding.transform.position.z
+            );
 
             foreach (Vector2Int unitPos in this._unitAroundCoords[i]) {
                 unitAround = Instantiate(

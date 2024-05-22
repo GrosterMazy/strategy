@@ -104,7 +104,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
             }
             FoodConsumption.SetText("Inventory: " + "\n" + "      " + InventoryStr);
         }
-        else if (_selectionController.isAnyUnitSelected)
+        else if (_selectionController.isAnyUnitSelected && _selectionController.selectedUnit.GetComponent<DarknessUnitAI>() == null)
         {
             Name.SetText(_selectionController.selectedUnit.name);
             UnitHealth unitHealth = _selectionController.selectedUnit.GetComponent<UnitHealth>();
@@ -146,6 +146,20 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
                     }
                 }
             }
+        }
+        else if (_selectionController.isAnyUnitSelected && _selectionController.selectedUnit.GetComponent<DarknessUnitAI>() != null)
+        {
+            Name.SetText(_selectionController.selectedUnit.name);
+            DarknessUnitHealth unitHealth = _selectionController.selectedUnit.GetComponent<DarknessUnitHealth>();
+            Health.SetText("Health: " + unitHealth.currentHealth.ToString() + " / " + _selectionController.selectedUnit.Health.ToString());
+            Regeneration.SetText("Regeneration " + unitHealth.regeneration);
+            Armour.SetText("Armour: " + _selectionController.selectedUnit.Armor);
+            DmgReduction.SetText("Dmg reduction: " + _selectionController.selectedUnit.DamageReductionPercent + "%");
+            Actions.SetText("Actions: " + _selectionController.selectedUnit.ActionsPerTurn);
+            Steps.SetText("Steps: " + _selectionController.selectedUnit.MovementSpeed);
+            AttackDmg.SetText("Attack dmg: " + _selectionController.selectedUnit.AttackDamage);
+            AttackRange.SetText("Attack range: " + _selectionController.selectedUnit.AttackRange);
+            FoodConsumption.SetText("Damage on the light: " + unitHealth.damageOnLight);
         }
         else if (_selectionController.isAnyToughResourceSelected)
         {

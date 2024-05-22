@@ -25,10 +25,10 @@ public class FacilityHealth : Health
     new void Start()
     {
         base.Start();
-        currentHealth = _maxHealth;
+        currentHealth = maxHealth;
     }
     public void Repairment() {
-        currentHealth = Mathf.Clamp(currentHealth + HealthPerRepairment, 0, _maxHealth); }
+        currentHealth = Mathf.Clamp(currentHealth + HealthPerRepairment, 0, maxHealth); }
     private void TransformationHealthOnTurnChanged()
     {
         _wasDamagedInThisTurn = false;
@@ -51,7 +51,7 @@ public class FacilityHealth : Health
     private void InitComponentLinks()
     {
         _facilityDescription = GetComponent<FacilityDescription>();
-        _maxHealth = _facilityDescription.MaxHealth;
+        maxHealth = _facilityDescription.MaxHealth;
         damageReductionPercent = _facilityDescription.DamageReductionPercent;
     }
 }

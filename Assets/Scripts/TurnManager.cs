@@ -136,6 +136,10 @@ public class TurnManager : MonoBehaviour
             effect.ReduceRemainingLifeTimeOnTurnChanged();
         }
         _selectedObjectInformationEnableController.SelectedObjectInformationSetActive(_mouseSelection.selected);
+
+        foreach (DarknessUnitAI darknessUnitAI in FindObjectsOfType<DarknessUnitAI>()) {
+            darknessUnitAI.OnTurnChanged();
+        }
     }
 
     private void InitComponentLinks()
