@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7389076025714455649}
-  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.9584522, y: 1.9742985, z: -0.42944074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToFollow: {fileID: 7389076026409502089}
-  Deceleration: 5
+  MovementDeceleration: 5
+  RotationDeceleration: 5
 --- !u!114 &8779618635815844225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +236,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7389076026409502091}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -254,10 +255,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801fa21fd47295f4fa175f041a4935f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
-  zoomSpeed: 50
-  minZoom: 1
-  maxZoom: 30
+  MoveSpeed: 50
+  ZoomSpeed: 50
+  MinZoom: 10
+  MaxZoom: 45
+  RotationSpeed: 100
   MapCenter: {fileID: 0}
 --- !u!1 &7389076027536664374
 GameObject:

@@ -287,13 +287,28 @@ PrefabInstance:
     - target: {fileID: 7389076025714455581, guid: 6771edb92b6953142bd91f16ab067867,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 60
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389076026409502088, guid: 6771edb92b6953142bd91f16ab067867,
+        type: 3}
+      propertyPath: MaxAngle
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389076026409502088, guid: 6771edb92b6953142bd91f16ab067867,
+        type: 3}
+      propertyPath: MinAngle
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7389076026409502088, guid: 6771edb92b6953142bd91f16ab067867,
         type: 3}
       propertyPath: MapCenter
       value: 
       objectReference: {fileID: 671290254}
+    - target: {fileID: 7389076026409502089, guid: 6771edb92b6953142bd91f16ab067867,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 7389076027536664374, guid: 6771edb92b6953142bd91f16ab067867,
         type: 3}
       propertyPath: m_Name
