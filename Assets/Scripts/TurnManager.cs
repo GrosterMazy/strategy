@@ -29,6 +29,7 @@ public class TurnManager : MonoBehaviour
 
     private int _turnToChangeDayAndNight;
 
+    private TargetsInDarkness _targetsInDarkness;
     private MouseSelection _mouseSelection;
     private SelectedObjectInformationEnableController _selectedObjectInformationEnableController;
 
@@ -136,7 +137,18 @@ public class TurnManager : MonoBehaviour
             effect.ReduceRemainingLifeTimeOnTurnChanged();
         }
         _selectedObjectInformationEnableController.SelectedObjectInformationSetActive(_mouseSelection.selected);
-
+        foreach (WorkerUnit workerUnit in FindObjectsOfType<WorkerUnit>())
+        {
+            _targetsInDarkness.AddTarget(workerUnit.LocalCoords);
+        }
+        foreach (FighterUnit fighterUnit in FindObjectsOfType<FighterUnit>())
+        {
+            _targetsInDarkness.AddTarget(fighterUnit.LocalCoords);
+        }
+        foreach (FacilityDescription facility in FindObjectsOfType<FacilityDescription>())
+        {
+            _targetsInDarkness.AddTarget(facility.LocalCoords);
+        }
         foreach (DarknessUnitAI darknessUnitAI in FindObjectsOfType<DarknessUnitAI>()) {
             darknessUnitAI.OnTurnChanged();
         }
@@ -146,5 +158,6 @@ public class TurnManager : MonoBehaviour
     {
         _mouseSelection = FindObjectOfType<MouseSelection>();
         _selectedObjectInformationEnableController = FindObjectOfType<SelectedObjectInformationEnableController>();
+        _targetsInDarkness = FindObjectOfType<TargetsInDarkness>();
     }
 }

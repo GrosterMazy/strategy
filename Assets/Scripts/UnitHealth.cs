@@ -13,7 +13,6 @@ public class UnitHealth : Health
     new private void Awake()
     {
         base.Awake();
-        InitComponentLinks();
     }
     
     private void OnEnable()
@@ -27,6 +26,7 @@ public class UnitHealth : Health
     new void Start()
     {
         base.Start();
+        InitComponentLinks();
         TransformationHealthOnTurnChanged();
         currentHealth = maxHealth;
     }

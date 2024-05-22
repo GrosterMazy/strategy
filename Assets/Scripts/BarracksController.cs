@@ -27,7 +27,12 @@ public class BarracksController : MonoBehaviour
             else _window.SetActive(false); } 
         else _window.SetActive(false); }
 
-    private void InitComponentsLinks() { _window = FindObjectOfType<BarracksWindow>().gameObject; _selectionController = FindObjectOfType<SelectionController>(); _turnManager = FindObjectOfType<TurnManager>(); }
+    private void InitComponentsLinks() 
+    { 
+        _window = FindObjectOfType<BarracksWindow>().gameObject;
+        _selectionController = FindObjectOfType<SelectionController>();
+        _turnManager = FindObjectOfType<TurnManager>(); 
+    }
 
     private void Start() { InitComponentsLinks(); ButtonsActivate(); }
 

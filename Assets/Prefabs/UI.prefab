@@ -7479,11 +7479,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDay: 0
   turn: 0
-  timeToTurn: 20
+  timeToTurn: 30
   remainingTime: 0
-  dayDuration: 20
-  nightDuration: 8
-  dayDurationChange: -3
+  dayDuration: 25
+  nightDuration: 10
+  dayDurationChange: 0
   nightDurationChange: 0
   teamCount: 1
   currentTeam: 0
