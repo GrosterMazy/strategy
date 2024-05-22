@@ -21,18 +21,13 @@ public class BarracksController : MonoBehaviour
                                                                             _unitsLinks.Add(_units[_].name, _units[_]); }
                                                                             _window.SetActive(false); }
 
-    private void OpenWindow(Transform pos) { FirstFactionFacilities facility = _selectionController.selectedFacility;
+    private void OpenWindow(Transform pos) { FirstFactionFacilities facility = _selectionController.selectedFacility; 
         if (facility != null) { Barracks barracks = facility.GetComponent<Barracks>();
             if (barracks != null) { if (barracks.TeamAffiliation == _turnManager.currentTeam && barracks.ActionsToFinalizeBuilding == 0) _window.SetActive(true); _targetBarracks = barracks; }
             else _window.SetActive(false); } 
         else _window.SetActive(false); }
 
-    private void InitComponentsLinks() 
-    { 
-        _window = FindObjectOfType<BarracksWindow>().gameObject;
-        _selectionController = FindObjectOfType<SelectionController>();
-        _turnManager = FindObjectOfType<TurnManager>(); 
-    }
+    private void InitComponentsLinks() { _window = FindObjectOfType<BarracksWindow>().gameObject; _selectionController = FindObjectOfType<SelectionController>(); _turnManager = FindObjectOfType<TurnManager>(); }
 
     private void Start() { InitComponentsLinks(); ButtonsActivate(); }
 

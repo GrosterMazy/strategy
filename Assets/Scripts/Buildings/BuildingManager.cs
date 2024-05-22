@@ -39,7 +39,7 @@ public class BuildingManager : MonoBehaviour
                         _currentAdministratum.Storage["Wood"] >= _buildingToBuild.WoodBuildingFoundationCost && _currentAdministratum.Storage["Food"] >= _buildingToBuild.FoodBuildingFoundationCost && !_hexGrid.hexCells[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y].isWater) {
                     var _building = Instantiate(_buildingToBuild, _highlighted.parent.transform.position, Quaternion.identity);
                     _placementManager.UpdateGrid(_highlightedInLocalCoords, _highlightedInLocalCoords, _building);
-                    _building.TeamAffiliation = CurrentTeamNumber;
+                    _building.TeamAffiliation = CurrentTeamNumber; _building.LocalCoords = _highlightedInLocalCoords;
                     _building.Administratum = TeamsAdministratumsReferences[_building.TeamAffiliation];
                     _building.BuildingExpenses("Foundation"); } } } }
 
