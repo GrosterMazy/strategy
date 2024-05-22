@@ -50,7 +50,8 @@ public class FractionSpawner : MonoBehaviour {
         );
 
         neighbours = Array.FindAll(this._hexGrid.Neighbours(pos), neighbourPos =>
-            this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null                
+            this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null
+            && !this._hexGrid.hexCells[neighbourPos.x, neighbourPos.y].isWater
         );
 
         while (this._placementManager.gridWithObjectsInformation[pos.x, pos.y] != null
@@ -61,7 +62,8 @@ public class FractionSpawner : MonoBehaviour {
                 UnityEngine.Random.Range(0, this._hexGrid.size.y)
             );
             neighbours = Array.FindAll(this._hexGrid.Neighbours(pos), neighbourPos =>
-                this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null                
+                this._placementManager.gridWithObjectsInformation[neighbourPos.x, neighbourPos.y] == null
+                && !this._hexGrid.hexCells[neighbourPos.x, neighbourPos.y].isWater
             );
         }
 
