@@ -131,6 +131,9 @@ public class HexGrid : MonoBehaviour {
     [SerializeField, Range(0f, 1f)] private float oreLevel; // уровень, выше которого начинает появляться руда
     [SerializeField, Range(0f, 1f)] private float oreFrequency;
 
+    [SerializeField] private Color beachColor;
+    [SerializeField, Range(0f, 1f)] private float beachLevel = 0.27f;
+
     // [SerializeField] private Color desertColor; // не используется
 
     // [SerializeField] private Color jungleColor; // не используется
@@ -511,7 +514,7 @@ public class HexGrid : MonoBehaviour {
                 filled = false;
 
                 // красим воду
-                if (heightNormalized < this.waterCoastLevel) {
+                if (height < waterHeight) {
                     if (heightNormalized < this.deepWaterLevel) hexCellRenderer.material.color = this.deepWaterColor;
                     else if (heightNormalized < this.waterLevel) hexCellRenderer.material.color = this.waterColor;
                     // TODO: rivers
@@ -549,6 +552,9 @@ public class HexGrid : MonoBehaviour {
                 
                 // красим землю по биому и спавним растительность на карте
                 switch (hexCell.biome) {
+                    case Biome.Beach:
+                        hexCellRenderer.material.color = this.beachColor;
+                        break;
                     case Biome.EternalSnow:
                         hexCellRenderer.material = _snowMats[UnityEngine.Random.Range(0, _snowMats.Length)];
                         break;
@@ -683,6 +689,9 @@ public class HexGrid : MonoBehaviour {
             realHeightNormalized = this.hexCells[pos.x, pos.y].heightNormalized;
         }
         else realHeightNormalized = heightNormalized;
+
+        if (this.waterCoastLevel <= realHeightNormalized && realHeightNormalized < this.beachLevel)
+            return Biome.Beach;
         
         float temperature = this.temperature.ValueAt(pos.x, pos.y);
         float wetness = this.wetness.ValueAt(pos.x, pos.y);

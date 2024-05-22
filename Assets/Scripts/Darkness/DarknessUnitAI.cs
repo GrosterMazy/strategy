@@ -16,21 +16,26 @@ public class DarknessUnitAI : UnitDescription {
     private void OnDisable() =>
         TurnManager.onTurnChanged -= OnTurnChanged;
 
-    private void Start() {
+    private void Awake() {
         this._placementManager = FindObjectOfType<PlacementManager>();
         this._targetsInDarkness = FindObjectOfType<TargetsInDarkness>();
         this._hexGrid = FindObjectOfType<HexGrid>();
         this._darknessUnitSpawner = FindObjectOfType<DarknessUnitSpawner>();
     }
 
-    private void OnDestroy() =>
+    private void OnDestroy() {
+        this._placementManager.gridWithObjectsInformation[this.LocalCoords.x, this.LocalCoords.y] = this._underMe;
         this._darknessUnitSpawner.mobCapFilled--;
+    }
+        
 
-    private void OnTurnChanged() {
+    public void OnTurnChanged() {
         // Выбираем ближайшую цель
         int mindist = 1_000_000;
         int dist;
         Vector2Int target = Vector2Int.zero;
+
+        if (this._targetsInDarkness.Targets.Count == 0) return;
 
         foreach (Vector2Int pos in this._targetsInDarkness.Targets) {
             dist = this._hexGrid.Distance(pos, this.LocalCoords);

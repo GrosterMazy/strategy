@@ -103,6 +103,10 @@ public class DarknessUnitSpawner : MonoBehaviour {
             darknessUnit.Health += this._additionalUnitHealth;
             darknessUnit.AttackDamage += this._additionalUnitAttackDamage;
 
+            DarknessUnitHealth darknessUnitHealth = darknessUnit.GetComponent<DarknessUnitHealth>();
+            darknessUnitHealth.currentHealth = darknessUnit.Health;
+            darknessUnitHealth.maxHealth = darknessUnit.Health;
+
             this.mobCapFilled++;
 
             toSpawn--;

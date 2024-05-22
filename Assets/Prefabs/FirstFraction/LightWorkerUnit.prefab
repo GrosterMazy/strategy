@@ -1332,6 +1332,7 @@ MonoBehaviour:
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1.5
   RangedLoadDistance: 1
+  _maxHeightToStep: 5
   miningModifier: 1
   WeightCapacityMax: 40
 --- !u!114 &706169697941482438
@@ -1359,6 +1360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
+  maxHealth: 0
   regenerationPercent: 34
 --- !u!114 &8230875683712456443
 MonoBehaviour:

@@ -308,7 +308,7 @@ MonoBehaviour:
     seed: {x: 0, y: 0}
   baseTerrainRigidityHeightInfluence: 1
   waterCoastColor: {r: 1, g: 0.8755179, b: 0.6933962, a: 0}
-  waterCoastLevel: 0.27
+  waterCoastLevel: 0.255585
   waterColor: {r: 0.6981132, g: 0.5994925, b: 0.45772517, a: 0}
   waterLevel: 0.2
   deepWaterColor: {r: 0.4433962, g: 0.38419092, b: 0.2990833, a: 0}
@@ -369,6 +369,8 @@ MonoBehaviour:
     type: 3}
   oreLevel: 0.4
   oreFrequency: 0.1
+  beachColor: {r: 1, g: 0.8745098, b: 0.69411767, a: 0}
+  beachLevel: 0.27
   jungleTreeFrequency: 0.6
   jungleWoodFrequency: 0.01
   jungleMinWoodAmount: 1
