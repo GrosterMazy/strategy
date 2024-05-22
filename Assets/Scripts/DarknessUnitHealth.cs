@@ -26,7 +26,7 @@ public class DarknessUnitHealth : Health
     new protected void Start()
     {
         base.Start();
-        currentHealth = _maxHealth;
+        currentHealth = maxHealth;
     }
 
     private void RegenerationInDarknessOnTurnChange()
@@ -57,11 +57,11 @@ public class DarknessUnitHealth : Health
         EventBus.anyUnitDie?.Invoke();
         Destroy(gameObject);
     }
-    private void InitComponentLinks()
+    protected void InitComponentLinks()
     {
         _unitDescription = GetComponent<UnitDescription>();
         _hexGrid = FindObjectOfType<HexGrid>();
-        _maxHealth = _unitDescription.Health;
+        maxHealth = _unitDescription.Health;
         damageReductionPercent = _unitDescription.DamageReductionPercent;
     }
 }
