@@ -15,6 +15,7 @@ public class FighterUnit : UnitDescription
     private TargetsInDarkness _targetsInDarkness;
     private Transform _highlighted;
     private MouseSelection _mouseSelection;
+    private BuildingManager _buildingManager;
 
     private bool ItemToReturnReferenceUpdater(Vector2Int _coordsWithItem)
     {
@@ -28,8 +29,10 @@ public class FighterUnit : UnitDescription
         else return NatureProhibitionInMove(_coordsWithItem);
     }
 
+    private void MaintenanceCosts() { _buildingManager.TeamsAdministratumsReferences[TeamAffiliation].WasteResources(0, 0, 0, FoodConsumption); }
+
     private void InitComponents() { _unitMovement = GetComponent<UnitMovement>(); _unitHealth = GetComponent<UnitHealth>(); _placementManager = FindObjectOfType<PlacementManager>(); _hexGrid = FindObjectOfType<HexGrid>();
-        _targetsInDarkness = FindObjectOfType<TargetsInDarkness>(); _mouseSelection = FindObjectOfType<MouseSelection>(); }
+        _targetsInDarkness = FindObjectOfType<TargetsInDarkness>(); _mouseSelection = FindObjectOfType<MouseSelection>(); _buildingManager = FindObjectOfType<BuildingManager>(); }
 
     private void ItemReferenceReturner() {  
         if (_itemToReturnReference != null && _gridWithObjects[_itemToReturnReference.LocalCoords.x, _itemToReturnReference.LocalCoords.y] == null) { _itemToReturnReference.GoneAway(); } }
@@ -46,7 +49,7 @@ public class FighterUnit : UnitDescription
     private void Update() { _gridWithObjects = _placementManager.gridWithObjectsInformation; _highlighted = _mouseSelection.highlighted; } // нужен экшен изменения gridwoi для полной оптимизации
 
     private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += ItemToReturnReferenceUpdater; _unitHealth.death += ItemReferenceReturner;
-        TurnManager.onTurnChanged += IsIADarknessTarget; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; }
+        TurnManager.onTurnChanged += IsIADarknessTarget; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; TurnManager.onTurnChanged += MaintenanceCosts; }
     private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= ItemToReturnReferenceUpdater; _unitHealth.death -= ItemReferenceReturner;
-        TurnManager.onTurnChanged -= IsIADarknessTarget; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; }
+        TurnManager.onTurnChanged -= IsIADarknessTarget; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; TurnManager.onTurnChanged -= MaintenanceCosts; }
 }

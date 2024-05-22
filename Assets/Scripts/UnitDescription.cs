@@ -5,6 +5,11 @@ using System.Linq;
 
 public class UnitDescription : ObjectOnGrid
 {
+    public int TurnsToTrain;
+    public int FoodCost;
+    public int WoodCost;
+    public int SteelCost;
+    public int LightCost;
     public List<float> ArmorEfficiencyTable; // Таблица, где номер элемента - количество брони, а значение элемента - соответствующая ей %-ая защита от урона
     public bool IsSelected; // тыкнул мышкой на него
     public bool IsHighlighted; // навел мышку на него
@@ -15,7 +20,7 @@ public class UnitDescription : ObjectOnGrid
     public int AttackRange;
     public float Health;
     public float AttackDamage;
-    public float FoodConsumption;
+    public int FoodConsumption;
     public float ArmorUnitEfficiencyMaxAmount;  // Значение максимальной эффективности брони(т.е. на сколько % будет снижен урон за первую единицу брони)
     public float ArmorEfficiencyDecreasementPerUnit; // То, насколько будет снижаться эффективность каждой последующей единицы брони(в %)
     [NonSerialized] public float DamageReductionPercent;

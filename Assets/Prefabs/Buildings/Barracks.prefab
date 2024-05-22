@@ -59,10 +59,11 @@ MonoBehaviour:
   MaxHealth: 80
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1
+  WorkerInsideMe: {fileID: 0}
   _highlighted: {fileID: 0}
   _placementManager: {fileID: 0}
   _hexGrid: {fileID: 0}
-  WorkerInsideMe: {fileID: 0}
+  _mouseSelection: {fileID: 0}
   FoodConsumption: 1
   SteelConsumption: 0
   WoodConsumption: 0
@@ -76,6 +77,10 @@ MonoBehaviour:
   FoodConstructionCost: 1
   SteelConstructionCost: 0
   WoodConstructionCost: 1
+  Basic: {fileID: 2100000, guid: 76b17f00fbcc80541b3f36d231c9b7ec, type: 2}
+  Ready: {fileID: 2100000, guid: 4a5288f3c5ebabd4d846aa6423abca2a, type: 2}
+  InProgress: {fileID: 2100000, guid: eac0f0d254add624ba0e4d3ae4257f2c, type: 2}
+  Reject: {fileID: 2100000, guid: 3806a3c22c0804840820f3713e9c6264, type: 2}
 --- !u!114 &5986018674795878778
 MonoBehaviour:
   m_ObjectHideFlags: 0

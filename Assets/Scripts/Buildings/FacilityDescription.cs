@@ -19,11 +19,11 @@ public class FacilityDescription : ObjectOnGrid
     public float ArmorUnitEfficiencyMaxAmount;  // Значение максимальной эффективности брони(т.е. на сколько % будет снижен урон за первую единицу брони)
     public float ArmorEfficiencyDecreasementPerUnit; // То, насколько будет снижаться эффективность каждой последующей единицы брони(в %)
     [NonSerialized] public float DamageReductionPercent;
+    public GameObject WorkerInsideMe;
     public Transform _highlighted;
     public PlacementManager _placementManager;
     public HexGrid _hexGrid;
-    public GameObject WorkerInsideMe;
-    private MouseSelection _mouseSelection;
+    public MouseSelection _mouseSelection;
 
     public void ArmorCounter() {
         if (ArmorEfficiencyDecreasementPerUnit <= 0) { throw new Exception("Убывающая полезность брони не может быть равна или меньше 0"); }
@@ -39,21 +39,22 @@ public class FacilityDescription : ObjectOnGrid
         Armor = Mathf.Clamp(Armor, 0, ArmorEfficiencyTable.Count - 1);
         DamageReductionPercent = ArmorEfficiencyTable[Armor]; }
 
-    private void ThrowAwayWorker() { 
+    protected void ThrowAwayWorker() { 
         if (_highlighted == null) { return; }
         Vector2Int _highlightedInLocalCoords = new Vector2Int(_hexGrid.InLocalCoords(_highlighted.position).x, _hexGrid.InLocalCoords(_highlighted.position).y);
-        if (IsSelected && WorkerOnSite && _placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null && Input.GetKeyDown(KeyCode.T) && IsSelectedDestinationNearby(_highlightedInLocalCoords)) {
+        if (IsSelected && WorkerOnSite && _placementManager.gridWithObjectsInformation[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y] == null && Input.GetKeyDown(KeyCode.T) &&
+                IsSelectedDestinationNearby(_highlightedInLocalCoords) && !_hexGrid.hexCells[_highlightedInLocalCoords.x, _highlightedInLocalCoords.y].isWater) {
             ObjectOnGrid _workerInsideMeLocalCoords = WorkerInsideMe.GetComponent<ObjectOnGrid>();
             WorkerInsideMe.SetActive(true); WorkerOnSite = false; WorkerInsideMe.transform.position = _highlighted.parent.transform.position; _workerInsideMeLocalCoords.LocalCoords = new Vector2Int(_highlightedInLocalCoords.x, _highlightedInLocalCoords.y);
             _placementManager.UpdateGrid(_highlighted.position, _highlighted.position, _workerInsideMeLocalCoords); WorkerInsideMe = null; } }
 
     public bool IsSelectedDestinationNearby(Vector2Int _selectedCell) => _hexGrid.Neighbours(transform.position).Contains(_selectedCell);
 
-    private void InitComponents() { _placementManager = FindObjectOfType<PlacementManager>(); _hexGrid = FindObjectOfType<HexGrid>(); _mouseSelection = FindObjectOfType<MouseSelection>(); }
+    protected void InitComponents() { _placementManager = FindObjectOfType<PlacementManager>(); _hexGrid = FindObjectOfType<HexGrid>(); _mouseSelection = FindObjectOfType<MouseSelection>(); }
 
-    private void Start() { InitComponents();
+    protected void Start() { InitComponents();
         ArmorCounter(); }
 
-    private void Update() { _highlighted = _mouseSelection.highlighted; // нужен экшен смены хайлайтеда (для полной оптимизации, но в целом и так норм)
+    protected void Update() { _highlighted = _mouseSelection.highlighted; // нужен экшен смены хайлайтеда (для полной оптимизации, но в целом и так норм)
         ThrowAwayWorker(); }
 }
