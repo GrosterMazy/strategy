@@ -12,6 +12,7 @@ public class TurnManager : MonoBehaviour
 
     public bool isDay;
     public int turn;
+    public int turnToWin;
     public float timeToTurn;
     public float remainingTime;
     public int dayDuration;
@@ -22,6 +23,7 @@ public class TurnManager : MonoBehaviour
     public int currentTeam; // Номер команды, которая сейчас ходит
     public Dictionary<int, string> teamsDict = new Dictionary<int, string>(); // Словарь, ключи в котором - это номера команд, а значения - их названия
 
+    [SerializeField] private GameObject _winScreen;
     [SerializeField] private TextMeshProUGUI _turnText;
     [SerializeField] private TextMeshProUGUI _currentTeamText;
     [SerializeField] private TextMeshProUGUI _remainingTimeText;
@@ -63,6 +65,11 @@ public class TurnManager : MonoBehaviour
     {
         currentTeam = 1;
         turn += 1;
+        if (turn == turnToWin)
+        {
+            _winScreen.SetActive(true);
+            return;
+        }
         _currentTeamText.SetText("Current Team: " + teamsDict[currentTeam]);
         _turnText.SetText("Turn: " + (turn).ToString());
         if (turn == _turnToChangeDayAndNight)
