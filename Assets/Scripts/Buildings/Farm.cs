@@ -2,6 +2,4 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farm : FirstFactionProductionBuildingDescription
-{
-}
+public class Farm : FirstFactionProductionBuildingDescription { }

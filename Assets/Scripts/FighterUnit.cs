@@ -42,7 +42,7 @@ public class FighterUnit : UnitDescription
 
     private void UpdateMyTargetInDarknessCoords() { _targetsInDarkness.RemoveTarget(LocalCoords); _targetsInDarkness.AddTarget(_hexGrid.InLocalCoords(_highlighted.position)); }
 
-    private void Awake() { base.Awake(); InitComponents(); }
+    private new void Awake() { base.Awake(); InitComponents(); }
 
     private void Update() { _gridWithObjects = _placementManager.gridWithObjectsInformation; _highlighted = _mouseSelection.highlighted; } // нужен экшен изменения gridwoi для полной оптимизации
 

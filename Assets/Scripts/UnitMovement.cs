@@ -48,12 +48,12 @@ public class UnitMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && _unitDescription.IsSelected && _maxSpeed - spentSpeed > 0 && _unitDescription.TeamAffiliation == _turnManager.currentTeam)
+        if (Input.GetMouseButtonDown(1) && _unitDescription.IsSelected && _unitDescription.TeamAffiliation == _turnManager.currentTeam)
         {
             if(_isHighlightedNeighbour && !_highlightedController.isAnyUnitHighlighted)
             {
                 bool? _canIMove = WantToMoveOnCell?.Invoke(_hexGrid.InLocalCoords(_highlighted.position));
-                if (!(bool)_canIMove) { return; }
+                if (!(bool)_canIMove || !(_maxSpeed - spentSpeed > 0)) { return; }
                 transform.position = _highlighted.parent.transform.position;
                 _placementManager.UpdateGrid(_objectOnGrid.LocalCoords, _hexGrid.InLocalCoords(_highlighted.position), _objectOnGrid);
                 MovedToCell?.Invoke();

@@ -102,7 +102,18 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
             {
                 InventoryStr += key + ": " + _selectionController.selectedFacility.Storage[key] + "; ";
             }
-            FoodConsumption.SetText("Inventory: " + "\n" + "      " + InventoryStr);
+            FoodConsumption.SetText("Facility storage: " + InventoryStr); 
+            InventoryStr = "";
+            GameObject unit = _selectionController.selectedFacility.WorkerInsideMe;
+            if ( unit != null)
+            {
+                WorkerUnit workerUnit = unit.GetComponent<WorkerUnit>();
+                foreach (string key in workerUnit.Inventory.Keys)
+                {
+                    InventoryStr += key + ": " + workerUnit.Inventory[key] + "; ";
+                } 
+                Fullness.SetText("Unit inventory: " + "\n" + "      " + InventoryStr);
+            }
         }
         else if (_selectionController.isAnyUnitSelected && _selectionController.selectedUnit.GetComponent<DarknessUnitAI>() == null)
         {

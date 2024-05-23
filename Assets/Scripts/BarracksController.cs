@@ -29,8 +29,8 @@ public class BarracksController : MonoBehaviour
 
     private void InitComponentsLinks() { _window = FindObjectOfType<BarracksWindow>().gameObject; _selectionController = FindObjectOfType<SelectionController>(); _turnManager = FindObjectOfType<TurnManager>(); }
 
-    private void Start() { InitComponentsLinks(); ButtonsActivate(); }
+    private void Awake() { InitComponentsLinks(); ButtonsActivate(); }
 
-    private void OnEnable() { MouseSelection.onSelectionChanged += OpenWindow; }
-    private void OnDisable() {  MouseSelection.onSelectionChanged -= OpenWindow; }
+    private void OnEnable() { _selectionController.onSelectedInformationChanged += OpenWindow; }
+    private void OnDisable() {  _selectionController.onSelectedInformationChanged -= OpenWindow; }
 }

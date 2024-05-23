@@ -414,7 +414,7 @@ MonoBehaviour:
       type: 3}
     objectAround: {fileID: 8176674563649966998, guid: d9125e213f001c64481514b86885cd39,
       type: 3}
-    numberOfObjectsAround: 2
+    numberOfObjectsAround: 3
 --- !u!114 &939625745214860066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,12 +437,12 @@ MonoBehaviour:
   unitActionsPowerup: 1
   maxUnitActions: 3
   unitArmorPowerup: 1
-  maxUnitArmor: 5
+  maxUnitArmor: 10
   unitSpeedPowerup: 1
-  maxUnitSpeed: 3
+  maxUnitSpeed: 4
   unitAttackRangePowerup: 1
-  maxUnitAttackRange: 2
-  unitHealthPowerup: 5
+  maxUnitAttackRange: 3
+  unitHealthPowerup: 8
   maxUnitHealth: 100
   unitAttackDamagePowerup: 5
   maxUnitAttackDamage: 50

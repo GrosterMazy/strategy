@@ -122,7 +122,7 @@ public class WorkerUnit : UnitDescription
         _unitActions = GetComponent<UnitActions>(); _thisWorkerUnit = GetComponent<WorkerUnit>(); _mouseSelection = FindObjectOfType<MouseSelection>();
         _highlightingController = FindObjectOfType<HighlightingController>(); _hexGrid = FindObjectOfType<HexGrid>(); _targetsInDarkness = FindObjectOfType<TargetsInDarkness>(); _buildingManager = FindObjectOfType<BuildingManager>(); }
 
-    private void Awake() { base.Awake(); _weightCapacityRemaining = WeightCapacityMax; InitComponents(); }
+    private new void Awake() { base.Awake(); _weightCapacityRemaining = WeightCapacityMax; InitComponents(); }
 
     private void Update() { RepairBuilding(); TransferSingleResourcesWindow();
         _highlightedFacility = _highlightingController.highlightedFirstFactionFacility; _highlighted = _mouseSelection.highlighted; } // нужны экшены смены хайлайтеда и хайлайтед фасилити

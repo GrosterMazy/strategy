@@ -59,18 +59,19 @@ MonoBehaviour:
   MaxHealth: 200
   ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1
+  WorkerInsideMe: {fileID: 0}
   _highlighted: {fileID: 0}
   _placementManager: {fileID: 0}
   _hexGrid: {fileID: 0}
-  WorkerInsideMe: {fileID: 0}
+  _mouseSelection: {fileID: 0}
   FoodConsumption: 2
   SteelConsumption: 0
   WoodConsumption: 0
   LightConsumption: 0
   InitialLight: 0
   InitialSteel: 5
-  InitialWood: 15
-  InitialFood: 15
+  InitialWood: 20
+  InitialFood: 20
 --- !u!114 &9086735682775507510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
+  maxHealth: 0
   HealthPerRepairment: 10
 --- !u!54 &5120226966240064624
 Rigidbody:

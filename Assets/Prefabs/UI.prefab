@@ -5961,13 +5961,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4035824427041942114}
+  - component: {fileID: 8847415291023242548}
   m_Layer: 5
   m_Name: LooseScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4035824427041942114
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5988,6 +5989,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8847415291023242548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2561708272364651790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5bb490f8eddf741bde16c9098428b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2808916656293311072
 GameObject:
   m_ObjectHideFlags: 0
@@ -6820,7 +6833,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8667028218001039526
@@ -7799,6 +7812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6181838566558140194}
+  - component: {fileID: 922510281}
   m_Layer: 5
   m_Name: WinScreen
   m_TagString: Untagged
@@ -7826,6 +7840,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &922510281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7403266732376443891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df2507b5b368ca418e6f750f80dfa0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7831433831925700234
 GameObject:
   m_ObjectHideFlags: 0
@@ -7873,11 +7899,11 @@ MonoBehaviour:
   isDay: 0
   turn: 0
   turnToWin: 100
-  timeToTurn: 30
+  timeToTurn: 300
   remainingTime: 0
-  dayDuration: 25
-  nightDuration: 10
-  dayDurationChange: 0
+  dayDuration: 15
+  nightDuration: 8
+  dayDurationChange: -3
   nightDurationChange: 0
   teamCount: 1
   currentTeam: 0
