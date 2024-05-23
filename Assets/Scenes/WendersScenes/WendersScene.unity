@@ -136,17 +136,12 @@ PrefabInstance:
     - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
         type: 3}
       propertyPath: size.x
-      value: 55
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
         type: 3}
       propertyPath: size.y
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 6370256542029882500, guid: cece29dd214f2654e9af690c0e13a6df,
-        type: 3}
-      propertyPath: waterCoastLevel
-      value: 0.25
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7325931689074160785, guid: cece29dd214f2654e9af690c0e13a6df,
         type: 3}

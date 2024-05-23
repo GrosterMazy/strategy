@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GrosterMazyScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/InGameScenes/MainMenuScene.unity
+    guid: 10d5a36a1a8d70d4f82b709e5104c6a9
+  - enabled: 1
+    path: Assets/Scenes/InGameScenes/MainGameScene.unity
+    guid: d8a8122969e1fb34cab54118a4b31e50
   m_configObjects: {}
