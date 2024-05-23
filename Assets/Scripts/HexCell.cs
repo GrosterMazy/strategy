@@ -21,7 +21,7 @@ public class HexCell : MonoBehaviour
         TurnManager.DayStarts += DayStarts;       //    Экшены из скрипта TurnManager        
         _darknessnPrefab = Resources.Load<GameObject>("Prefabs/Darkness");
         lightTransporter.OnLightForceChange += OnLightForceChanged;
-        _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up, transform.rotation, transform.parent);
+        _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up*1.5f, transform.rotation, transform.parent);
         _darknessInstance.SetActive(false);
 
     }

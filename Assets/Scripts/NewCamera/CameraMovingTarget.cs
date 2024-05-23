@@ -23,6 +23,7 @@ public class CameraMovingTarget : MonoBehaviour
 
     private void Awake()
     {
+        SRTW = FindObjectOfType<SingleResourcesTransferWindow>();
         _transform = transform;
     }
     private void FixedUpdate()
