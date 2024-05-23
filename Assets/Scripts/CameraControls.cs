@@ -24,12 +24,8 @@ public class CameraControls : MonoBehaviour {
         // движение камеры
         if (Input.GetMouseButton(1))
             this.basePosition +=
-                - (new Vector3(this.transform.right.x, 0, this.transform.right.z)).normalized
-                    * this.moveSpeed * Time.deltaTime * Input.GetAxis("Mouse X")
-                - Vector3.Cross(
-                        (new Vector3(this.transform.right.x, 0, this.transform.right.z)).normalized,
-                        new Vector3(0, 1, 0)
-                    ) * this.moveSpeed * Time.deltaTime * Input.GetAxis("Mouse Y");
+                -(new Vector3(this.transform.right.x, 0, this.transform.right.z)).normalized * this.moveSpeed * Time.deltaTime * Input.GetAxis("Mouse X")
+                - (new Vector3(this.transform.forward.x, 0, this.transform.forward.z)).normalized * this.moveSpeed * Time.deltaTime * Input.GetAxis("Mouse X");
         // зум
         this._currentZoom = Mathf.Clamp(
             this._currentZoom - this.zoomSpeed * Time.deltaTime * Input.GetAxis("Mouse ScrollWheel"),
