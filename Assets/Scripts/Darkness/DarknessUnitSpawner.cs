@@ -107,6 +107,10 @@ public class DarknessUnitSpawner : MonoBehaviour {
             darknessUnitHealth.currentHealth = darknessUnit.Health;
             darknessUnitHealth.maxHealth = darknessUnit.Health;
 
+            darknessUnit.ArmorCounter();
+            darknessUnitHealth.damageReductionPercent = darknessUnit.ArmorEfficiencyTable[darknessUnit.Armor];
+            darknessUnitHealth.damageReductionPercent = darknessUnit.DamageReductionPercent;
+
             this.mobCapFilled++;
 
             toSpawn--;
