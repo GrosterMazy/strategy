@@ -29,13 +29,13 @@ public class CameraMovingTarget : MonoBehaviour
        // Передвижение //
         if (Input.GetMouseButton(1))
         {
-           _currentX = Mathf.Clamp(_currentX + -MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse X"),-MapCenter.position.x, MapCenter.position.x * 2);
-           _currentZ = Mathf.Clamp(_currentZ + - MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse Y"), -MapCenter.position.z, MapCenter.position.z * 2);
+           _currentX = Mathf.Clamp(_currentX + -MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse X"),-MapCenter.position.x*2, MapCenter.position.x * 2);
+           _currentZ = Mathf.Clamp(_currentZ + - MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse Y"), -MapCenter.position.z*2, MapCenter.position.z * 2);
         }
         else if (Input.GetAxis("Horizontal")!=0 || Input.GetAxis("Vertical") != 0)
         {
-            _currentX = Mathf.Clamp(_currentX + MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Horizontal"), -MapCenter.position.x, MapCenter.position.x * 2);
-            _currentZ = Mathf.Clamp(_currentZ + MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Vertical"), -MapCenter.position.z, MapCenter.position.z * 2);
+            _currentX = Mathf.Clamp(_currentX + MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Horizontal"), -MapCenter.position.x*2, MapCenter.position.x * 2);
+            _currentZ = Mathf.Clamp(_currentZ + MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Vertical"), -MapCenter.position.z*2, MapCenter.position.z * 2);
         }
         // Зум //
         if(Input.GetAxis("Mouse ScrollWheel") !=0) _currentZoom = Mathf.Clamp(_currentZoom - ZoomSpeed * Time.fixedDeltaTime * Input.GetAxis("Mouse ScrollWheel")*40, MinZoom, MaxZoom);
