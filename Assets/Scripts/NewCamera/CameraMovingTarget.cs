@@ -32,8 +32,8 @@ public class CameraMovingTarget : MonoBehaviour
             // Передвижение //
             if (!Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(2) || Input.GetKey(KeyCode.F1))
             {
-                _currentPosition += (new Vector3(transform.right.x, 0, transform.right.z)).normalized * MoveSpeed * Time.deltaTime * Input.GetAxis("Mouse X");
-                _currentPosition += (new Vector3(transform.forward.x, 0, transform.forward.z)).normalized * MoveSpeed * Time.deltaTime * Input.GetAxis("Mouse Y");
+                _currentPosition -= (new Vector3(transform.right.x, 0, transform.right.z)).normalized * MoveSpeed * Time.deltaTime * Input.GetAxis("Mouse X");
+                _currentPosition -= (new Vector3(transform.forward.x, 0, transform.forward.z)).normalized * MoveSpeed * Time.deltaTime * Input.GetAxis("Mouse Y");
                 _currentPosition.x = Mathf.Clamp(_currentPosition.x, -MapCenter.position.x * 2, MapCenter.position.x * 2);
                 _currentPosition.z = Mathf.Clamp(_currentPosition.z, -MapCenter.position.z * 2, MapCenter.position.z * 2);
             }
