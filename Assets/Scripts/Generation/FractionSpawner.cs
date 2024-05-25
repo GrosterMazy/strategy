@@ -19,11 +19,11 @@ public class FractionSpawner : MonoBehaviour {
     private PlacementManager _placementManager;
     private BuildingManager _buildingManager;
 
-    private void OnEnable()
-    {
+    private void Awake() =>
         this._placementManager = FindObjectOfType<PlacementManager>();
+
+    private void OnEnable() =>
         this._placementManager.onGridCreated += OnGridCreated; 
-    }
 
     private void OnDestroy() =>
         this._placementManager.onGridCreated -= OnGridCreated;

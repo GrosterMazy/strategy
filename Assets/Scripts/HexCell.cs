@@ -47,16 +47,31 @@ public class HexCell : MonoBehaviour
         DarknessUpdate();
     }
     private void DarknessUpdate() //проверка условий для создания или удаления тьмы
-    {    
-        if (_darknessInstance != null && LightRate <= DarknessMainVariables.CriticalLightRate && _darknessInstance.activeSelf == false && _lightInstance!=null) 
-        {
+    {
+        if (_darknessInstance == null || _lightInstance == null) return;
+
+        // днём никакого света и тьмы
+        if (turnManager.isDay) {
             _lightInstance.SetActive(false);
-            _darknessInstance.SetActive(true); InDarkness = true;
+            _darknessInstance.SetActive(false);
+            InDarkness = false;
+            return;
         }
-        else if (_darknessInstance != null && LightRate > DarknessMainVariables.CriticalLightRate && _lightInstance!=null)
+
+        // ставим тьму ночью если её нет, но она должна быть
+        if (_darknessInstance.activeSelf == false && LightRate <= DarknessMainVariables.CriticalLightRate) {
+            _lightInstance.SetActive(false);
+            _darknessInstance.SetActive(true);
+            InDarkness = true;
+            return;
+        }
+
+        // ставим свет ночью если его нет, но он должен быть
+        if (_lightInstance.activeSelf == false && LightRate > DarknessMainVariables.CriticalLightRate)
         {
-            if (!turnManager.isDay) _lightInstance.SetActive(true);
-            _darknessInstance.SetActive(false); InDarkness = false;
+            _lightInstance.SetActive(true);
+            _darknessInstance.SetActive(false);
+            InDarkness = false;
         }
     }  
     private void OnLightForceChanged(LightTransporter NewSource, int NewLightForce)
