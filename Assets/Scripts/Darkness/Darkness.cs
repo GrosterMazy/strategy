@@ -10,6 +10,10 @@ public class Darkness : ObjectOnGrid
     private void Awake()
     {
         _turnManager = FindObjectOfType<TurnManager>();
+    
+    }
+    private void OnEnable()
+    {
         _turnManager.onTurnChanged += OnTrurnChanged;
     }
     private void OnDisable()
