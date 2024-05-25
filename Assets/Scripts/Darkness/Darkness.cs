@@ -7,7 +7,7 @@ public class Darkness : ObjectOnGrid
     private GameObject _objectInDarkness;
     private TurnManager _turnManager;
 
-    private void OnEnable()
+    private void Awake()
     {
         _turnManager = FindObjectOfType<TurnManager>();
         _turnManager.onTurnChanged += OnTrurnChanged;

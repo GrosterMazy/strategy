@@ -115,7 +115,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Darkness
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5754084199372789682, guid: f1f13d5d91c92ad478702e32ad5de41e, type: 3}
+    - {fileID: -7511558181221131132, guid: f1f13d5d91c92ad478702e32ad5de41e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f1f13d5d91c92ad478702e32ad5de41e, type: 3}
 --- !u!1 &6336970646593665886 stripped
 GameObject:
