@@ -27,9 +27,10 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
     private List<GameObject> _spellButtons = new List<GameObject>();
     private float _backgroundWidth;
     private float _backgroundHeight;
-    private Vector3 space = new Vector3(70, 0, 0);
+    private Vector3 space = new Vector3(150, 0, 0);
     private SelectionController _selectionController;
     private Caster _caster;
+    private BuildingManager _buildingManager;
 
     private void Awake()
     {
@@ -141,7 +142,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
             }
             if (_caster != null)
             {
-                Vector3 offset = new Vector3(-_backgroundWidth / 2 + 45, -_backgroundHeight / 2 + 45, 0);
+                Vector3 offset = new Vector3(-_backgroundWidth / 2 + 75, -_backgroundHeight / 2 + 45, 0);
                 foreach (SpellsDescription spell in _caster.SpellsList)
                 {
                     if (spell.IsOnButton)
@@ -149,12 +150,33 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
                         GameObject newSpellButton = Instantiate(spellButtonPrefab, background.transform);
                         newSpellButton.GetComponent<Button>().onClick.AddListener(() => _caster.PrepareSpell(spell, _caster.GetComponent<UnitDescription>()));
                         _spellButtons.Add(newSpellButton);
+                        newSpellButton.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = spell.Name;
                         RectTransform newSpellButtonRect = newSpellButton.GetComponent<RectTransform>();
                         float newX = newSpellButtonRect.rect.position.x + offset.x;
                         float newY = newSpellButtonRect.rect.position.y + offset.y;
                         newSpellButtonRect.localPosition += offset;
                         offset += space;
                     }
+                }
+            }
+            else if (_selectionController.selectedUnit.GetComponent<WorkerUnit>() != null)
+            {
+                Vector3 offset = new Vector3(-_backgroundWidth / 2 + 75, -_backgroundHeight / 2 + 45, 0);
+                for (int i = 1; i < 5; i++)
+                {
+                    GameObject newButton = Instantiate(spellButtonPrefab, background.transform);
+                    newButton.GetComponent<ButtonsInRightDownCorner>().chlen228_1337_1000___7_AAAAAAAAAAAAAAAAAAAAAAAAABLUATTTTTTTTTTTTTT = i;
+                    newButton.GetComponent<Button>().onClick.AddListener(() => ChooseBuildingOnButton(newButton.GetComponent<ButtonsInRightDownCorner>().chlen228_1337_1000___7_AAAAAAAAAAAAAAAAAAAAAAAAABLUATTTTTTTTTTTTTT));
+                    if (i == 1) { newButton.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Sawmill"; }
+                    if (i == 2) { newButton.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Foundry"; }
+                    if (i == 3) { newButton.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Barracks"; }
+                    if (i == 4) { newButton.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Farm"; }
+                    _spellButtons.Add(newButton);
+                    RectTransform newSpellButtonRect = newButton.GetComponent<RectTransform>();
+                    float newX = newSpellButtonRect.rect.position.x + offset.x;
+                    float newY = newSpellButtonRect.rect.position.y + offset.y;
+                    newSpellButtonRect.localPosition += offset;
+                    offset += space;
                 }
             }
         }
@@ -219,11 +241,16 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
         }
     }
 
+    private void ChooseBuildingOnButton(int indexOfBuilding)
+    {
+        _buildingManager.buildingToBuild = indexOfBuilding;
+    }
     private void InitComponentLinks()
     {
         _turnManager = FindObjectOfType<TurnManager>();
         _selectionController = FindObjectOfType<SelectionController>();
         _backgroundWidth = background.GetComponent<RectTransform>().rect.width;
         _backgroundHeight = background.GetComponent<RectTransform>().rect.height;
+        _buildingManager = FindObjectOfType<BuildingManager>();
     }
 }

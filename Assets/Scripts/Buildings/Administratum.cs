@@ -23,5 +23,5 @@ public class Administratum : FirstFactionFacilities
 
     new private void Update() { base.Update(); if (Storage["Food"] <= 0) LoseScreen(); }
 
-    private void OnDestroy() { LoseScreen(); }
+    private void OnDestroy() { LoseScreen(); } // При выключении игры возникает ошибка, потому что объекта _looseScreen уже нет, а мы пытаемся его включить
 }
