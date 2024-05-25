@@ -5,6 +5,8 @@ public class HexCell : MonoBehaviour
 {
     [NonSerialized] public float LightRate = 0; //коэффициент освещенности (КО) клетки от которого зависит заспавниться ли на этой клетке тьма в следующем ходу или нет
     private GameObject _darknessnPrefab;
+    private GameObject _lightPrefab;
+    private GameObject _lightInstance;
     private GameObject _darknessInstance;
     [NonSerialized] public LightTransporter lightTransporter;
     [NonSerialized] public TurnManager turnManager;
@@ -24,8 +26,11 @@ public class HexCell : MonoBehaviour
         turnManager.NightStarts += NightStarts;   
         turnManager.DayStarts += DayStarts;       //    Экшены из скрипта TurnManager        
         _darknessnPrefab = Resources.Load<GameObject>("Prefabs/Darkness");
+        _lightPrefab = Resources.Load<GameObject>("Prefabs/CellLight");
         lightTransporter.OnLightForceChange += OnLightForceChanged;
         _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up*1.5f, transform.rotation, transform.parent);
+        _lightInstance = Instantiate(_lightPrefab, transform.parent.position + Vector3.up * 1.5f, transform.rotation, transform.parent);
+        _lightInstance.SetActive(false);
         _darknessInstance.SetActive(false);
 
     }
@@ -42,14 +47,15 @@ public class HexCell : MonoBehaviour
         DarknessUpdate();
     }
     private void DarknessUpdate() //проверка условий для создания или удаления тьмы
-    {
-        bool check = _darknessInstance.activeSelf==false;
-        if (_darknessInstance != null && LightRate <= DarknessMainVariables.CriticalLightRate && check) 
+    {    
+        if (_darknessInstance != null && LightRate <= DarknessMainVariables.CriticalLightRate && _darknessInstance.activeSelf == false && _lightInstance!=null) 
         {
+            _lightInstance.SetActive(false);
             _darknessInstance.SetActive(true); InDarkness = true;
         }
-        else if (_darknessInstance != null && LightRate > DarknessMainVariables.CriticalLightRate)
+        else if (_darknessInstance != null && LightRate > DarknessMainVariables.CriticalLightRate && _lightInstance!=null)
         {
+            if (!turnManager.isDay) _lightInstance.SetActive(true);
             _darknessInstance.SetActive(false); InDarkness = false;
         }
     }  

@@ -29,6 +29,7 @@ MonoBehaviour:
   Source: {fileID: 0}
   LightForce: 0
   LightDecrease: 0
+  LightDuration: 999999
 --- !u!114 &6095606676036330923
 MonoBehaviour:
   m_ObjectHideFlags: 0

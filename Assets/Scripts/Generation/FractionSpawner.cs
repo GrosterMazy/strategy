@@ -19,16 +19,18 @@ public class FractionSpawner : MonoBehaviour {
     private PlacementManager _placementManager;
     private BuildingManager _buildingManager;
 
-    private void OnEnable() =>
-        PlacementManager.onGridCreated += OnGridCreated;
+    private void OnEnable()
+    {
+        this._placementManager = FindObjectOfType<PlacementManager>();
+        this._placementManager.onGridCreated += OnGridCreated; 
+    }
 
     private void OnDestroy() =>
-        PlacementManager.onGridCreated -= OnGridCreated;
+        this._placementManager.onGridCreated -= OnGridCreated;
     
     private void OnGridCreated() {
         // Debug.Log("FractionSpawner started");
         this._hexGrid = FindObjectOfType<HexGrid>();
-        this._placementManager = FindObjectOfType<PlacementManager>();
         this._buildingManager = FindObjectOfType<BuildingManager>();
 
         // проверка, что maxDistanceBetweenFractions и maxDistanceBetweenFractions меньше максимального расстояния между двумя точками на hexGrid

@@ -7,7 +7,7 @@ public class Darkness : ObjectOnGrid
     private GameObject _objectInDarkness;
     private TurnManager _turnManager;
 
-    private void Awake()
+    private void OnEnable()
     {
         _turnManager = FindObjectOfType<TurnManager>();
         _turnManager.onTurnChanged += OnTrurnChanged;
@@ -21,10 +21,6 @@ public class Darkness : ObjectOnGrid
         _objectInDarkness = other.gameObject;
         _isSomethingInDarkness = true;
     }
-
-    // private void OnDestroy() {
-    //     Debug.Log("darkness gone");
-    // }
 
     private void OnTrurnChanged()
     {

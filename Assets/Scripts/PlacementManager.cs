@@ -5,7 +5,7 @@ using System;
 
 public class PlacementManager : MonoBehaviour
 {
-    public static Action onGridCreated;
+    public Action onGridCreated;
     [NonSerialized] public ObjectOnGrid[,] gridWithObjectsInformation; // Сетка с информацией об объектах, которую можно получить, обратившись к этому массиву по координатам.
 
     private Vector2Int _size;

@@ -8,6 +8,7 @@ public class Administratum : FirstFactionFacilities
     [SerializeField] private int InitialSteel;
     [SerializeField] private int InitialWood;
     [SerializeField] private int InitialFood;
+    [SerializeField] private int LightForce;
     private GameObject _looseScreen;
 
     public void WasteResources(int _lightConsume, int _steelConsume, int _woodConsume, int _foodConsume) { 
@@ -17,7 +18,7 @@ public class Administratum : FirstFactionFacilities
 
     private void LoseScreen() { _looseScreen.SetActive(true); }
 
-    private void Awake() { Storage.Add("Light", InitialLight); Storage.Add("Steel", InitialSteel); Storage.Add("Wood", InitialWood); Storage.Add("Food", InitialFood); }
+    private void Awake() { Storage.Add("Light", InitialLight); Storage.Add("Steel", InitialSteel); Storage.Add("Wood", InitialWood); Storage.Add("Food", InitialFood); _hexGrid.hexCells[LocalCoords.x,LocalCoords.y].GetComponent<LightTransporter>().SetLight(LightForce); }
 
     new private void Start() { base.Start(); InitComponents(); _looseScreen.SetActive(false); }
 

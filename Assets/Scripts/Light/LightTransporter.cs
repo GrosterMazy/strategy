@@ -17,14 +17,16 @@ public class LightTransporter : MonoBehaviour {
 
     public void Subscribe()
     {
+        grid.OnGenerationEnded += SubscribeOnNeighbours;
         turnManager.onTurnChanged += OnTurnChanged;
     }
 
-    private void Start() {
+    private void SubscribeOnNeighbours() {
         foreach(Vector2Int Coords in grid.Neighbours(transform.position))
             grid.hexCells[Coords.x, Coords.y].GetComponent<LightTransporter>().OnLightForceChange += OnLightSourceChanged;
     }
     private void OnDestroy() {
+        grid.OnGenerationEnded-= SubscribeOnNeighbours;
         turnManager.onTurnChanged -= OnTurnChanged;
         foreach (Vector2Int Coords in grid.Neighbours(transform.position))
             grid.hexCells[Coords.x, Coords.y].GetComponent<LightTransporter>().OnLightForceChange -= OnLightSourceChanged;
@@ -57,7 +59,8 @@ public class LightTransporter : MonoBehaviour {
             OnLightForceChange?.Invoke(this, NewLightForce - NewSource.LightDecrease);
         }
     }
-    public void SetLight(int NewLightRate, int NewDecrease=1, int Duration=9999) {
+    public void SetLight(int NewLightRate, int NewDecrease=1, int Duration=999999) {
+
         Source = null;
         LightDuration = Duration;
         LightForce = NewLightRate;
@@ -69,9 +72,6 @@ public class LightTransporter : MonoBehaviour {
     private void OnTurnChanged()
     {
         LightDuration -= 1;
-        if (LightDuration <= 0)
-        {
-            SetLight(0, 0);
-        }
+        if (LightDuration <= 0) { SetLight(0, 0); }
     }
 }

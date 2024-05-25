@@ -183,7 +183,8 @@ public class HexGrid : MonoBehaviour {
     private Material[] _steppeMats;
 
     private TurnManager _turnManager;
-
+    private PlacementManager _placementManager;
+    public Action OnGenerationEnded;
     private void Awake() {
         // Debug.Log("HexGrid awake started");
         //подгрузка материалов
@@ -199,6 +200,7 @@ public class HexGrid : MonoBehaviour {
 
         // Base
         this._turnManager = FindObjectOfType<TurnManager>();
+        this._placementManager = FindObjectOfType<PlacementManager>();
         this._hexagonPrefabRenderer = this.hexagonPrefab.transform.GetChild(0).GetComponent<Renderer>();
         this.pivots = new GameObject[this.size.x, this.size.y];
         this.hexCells = new HexCell[this.size.x, this.size.y];
@@ -242,7 +244,7 @@ public class HexGrid : MonoBehaviour {
         this.GenerateMountainsMap();
         this.GenerateHighlandsMap();
         this.GenerateMap();
-
+        this.OnGenerationEnded?.Invoke();
         // Vector2Int pos, zero = new Vector2Int(0, 0);
         // for (int x = 0; x < this.size.x; x++)
         //     for (int y = 0; y < this.size.y; y++) {
@@ -421,7 +423,7 @@ public class HexGrid : MonoBehaviour {
 
     private void GenerateMap() {
         Vector2Int pos;
-        float heightNormalized, waterDepth;
+        float heightNormalized;
         int height;
         GameObject pivot;
         HexCell hexCell;
