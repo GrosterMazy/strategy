@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class TargetsInDarkness : MonoBehaviour {
     public List<Vector2Int> Targets = new List<Vector2Int>();
+    private TurnManager _turnManager;
 
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += ClearTargets;
+        _turnManager = FindObjectOfType<TurnManager>();
+        _turnManager.onTurnChanged += ClearTargets;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= ClearTargets;
+        _turnManager.onTurnChanged -= ClearTargets;
     }
     private void ClearTargets()
     {

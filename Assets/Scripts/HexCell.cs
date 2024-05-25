@@ -7,6 +7,8 @@ public class HexCell : MonoBehaviour
     private GameObject _darknessnPrefab;
     private GameObject _darknessInstance;
     [NonSerialized] public LightTransporter lightTransporter;
+    [NonSerialized] public TurnManager turnManager;
+
     [NonSerialized] public Vector2Int localPos;
     [NonSerialized] public int height;
     [NonSerialized] public float heightNormalized; // высота в диапазоне от 0 до 1
@@ -14,11 +16,13 @@ public class HexCell : MonoBehaviour
     [NonSerialized] public bool isMountain = false;
     [NonSerialized] public bool isWater = false;
     [NonSerialized] public bool InDarkness = false;
+
+    
     
     private void Start()
     {
-        TurnManager.NightStarts += NightStarts;   
-        TurnManager.DayStarts += DayStarts;       //    Экшены из скрипта TurnManager        
+        turnManager.NightStarts += NightStarts;   
+        turnManager.DayStarts += DayStarts;       //    Экшены из скрипта TurnManager        
         _darknessnPrefab = Resources.Load<GameObject>("Prefabs/Darkness");
         lightTransporter.OnLightForceChange += OnLightForceChanged;
         _darknessInstance = Instantiate(_darknessnPrefab, transform.parent.position + Vector3.up*1.5f, transform.rotation, transform.parent);
@@ -39,7 +43,8 @@ public class HexCell : MonoBehaviour
     }
     private void DarknessUpdate() //проверка условий для создания или удаления тьмы
     {
-        if (LightRate <= DarknessMainVariables.CriticalLightRate && _darknessInstance.activeSelf==false)
+        bool check = _darknessInstance.activeSelf==false;
+        if (_darknessInstance != null && LightRate <= DarknessMainVariables.CriticalLightRate && check) 
         {
             _darknessInstance.SetActive(true); InDarkness = true;
         }

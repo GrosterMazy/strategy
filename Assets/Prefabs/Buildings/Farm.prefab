@@ -149,12 +149,13 @@ MonoBehaviour:
   IsHighlighted: 0
   WorkerOnSite: 0
   MaxHealth: 75
-  ArmorUnitEfficiencyMaxAmount: 10
+  ArmorUnitEfficiencyMaxAmount: 15
   ArmorEfficiencyDecreasementPerUnit: 1
+  WorkerInsideMe: {fileID: 0}
   _highlighted: {fileID: 0}
   _placementManager: {fileID: 0}
   _hexGrid: {fileID: 0}
-  WorkerInsideMe: {fileID: 0}
+  _mouseSelection: {fileID: 0}
   FoodConsumption: 1
   SteelConsumption: 0
   WoodConsumption: 0
@@ -181,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
+  maxHealth: 0
   HealthPerRepairment: 10
 --- !u!114 &20115452634573019
 MonoBehaviour:

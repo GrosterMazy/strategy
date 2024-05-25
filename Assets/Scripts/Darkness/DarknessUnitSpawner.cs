@@ -52,12 +52,12 @@ public class DarknessUnitSpawner : MonoBehaviour {
 
         this._turnCounter = 0;
 
-        TurnManager.onTurnChanged += OnTurnChanged;
+        this._turnManager.onTurnChanged += OnTurnChanged;
         DarknessUnitSpawner.onDarknessPowerup += OnDarknessPowerup;
     }
 
     private void OnDestroy() {
-        TurnManager.onTurnChanged -= OnTurnChanged;
+        this._turnManager.onTurnChanged -= OnTurnChanged;
         DarknessUnitSpawner.onDarknessPowerup -= OnDarknessPowerup;
     }
 

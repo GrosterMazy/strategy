@@ -18,6 +18,12 @@ public class FirstFactionProductionBuildingDescription : FirstFactionFacilities
     public int SteelConstructionCost;
     public int WoodConstructionCost;
 
+    protected TurnManager _turnManager;
+
+    protected void Awake() {
+        _turnManager = FindObjectOfType<TurnManager>();
+    }
+
     public void ResourcesConsumption() { 
         if (WorkerOnSite) { 
             Administratum.WasteResources(LightConsumption, SteelConsumption, WoodConsumption, FoodConsumption); } }
@@ -31,6 +37,8 @@ public class FirstFactionProductionBuildingDescription : FirstFactionFacilities
         else { throw new Exception("Unknown expense type"); }
         Administratum.WasteResources(_lightExpense, _steelExpense, _woodExpense, _foodExpense); }
 
-    private void OnEnable() { TurnManager.onTurnChanged += ResourcesConsumption; }
-    private void OnDisable() { TurnManager.onTurnChanged -= ResourcesConsumption; }
+    protected void OnEnable() {
+        _turnManager.onTurnChanged += ResourcesConsumption;
+    }
+    protected void OnDisable() { _turnManager.onTurnChanged -= ResourcesConsumption; }
 }

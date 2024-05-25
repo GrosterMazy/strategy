@@ -185,6 +185,7 @@ public class HexGrid : MonoBehaviour {
     private TurnManager _turnManager;
 
     private void Awake() {
+        // Debug.Log("HexGrid awake started");
         //подгрузка материалов
         _plainsMats = Resources.LoadAll<Material>("Materials/Nature/Plains");
         _forestMats = Resources.LoadAll<Material>("Materials/Nature/Forest");
@@ -248,6 +249,8 @@ public class HexGrid : MonoBehaviour {
         //         pos = new Vector2Int(x, y);
         //         this.UpdateHeight(pos, 0);
         //     }
+
+        // Debug.Log("HexGrid awake ended");
     }
 
     private void GenerateMountainsMap() {
@@ -486,6 +489,7 @@ public class HexGrid : MonoBehaviour {
                 lightTransporter = hexCell.GetComponent<LightTransporter>();
                 lightTransporter.grid = this;
                 lightTransporter.turnManager = this._turnManager;
+                lightTransporter.Subscribe();
                 lightTransporter.cell = hexCell;
 
                 // раширяем клету и двигаем её центр (можно убрать эту часть и клетки будут просто подниматься по оси у)
@@ -503,6 +507,7 @@ public class HexGrid : MonoBehaviour {
 
                 // устанавливаем переменные клетки
                 hexCell.lightTransporter = lightTransporter;
+                hexCell.turnManager = this._turnManager;
                 hexCell.height = height;
                 hexCell.heightNormalized = heightNormalized;
                 hexCell.localPos = pos;

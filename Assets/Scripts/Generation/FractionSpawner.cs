@@ -26,6 +26,7 @@ public class FractionSpawner : MonoBehaviour {
         PlacementManager.onGridCreated -= OnGridCreated;
     
     private void OnGridCreated() {
+        // Debug.Log("FractionSpawner started");
         this._hexGrid = FindObjectOfType<HexGrid>();
         this._placementManager = FindObjectOfType<PlacementManager>();
         this._buildingManager = FindObjectOfType<BuildingManager>();
@@ -37,6 +38,7 @@ public class FractionSpawner : MonoBehaviour {
 
         this.GenerateBuildingCoords();
         this.SpawnBuildings();
+        // Debug.Log("FractionSpawner ended");
     }
 
     private void GenerateBuildingCoords() { // TODO: алгоритм, спавнящий фракции в максимально равных условиях с учётом их особенностей

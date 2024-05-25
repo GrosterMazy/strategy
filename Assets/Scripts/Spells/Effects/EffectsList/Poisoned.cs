@@ -4,11 +4,11 @@
     private float _damage = 5;
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += PoisonDamage;
+        _turnManager.onTurnChanged += PoisonDamage;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= PoisonDamage;
+        _turnManager.onTurnChanged -= PoisonDamage;
     }
     private void Start()
     {

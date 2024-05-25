@@ -25,13 +25,13 @@ public class UnitMovement : MonoBehaviour
     }
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += UpdateSpeedValueOnTurnChanged;
+        _turnManager.onTurnChanged += UpdateSpeedValueOnTurnChanged;
         MouseSelection.onHighlightChanged += NeighboursFind;
         MouseSelection.onHighlightChanged += OnHighlightChanged;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= UpdateSpeedValueOnTurnChanged;
+        _turnManager.onTurnChanged -= UpdateSpeedValueOnTurnChanged;
         MouseSelection.onHighlightChanged -= NeighboursFind;
         MouseSelection.onHighlightChanged -= OnHighlightChanged;
     }

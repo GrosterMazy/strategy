@@ -6,9 +6,9 @@ using TMPro;
 
 public class TurnManager : MonoBehaviour
 {
-    [NonSerialized] public static Action onTurnChanged;
-    [NonSerialized] public static Action DayStarts;
-    [NonSerialized] public static Action NightStarts;
+    [NonSerialized] public Action onTurnChanged;
+    [NonSerialized] public Action DayStarts;
+    [NonSerialized] public Action NightStarts;
 
     public bool isDay;
     public int turn;

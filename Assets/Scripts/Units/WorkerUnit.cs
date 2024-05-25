@@ -28,6 +28,8 @@ public class WorkerUnit : UnitDescription
     private TargetsInDarkness _targetsInDarkness;
     private BuildingManager _buildingManager;
 
+    private TurnManager _turnManager;
+
     private void TransferSingleResourcesWindow() {
         if (Input.GetKeyDown(KeyCode.G) && IsSelected && _highlightedFacility != null && _highlightedFacility.TeamAffiliation == TeamAffiliation && _hexGrid.Distance(LocalCoords, _highlightedFacility.LocalCoords) <= RangedLoadDistance && // Distance не работает так, как надо
             _highlightedFacility.ActionsToFinalizeBuilding == 0) { WantToOpenSingleTransferWindow?.Invoke(_thisWorkerUnit, _highlightedFacility); } }
@@ -122,15 +124,20 @@ public class WorkerUnit : UnitDescription
         _unitActions = GetComponent<UnitActions>(); _thisWorkerUnit = GetComponent<WorkerUnit>(); _mouseSelection = FindObjectOfType<MouseSelection>();
         _highlightingController = FindObjectOfType<HighlightingController>(); _hexGrid = FindObjectOfType<HexGrid>(); _targetsInDarkness = FindObjectOfType<TargetsInDarkness>(); _buildingManager = FindObjectOfType<BuildingManager>(); }
 
-    private new void Awake() { base.Awake(); _weightCapacityRemaining = WeightCapacityMax; InitComponents(); }
+    private new void Awake() {
+        base.Awake();
+        _turnManager = FindObjectOfType<TurnManager>();
+        _weightCapacityRemaining = WeightCapacityMax;
+        InitComponents();
+    }
 
     private void Update() { RepairBuilding(); TransferSingleResourcesWindow();
         _highlightedFacility = _highlightingController.highlightedFirstFactionFacility; _highlighted = _mouseSelection.highlighted; } // нужны экшены смены хайлайтеда и хайлайтед фасилити
     
     private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += EnterBuilding; _unitHealth.death += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += GetToughResource;
-        _unitMovement.WantToMoveOnCell += CollectItem; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; TurnManager.onTurnChanged += MaintenanceCosts; }
+        _unitMovement.WantToMoveOnCell += CollectItem; _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; _turnManager.onTurnChanged += MaintenanceCosts; }
     private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= EnterBuilding; _unitHealth.death -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= GetToughResource;
-        _unitMovement.WantToMoveOnCell -= CollectItem; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; TurnManager.onTurnChanged -= MaintenanceCosts; }
+        _unitMovement.WantToMoveOnCell -= CollectItem; _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; _turnManager.onTurnChanged -= MaintenanceCosts; }
 
     private void OnDestroy() {
         ItemReferenceReturner();

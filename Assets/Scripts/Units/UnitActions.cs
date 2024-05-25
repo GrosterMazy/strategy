@@ -11,6 +11,7 @@ public class UnitActions : MonoBehaviour
     private HighlightingController _highlightedController;
     private MouseSelection _mouseSelection;
     private UnitDescription _unitDescription;
+    private TurnManager _turnManager;
 
     private void Awake()
     {
@@ -19,11 +20,11 @@ public class UnitActions : MonoBehaviour
 
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += UpdateActionsCountOnTurnChanged;
+        _turnManager.onTurnChanged += UpdateActionsCountOnTurnChanged;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= UpdateActionsCountOnTurnChanged;
+        _turnManager.onTurnChanged -= UpdateActionsCountOnTurnChanged;
     }
     private void Start()
     {
@@ -70,6 +71,7 @@ public class UnitActions : MonoBehaviour
     private void InitComponentLinks()
     {
         _hexGrid = FindObjectOfType<HexGrid>();
+        _turnManager = FindObjectOfType<TurnManager>();
         _selectionController = FindObjectOfType<SelectionController>();
         _highlightedController = FindObjectOfType<HighlightingController>();
         _mouseSelection = FindObjectOfType<MouseSelection>();

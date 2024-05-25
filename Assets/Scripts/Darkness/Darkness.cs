@@ -5,20 +5,26 @@ public class Darkness : ObjectOnGrid
     public float Damage;
     private bool _isSomethingInDarkness=false;
     private GameObject _objectInDarkness;
+    private TurnManager _turnManager;
 
     private void Awake()
     {
-        TurnManager.onTurnChanged += OnTrurnChanged;
+        _turnManager = FindObjectOfType<TurnManager>();
+        _turnManager.onTurnChanged += OnTrurnChanged;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= OnTrurnChanged;
+        _turnManager.onTurnChanged -= OnTrurnChanged;
     }
     private void OnTriggerStay(Collider other) // Проверка есть ли что-либо в этой тьме
     {
         _objectInDarkness = other.gameObject;
         _isSomethingInDarkness = true;
     }
+
+    // private void OnDestroy() {
+    //     Debug.Log("darkness gone");
+    // }
 
     private void OnTrurnChanged()
     {

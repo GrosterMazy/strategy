@@ -12,6 +12,8 @@ public class ProductionBuildingFabrication : MonoBehaviour
     private FacilityDescription _myFacility;
     private WorkerUnit _myWorkingWorker;
 
+    private TurnManager _turnManager;
+
     public void ApplyResource(string _resource, int _amount) { if (_resource != RawMaterialName) { return; }
         _myFacility.Storage[_resource] += _amount; }
 
@@ -43,6 +45,17 @@ public class ProductionBuildingFabrication : MonoBehaviour
     private void Awake() { InitComponents();
         _myFacility.Storage.Add(RawMaterialName, 0); _myFacility.Storage.Add(ProcessedMaterialName, 0); }
 
-    private void OnEnable() { _myFacility.OnEnteredWorker += MyWorkerLinkChange; _myFacility.OnEnteredWorker += UnloadWorker; TurnManager.onTurnChanged += Production; TurnManager.onTurnChanged += LoadWorker; }
-    private void OnDisable() { _myFacility.OnEnteredWorker -= MyWorkerLinkChange; _myFacility.OnEnteredWorker -= UnloadWorker; TurnManager.onTurnChanged -= Production; TurnManager.onTurnChanged -= LoadWorker; }
+    private void OnEnable() {
+        _turnManager = FindObjectOfType<TurnManager>();
+        _myFacility.OnEnteredWorker += MyWorkerLinkChange;
+        _myFacility.OnEnteredWorker += UnloadWorker;
+        _turnManager.onTurnChanged += Production;
+        _turnManager.onTurnChanged += LoadWorker;
+    }
+    private void OnDisable() {
+        _myFacility.OnEnteredWorker -= MyWorkerLinkChange;
+        _myFacility.OnEnteredWorker -= UnloadWorker;
+        _turnManager.onTurnChanged -= Production;
+        _turnManager.onTurnChanged -= LoadWorker;
+    }
 }

@@ -15,7 +15,6 @@ public class Barracks : FirstFactionProductionBuildingDescription
     private int _currentUnitRemainingTrainingTurns;
     private MeshRenderer _meshRenderer;
     private Color _neededColor;
-
     public void AddToQueue(UnitDescription unit) { if (Administratum.Storage["Light"] >= unit.LightCost && Administratum.Storage["Steel"] >= unit.SteelCost && Administratum.Storage["Wood"] >= unit.WoodCost && Administratum.Storage["Food"] >= unit.FoodCost) {
                                                     _trainQueue.Add(unit); Administratum.WasteResources(unit.LightCost, unit.SteelCost, unit.WoodCost, unit.FoodCost); }
                                                     else RejectSignal(); }
@@ -41,10 +40,13 @@ public class Barracks : FirstFactionProductionBuildingDescription
 
     private void ReturnMaterial() => _neededColor = Basic.color;
 
-    private void Awake() { _meshRenderer = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>(); }
+    private void Awake() {
+        base.Awake();
+        _meshRenderer = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
+    }
 
     private new void Update() { base.Update(); ThrowReadyUnit(); SignalManager(); }
 
-    private void OnEnable() { TurnManager.onTurnChanged += Train; }
-    private void OnDisable() { TurnManager.onTurnChanged -= Train; }
+    private void OnEnable() { base.OnEnable(); _turnManager.onTurnChanged += Train; }
+    private void OnDisable() { base.OnDisable(); _turnManager.onTurnChanged -= Train; }
 }

@@ -37,7 +37,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
     }
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += SetTextColor;
+        _turnManager.onTurnChanged += SetTextColor;
         SetTextColor();
         SelectCaster();
         DrawInformationPanel();
@@ -45,7 +45,7 @@ public class SelectedObjectInformationDrawerConntroller : MonoBehaviour
 
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= SetTextColor;
+        _turnManager.onTurnChanged -= SetTextColor;
         SetTextColor();
         foreach (GameObject spellButton in _spellButtons)
         {

@@ -12,6 +12,9 @@ public class Health : MonoBehaviour
     protected PlacementManager _placementManager;
     protected ObjectOnGrid _objectOnGrid;
     protected bool _wasDamagedInThisTurn = false;
+
+    protected TurnManager _turnManager;
+    
     protected void Awake()
     {
         InitComponentLinks();
@@ -75,6 +78,7 @@ public class Health : MonoBehaviour
 
     private void InitComponentLinks()
     {
+        _turnManager = FindObjectOfType<TurnManager>();
         _placementManager = FindObjectOfType<PlacementManager>();
         _objectOnGrid = GetComponent<ObjectOnGrid>();
     }

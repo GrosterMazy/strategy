@@ -14,13 +14,13 @@ public class DarknessUnitHealth : Health
     }
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += RegenerationInDarknessOnTurnChange;
-        TurnManager.onTurnChanged += GetDamageOnLight;
+        _turnManager.onTurnChanged += RegenerationInDarknessOnTurnChange;
+        _turnManager.onTurnChanged += GetDamageOnLight;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= RegenerationInDarknessOnTurnChange;
-        TurnManager.onTurnChanged -= GetDamageOnLight;
+        _turnManager.onTurnChanged -= RegenerationInDarknessOnTurnChange;
+        _turnManager.onTurnChanged -= GetDamageOnLight;
     }
     new protected void Start()
     {

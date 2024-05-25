@@ -15,11 +15,11 @@ public class FacilityHealth : Health
     }
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += TransformationHealthOnTurnChanged;
+        _turnManager.onTurnChanged += TransformationHealthOnTurnChanged;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= TransformationHealthOnTurnChanged;
+        _turnManager.onTurnChanged -= TransformationHealthOnTurnChanged;
     }
     new void Start()
     {

@@ -10,6 +10,7 @@ public class UnitHealth : Health
     private UnitMovement _unitMovement;
     private UnitActions _unitActions;
 
+
     new private void Awake()
     {
         base.Awake();
@@ -17,11 +18,11 @@ public class UnitHealth : Health
     
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += TransformationHealthOnTurnChanged;
+        _turnManager.onTurnChanged += TransformationHealthOnTurnChanged;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= TransformationHealthOnTurnChanged;
+        _turnManager.onTurnChanged -= TransformationHealthOnTurnChanged;
     }
     new void Start()
     {

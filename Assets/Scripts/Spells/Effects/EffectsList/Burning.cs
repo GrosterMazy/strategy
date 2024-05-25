@@ -4,11 +4,11 @@
     protected float _damage;
     private void OnEnable()
     {
-        TurnManager.onTurnChanged += BurnDamage;
+        _turnManager.onTurnChanged += BurnDamage;
     }
     private void OnDisable()
     {
-        TurnManager.onTurnChanged -= BurnDamage;
+        _turnManager.onTurnChanged -= BurnDamage;
     }
     protected void Start()
     {

@@ -10,6 +10,12 @@ public class EffectsDescription : MonoBehaviour // Родитель всех э�
                                   */
     public bool isNegative = true; // В наследнике можно изменить значение
 
+    protected TurnManager _turnManager;
+
+    protected void Awake() {
+        _turnManager = FindObjectOfType<TurnManager>();
+    }
+
 
     public void ReduceRemainingLifeTimeOnTurnChanged() // Вызывается после экшена onTurnChanged
     {

@@ -123,7 +123,7 @@ MonoBehaviour:
     IsLine: 0
     IsTriangle: 0
     IsStar: 0
-    IsThreeLinesForward: 1
+    IsThreeLinesForward: 0
     Shape_EndHeader_: 
     Conditions_Header_: 
     MinRemainingActions: 5
@@ -164,9 +164,9 @@ MonoBehaviour:
     Description: 
     Target_Header_: 
     OnCaster: 0
-    OnEnemyUnits: 0
+    OnEnemyUnits: 1
     OnTeammateUnits: 0
-    OnEnemyBuildings: 0
+    OnEnemyBuildings: 1
     OnTeammateBuildings: 0
     OnGround: 0
     Target_EndHeader_: 

@@ -16,6 +16,8 @@ public class FighterUnit : UnitDescription
     private Transform _highlighted;
     private MouseSelection _mouseSelection;
     private BuildingManager _buildingManager;
+    
+    private TurnManager _turnManager;
 
     private bool ItemToReturnReferenceUpdater(Vector2Int _coordsWithItem)
     {
@@ -42,12 +44,16 @@ public class FighterUnit : UnitDescription
 
     private void UpdateMyTargetInDarknessCoords() { _targetsInDarkness.RemoveTarget(LocalCoords); _targetsInDarkness.AddTarget(_hexGrid.InLocalCoords(_highlighted.position)); }
 
-    private new void Awake() { base.Awake(); InitComponents(); }
+    private new void Awake() {
+        _turnManager = FindObjectOfType<TurnManager>();
+        base.Awake();
+        InitComponents();
+    }
 
     private void Update() { _gridWithObjects = _placementManager.gridWithObjectsInformation; _highlighted = _mouseSelection.highlighted; } // нужен экшен изменения gridwoi для полной оптимизации
 
     private void OnEnable() { _unitMovement.MovedToCell += ItemReferenceReturner; _unitMovement.WantToMoveOnCell += ItemToReturnReferenceUpdater; _unitHealth.death += ItemReferenceReturner;
-         _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; TurnManager.onTurnChanged += MaintenanceCosts; }
+         _unitMovement.MovedToCell += UpdateMyTargetInDarknessCoords; _turnManager.onTurnChanged += MaintenanceCosts; }
     private void OnDisable() { _unitMovement.MovedToCell -= ItemReferenceReturner; _unitMovement.WantToMoveOnCell -= ItemToReturnReferenceUpdater; _unitHealth.death -= ItemReferenceReturner;
-         _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; TurnManager.onTurnChanged -= MaintenanceCosts; }
+         _unitMovement.MovedToCell -= UpdateMyTargetInDarknessCoords; _turnManager.onTurnChanged -= MaintenanceCosts; }
 }
