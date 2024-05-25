@@ -18,9 +18,11 @@ public class Administratum : FirstFactionFacilities
 
     private void LoseScreen() { _looseScreen.SetActive(true); }
 
-    private void Awake() { Storage.Add("Light", InitialLight); Storage.Add("Steel", InitialSteel); Storage.Add("Wood", InitialWood); Storage.Add("Food", InitialFood); _hexGrid.hexCells[LocalCoords.x,LocalCoords.y].GetComponent<LightTransporter>().SetLight(LightForce); }
+    private void Awake() { Storage.Add("Light", InitialLight); Storage.Add("Steel", InitialSteel); Storage.Add("Wood", InitialWood); Storage.Add("Food", InitialFood); }
 
-    new private void Start() { base.Start(); InitComponents(); _looseScreen.SetActive(false); }
+    new private void Start() { base.Start(); InitComponents(); _looseScreen.SetActive(false);
+        _hexGrid.hexCells[LocalCoords.x, LocalCoords.y].GetComponent<LightTransporter>().SetLight(LightForce);
+    }
 
     new private void Update() { base.Update(); if (Storage["Food"] <= 0) LoseScreen(); }
 
