@@ -71,7 +71,8 @@ MonoBehaviour:
   InitialLight: 0
   InitialSteel: 5
   InitialWood: 20
-  InitialFood: 20
+  InitialFood: 9999
+  LightForce: 3
 --- !u!114 &9086735682775507510
 MonoBehaviour:
   m_ObjectHideFlags: 0

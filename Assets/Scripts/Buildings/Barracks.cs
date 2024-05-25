@@ -15,6 +15,13 @@ public class Barracks : FirstFactionProductionBuildingDescription
     private int _currentUnitRemainingTrainingTurns;
     private MeshRenderer _meshRenderer;
     private Color _neededColor;
+    [SerializeField] private int LightForce=3;
+    protected new void Start()
+    {
+        base.Start();
+        _hexGrid.hexCells[LocalCoords.x, LocalCoords.y].GetComponent<LightTransporter>().SetLight(LightForce);
+    }
+
     public void AddToQueue(UnitDescription unit) { if (Administratum.Storage["Light"] >= unit.LightCost && Administratum.Storage["Steel"] >= unit.SteelCost && Administratum.Storage["Wood"] >= unit.WoodCost && Administratum.Storage["Food"] >= unit.FoodCost) {
                                                     _trainQueue.Add(unit); Administratum.WasteResources(unit.LightCost, unit.SteelCost, unit.WoodCost, unit.FoodCost); }
                                                     else RejectSignal(); }

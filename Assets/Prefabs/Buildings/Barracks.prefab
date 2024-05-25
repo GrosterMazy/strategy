@@ -81,6 +81,7 @@ MonoBehaviour:
   Ready: {fileID: 2100000, guid: 4a5288f3c5ebabd4d846aa6423abca2a, type: 2}
   InProgress: {fileID: 2100000, guid: eac0f0d254add624ba0e4d3ae4257f2c, type: 2}
   Reject: {fileID: 2100000, guid: 3806a3c22c0804840820f3713e9c6264, type: 2}
+  LightForce: 3
 --- !u!114 &5986018674795878778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
+  maxHealth: 0
   HealthPerRepairment: 10
 --- !u!135 &4920938985665499258
 SphereCollider:

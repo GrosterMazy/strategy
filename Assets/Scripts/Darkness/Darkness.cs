@@ -24,7 +24,7 @@ public class Darkness : ObjectOnGrid
 
     private void OnTrurnChanged()
     {
-        if (_isSomethingInDarkness == true)
+        if (_isSomethingInDarkness == true && _objectInDarkness!=null)
         {
             if (_objectInDarkness.TryGetComponent(out FacilityHealth facilityHealth) != false) // Пробуем найти у объекта во тьме компонент FacilityHealth
             {
